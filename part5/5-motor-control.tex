@@ -1,0 +1,462 @@
+%!TEX program = xelatex
+
+\documentclass[compress]{beamer}
+%--------------------------------------------------------------------------
+% Common packages
+%--------------------------------------------------------------------------
+
+\definecolor{links}{HTML}{663000}
+\hypersetup{colorlinks,linkcolor=,urlcolor=links}
+
+\usepackage[english]{babel}
+\usepackage{pgfpages} % required for notes on second screen
+\usepackage{graphicx}
+
+\usepackage{multicol}
+
+\usepackage{tabularx,ragged2e}
+\usepackage{booktabs}
+
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+\usetheme{hri}
+
+% Display the navigation bullet even without subsections
+\usepackage{remreset}% tiny package containing just the \@removefromreset command
+\makeatletter
+\@removefromreset{subsection}{section}
+\makeatother
+\setcounter{subsection}{1}
+
+
+\newcommand{\source}[2]{{\tiny\it Source: \href{#1}{#2}}}
+
+\usepackage{tikz}
+\usetikzlibrary{mindmap,backgrounds,positioning,calc,patterns}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepackage{circuitikz}
+
+\graphicspath{{part5/figs/}}
+
+\title{ROCO222 \newline Intro to Sensors and Actuators}
+\subtitle{Part 5 -- Motor control}
+
+\date{}
+\author{Séverin Lemaignan}
+\institute{Centre for Neural Systems and Robotics\\{\bf Plymouth University}}
+
+\begin{document}
+
+\licenseframe{github.com/severin-lemaignan/module-mobile-and-humanoid-robots}
+
+\maketitle
+
+\section{Simple motor control}
+
+{\fullbackground[scale=0.9,page=2]{ian-simple-motor-ctrl.pdf}
+    \begin{frame}{Open loop control}
+    \end{frame}
+}
+{\fullbackground[scale=0.9,page=3]{ian-simple-motor-ctrl.pdf}
+    \begin{frame}{Closed loop control}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=4]{ian-simple-motor-ctrl.pdf}
+    \begin{frame}{Motor operating point voltage dependent}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=5]{ian-simple-motor-ctrl.pdf}
+    \begin{frame}{Simple motor speed control}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=6]{ian-simple-motor-ctrl.pdf}
+    \begin{frame}{Linear power stage}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=7]{ian-simple-motor-ctrl.pdf}
+    \begin{frame}{Better motor speed control}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=8]{ian-simple-motor-ctrl.pdf}
+    \begin{frame}{Pulsed power stage (PWM)}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=9]{ian-simple-motor-ctrl.pdf}
+    \begin{frame}{Pulse width modulation waveforms}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=10]{ian-simple-motor-ctrl.pdf}
+    \begin{frame}{PWM and current ripple}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=11]{ian-simple-motor-ctrl.pdf}
+    \begin{frame}{PWM and electronic commutation}
+    \end{frame}
+}
+
+\section{H-bridge}
+
+{\fullbackground[scale=0.9,page=02]{ian-hbridge.pdf}
+    \begin{frame}{H-bridge}
+    \end{frame}
+}
+
+
+{\fullbackground[scale=0.9,page=03]{ian-hbridge.pdf}
+    \begin{frame}{H-bridge control motor direction}
+    \end{frame}
+}
+
+
+{\fullbackground[scale=0.9,page=04]{ian-hbridge.pdf}
+    \begin{frame}{Using junction transistors as switches}
+    \end{frame}
+}
+
+
+{\fullbackground[scale=0.9,page=05]{ian-hbridge.pdf}
+    \begin{frame}{Motor inductance}
+    \end{frame}
+}
+
+
+{\fullbackground[scale=0.9,page=06]{ian-hbridge.pdf}
+    \begin{frame}{Back EMF chen current abruptly switched off}
+    \end{frame}
+}
+
+
+{\fullbackground[scale=0.9,page=07]{ian-hbridge.pdf}
+    \begin{frame}{Diode protection against back EMF}
+    \end{frame}
+}
+
+
+{\fullbackground[scale=0.9,page=08]{ian-hbridge.pdf}
+    \begin{frame}{Simple transistor H-Bridge}
+    \end{frame}
+}
+
+
+{\fullbackground[scale=0.9,page=09]{ian-hbridge.pdf}
+    \begin{frame}{H-Bridges are available off-the-shelf}
+    \end{frame}
+}
+
+
+\section{Motor control with Arduino}
+
+{\fullbackground[scale=0.9,page=02]{ian-arduino-dc-motors.pdf}
+    \begin{frame}{Arduino motor shield}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=03]{ian-arduino-dc-motors.pdf}
+    \begin{frame}{Arduino motor shield specs}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=04]{ian-arduino-dc-motors.pdf}
+    \begin{frame}{L298 dual full-bridge driver}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=05]{ian-arduino-dc-motors.pdf}
+    \begin{frame}{L298 dual full-bridge driver}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=06]{ian-arduino-dc-motors.pdf}
+    \begin{frame}{Motor shield schematic}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=07]{ian-arduino-dc-motors.pdf}
+    \begin{frame}{Install the Arduino motor shield}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=08]{ian-arduino-dc-motors.pdf}
+    \begin{frame}{Arduino motor shield power supply}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=09]{ian-arduino-dc-motors.pdf}
+    \begin{frame}{Arduino motor shield output channels}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=10]{ian-arduino-dc-motors.pdf}
+    \begin{frame}{Pins always in use by the motor shield}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=11]{ian-arduino-dc-motors.pdf}
+    \begin{frame}{Motor shield pin usage}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=13]{ian-arduino-dc-motors.pdf}
+    \begin{frame}{DC motor connections}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=14]{ian-arduino-dc-motors.pdf}
+    \begin{frame}{Motor shield 1-channel DC motor demo}
+    \end{frame}
+}
+
+\begin{frame}[fragile]{Motor shield 1-channel DC motor demo}
+
+\begin{cppcode}
+/*****************************************************
+Motor Shield 1-Channel DC Motor Demo
+by Randy Sarafan
+For more information see:
+www.instructables.com/id/Arduino-Motor-Shield-Tutorial
+*****************************************************/
+void setup() {
+//Setup Channel A
+pinMode(12, OUTPUT); //Initiates Motor Channel A pin
+pinMode(9, OUTPUT); //Initiates Brake Channel A pin
+}
+\end{cppcode}
+
+\end{frame}
+
+\begin{frame}[fragile]{Motor shield 1-channel DC motor demo}
+
+\begin{cppcode}
+void loop(){
+  //forward @ full speed
+  digitalWrite(12, HIGH); //Establishes forward direction of Channel A
+  digitalWrite(9, LOW); //Disengage the Brake for Channel A
+  analogWrite(3, 255); //Spins the motor on Channel A at full speed
+  delay(3000);
+  digitalWrite(9, HIGH); //Engage the Brake for Channel A
+  delay(1000);
+  //backward @ half speed
+  digitalWrite(12, LOW); //Establishes backward direction of Channel A
+  digitalWrite(9, LOW); //Disengage the Brake for Channel A
+  analogWrite(3, 123); //Spins the motor on Channel A at half speed
+  delay(3000);
+  digitalWrite(9, HIGH); //Engage the Brake for Channel A
+  delay(1000);
+}
+\end{cppcode}
+
+\end{frame}
+
+
+{\fullbackground[scale=0.9,page=17]{ian-arduino-dc-motors.pdf}
+    \begin{frame}{DC motor running}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=18]{ian-arduino-dc-motors.pdf}
+    \begin{frame}{Motor shield 2-channels DC motor demo}
+    \end{frame}
+}
+
+\begin{frame}[fragile]{Motor shield 2-channels DC motor demo}
+
+\begin{cppcode}
+/*************************************************************
+Motor Shield 2‐Channel DC Motor Demo
+by Randy Sarafan
+  
+For more information see:
+www.instructables.com/id/Arduino-Motor‐Shield‐Tutorial
+*************************************************************/
+  
+  
+void  setup()
+{
+  //Setup Channel A
+  pinMode(12, OUTPUT);  //Initiates  Motor  Channel  A  pin
+  pinMode(9,  OUTPUT);  //Initiates  Brake  Channel  A  pin
+  
+  //Setup  Channel  B
+  pinMode(13,  OUTPUT);  //Initiates  Motor  Channel  A  pin
+  pinMode(8,  OUTPUT);    //Initiates  Brake  Channel  A  pin
+}
+\end{cppcode}
+
+\end{frame}
+
+\begin{frame}[fragile]{Motor shield 2-channels DC motor demo}
+
+\begin{cppcode}
+void loop(){
+  //Motor A forward @ full speed
+  digitalWrite(12, HIGH); //Establishes forward direction of Channel A
+  digitalWrite(9, LOW); //Disengage the Brake for Channel A
+  analogWrite(3, 255); //Spins the motor on Channel A at full speed
+
+  //Motor B backward @ half speed
+  digitalWrite(13, LOW); //Establishes backward direction of Channel B
+  digitalWrite(8, LOW); //Disengage the Brake for Channel B
+  analogWrite(11, 123); //Spins the motor on Channel B at half speed
+  delay(3000);
+
+  digitalWrite(9, HIGH); //Engage the Brake for Channel A
+  digitalWrite(9, HIGH); //Engage the Brake for Channel B
+  delay(1000);
+
+  //Motor A forward @ full speed
+  digitalWrite(12, LOW); //Establishes backward direction of Channel A
+  digitalWrite(9, LOW); //Disengage the Brake for Channel A
+  analogWrite(3, 123); //Spins the motor on Channel A at half speed
+
+  //Motor B forward @ full speed
+  digitalWrite(13, HIGH); //Establishes forward direction of Channel B
+  digitalWrite(8, LOW); //Disengage the Brake for Channel B
+  analogWrite(11, 255); //Spins the motor on Channel B at full speed
+  delay(3000);
+
+  digitalWrite(9, HIGH); //Engage the Brake for Channel A
+  digitalWrite(9, HIGH); //Engage the Brake for Channel B
+  delay(1000);
+}
+\end{cppcode}
+
+\end{frame}
+
+
+\section{Four quadrant control}
+
+{\fullbackground[scale=0.9,page=02]{ian-motor-ctrl.pdf}
+    \begin{frame}{Motor speed-torque chart}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=03]{ian-motor-ctrl.pdf}
+    \begin{frame}{One and two quadrant operation}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=04]{ian-motor-ctrl.pdf}
+    \begin{frame}{Four quadrant operation -- hoist example}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=05]{ian-motor-ctrl.pdf}
+    \begin{frame}{Four quadrant operation}
+    \end{frame}
+}
+
+\section{Feedback control}
+
+{\fullbackground[scale=0.9,page=07]{ian-motor-ctrl.pdf}
+    \begin{frame}{Open loop control systems}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=08]{ian-motor-ctrl.pdf}
+    \begin{frame}{Open loop control systems}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=09]{ian-motor-ctrl.pdf}
+    \begin{frame}{Simple feedback controller}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=10]{ian-motor-ctrl.pdf}
+    \begin{frame}{Simple feedback controller}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=11]{ian-motor-ctrl.pdf}
+    \begin{frame}{Simple feedback controller}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=12]{ian-motor-ctrl.pdf}
+    \begin{frame}{Adding a PID controller}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=13]{ian-motor-ctrl.pdf}
+    \begin{frame}{PID parallel pathways}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=14]{ian-motor-ctrl.pdf}
+    \begin{frame}{Proportional term}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=15]{ian-motor-ctrl.pdf}
+    \begin{frame}{Integral term}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=16]{ian-motor-ctrl.pdf}
+    \begin{frame}{Derivative term}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=17]{ian-motor-ctrl.pdf}
+    \begin{frame}{Changing PID controller characteristics}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=18]{ian-motor-ctrl.pdf}
+    \begin{frame}{PID differential equation}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=19]{ian-motor-ctrl.pdf}
+    \begin{frame}{Transfer function of PID controller}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=20]{ian-motor-ctrl.pdf}
+    \begin{frame}{Example: overall open-loop transfer function}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=21]{ian-motor-ctrl.pdf}
+    \begin{frame}{Example: overall closed-loop transfer function}
+    \end{frame}
+}
+
+
+{\fullbackground[scale=0.9,page=22]{ian-motor-ctrl.pdf}
+    \begin{frame}{Example: overall closed-loop transfer function}
+    \end{frame}
+}
+
+
+\begin{frame}{}
+    \begin{center}
+        \Large
+        That's all, folks!\\[2em]
+        \normalsize
+        Questions:\\
+        Portland Square B316 or \url{severin.lemaignan@plymouth.ac.uk} \\[1em]
+
+        Slides:\\
+        \href{https://github.com/severin-lemaignan/module-mobile-and-humanoid-robots}{\small
+        github.com/severin-lemaignan/module-introduction-sensors-actuators}
+
+
+    \end{center}
+\end{frame}
+
+
+
+\end{document}
