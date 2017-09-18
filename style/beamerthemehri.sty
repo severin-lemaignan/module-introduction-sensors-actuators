@@ -364,6 +364,7 @@
     scale/.estore in = \bgScale,
     color/.estore in = \bgColor,
     caption/.estore in = \bgCaption,
+    page/.estore in = \bgPage,
 }
 
 \newcommand\badge[1]{%
@@ -377,7 +378,8 @@
     \setbeamertemplate{background}{
         %\includegraphics[width=\paperwidth, height=\paperheight,keepaspectratio]{#1}
         \begin{tikzpicture}[remember picture,overlay]
-            \node at (current page.center){\includegraphics[width=\bgScale\paperwidth,height=\bgScale\paperheight,keepaspectratio]{#2}};
+            \node at (current
+            page.center){\includegraphics[width=\bgScale\paperwidth,height=\bgScale\paperheight,page=\bgPage,keepaspectratio]{#2}};
         \end{tikzpicture}
     }
 }
@@ -390,7 +392,7 @@
             rectangle/.style={fill=\bgColor}, show background rectangle]
             \useasboundingbox (current page.north east) rectangle (current page.south west);
 
-            \node at (current page.center){\includegraphics[width=\bgScale\paperwidth,height=\bgScale\paperheight,keepaspectratio]{#2}};
+            \node at (current page.center){\includegraphics[width=\bgScale\paperwidth,height=\bgScale\paperheight,page=\bgPage,keepaspectratio]{#2}};
         \end{tikzpicture}
 
     }
