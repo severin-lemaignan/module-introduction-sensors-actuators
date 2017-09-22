@@ -40,7 +40,7 @@
 \pgfplotsset{compat=newest}
 \usepackage{circuitikz}
 
-\graphicspath{{part3/figs/}}
+\graphicspath{{part2/figs/}}
 
 \title{ROCO222 \newline Introduction to Sensors and Actuators}
 \subtitle{Part 3 -- DC Motors Principles}
@@ -87,27 +87,31 @@
 
 \end{frame}
 
+{\fullbackground[scale=0.9]{ian-dc-motors-p3.pdf}
 \begin{frame}{Current in magnetic field}
-
-\begin{columns}
-    \begin{column}{0.5\linewidth}
-    A Conductor in a Fixed Magnetic Field
-
-    \textbf{Fixed Magnetic Field}
-
-    \end{column}
-    \begin{column}{0.5\linewidth}
-
-
-    A Current Carrying Conductor in a Fixed Magnetic Field
-
-    Force
-
-    \end{column}
-\end{columns}
-
+%
+%\begin{columns}
+%    \begin{column}{0.5\linewidth}
+%    A Conductor in a Fixed Magnetic Field
+%
+%    \textbf{Fixed Magnetic Field}
+%
+%    \end{column}
+%    \begin{column}{0.5\linewidth}
+%
+%
+%    A Current Carrying Conductor in a Fixed Magnetic Field
+%
+%    Force
+%
+%    \end{column}
+%\end{columns}
+%
 
 \end{frame}
+}
+
+
 
 \begin{frame}[plain]
 
@@ -116,7 +120,7 @@
     \end{center}
 
 \end{frame}
-\videoframe{part3/figs/homopolarmotor.ogv?start=1}
+\videoframe{part2/figs/homopolarmotor.ogv?start=1}
 
 \begin{frame}{Homopolar Motor}
 
@@ -168,37 +172,38 @@ fixed magnetic field
 
 \end{frame}
 
+{\fullbackground[scale=1]{ian-dc-motors-p6.pdf}
 \begin{frame}{Using Fleming's Left Hand (Motor) Rule}
-
-The Left Hand Rule to determines the movement direction of conductor
-carrying current
-
-    \begin{center}
-        \resizebox{0.6\linewidth}{!}{
-            \begin{tikzpicture}[>=latex]
-                \node at (0,0) (hand) {\includegraphics[width=4cm]{left-hand}};
-                \coordinate (origin) at (0.45,0.2);
-
-                \draw[ultra thick, ->, blue] (origin) -- ($(origin) + (0,2)$);
-                \draw[ultra thick, ->, green] (origin) -- ($(origin) + (2,0)$);
-                \draw[ultra thick, ->, red] (origin) -- ($(origin) + (1,-1.4)$);
-
-                \node[below left=2.3 of origin] {\large \bf left hand!};
-                \node[align=left,above left=0.7 of origin] {\textbf{Thumb}: \\
-                direction of \\ conductor motion};
-
-                \node[align=left,above right=0.5 of origin] {\textbf{Fore
-                Finger}:\\ direction of fixed \\magnetic field (N to S)};
-
-                \node[align=left,below right=of origin] {\textbf{Middle
-                Finger}:\\ conventional current direction};
-            \end{tikzpicture}
-        }
-
-        \includegraphics[width=0.7\linewidth]{image13}
-    \end{center}
-
+%
+%The Left Hand Rule to determines the movement direction of conductor
+%carrying current
+%
+%    \begin{center}
+%        \resizebox{0.6\linewidth}{!}{
+%            \begin{tikzpicture}[>=latex]
+%                \node at (0,0) (hand) {\includegraphics[width=4cm]{left-hand}};
+%                \coordinate (origin) at (0.45,0.2);
+%
+%                \draw[ultra thick, ->, blue] (origin) -- ($(origin) + (0,2)$);
+%                \draw[ultra thick, ->, green] (origin) -- ($(origin) + (2,0)$);
+%                \draw[ultra thick, ->, red] (origin) -- ($(origin) + (1,-1.4)$);
+%
+%                \node[below left=2.3 of origin] {\large \bf left hand!};
+%                \node[align=left,above left=0.7 of origin] {\textbf{Thumb}: \\
+%                direction of \\ conductor motion};
+%
+%                \node[align=left,above right=0.5 of origin] {\textbf{Fore
+%                Finger}:\\ direction of fixed \\magnetic field (N to S)};
+%
+%                \node[align=left,below right=of origin] {\textbf{Middle
+%                Finger}:\\ conventional current direction};
+%            \end{tikzpicture}
+%        }
+%        \includegraphics[width=0.6\linewidth]{image13}
+%    \end{center}
+%
 \end{frame}
+}
 
 \begin{frame}{Single coil in magnetic field}
 
@@ -206,31 +211,35 @@ carrying current
         \includegraphics[width=0.5\linewidth]{image15}
     \end{center}
 
+\only<1>{
 \begin{itemize}
-\item Current flow results in forces on sections that cut magnetic field B
-\item Left section gets pushed up with force F
-\item Right section gets pushed down with force F
-\item where
+    \item Current flow results in forces on sections that cut magnetic field
+        $\vec{B}$
+    \item Left section gets pushed up with force $\vec{F}$
+    \item Right section gets pushed down with force $\vec{F}$ where
 \[
-    \vec{F} = \vec{IL} \times \vec{B}
+    \vec{F} = \vec{I} \cdot L \times \vec{B}
 \]
 
 \end{itemize}
+}
 
+    \only<2>{
 
-In practice the shaft torque of a DC motor be less than the
+In practice the shaft torque of a DC motor is smaller than the
 electromagnetic torque because of mechanical losses
 
 \begin{itemize}
-\item Viscous friction will occur in the bearings
-\item Friction arises from the brushes rubbing on the commutator
-\item Air resistance will result in viscous friction due to rotation of the
-  armature which may even include a cooling fan
+    \item Viscous friction will occur in the bearings
+    \item Friction arises from the brushes rubbing on the commutator
+    \item Air resistance will result in viscous friction due to rotation of the
+    armature which may even include a cooling fan
 \end{itemize}
+}
 
 \end{frame}
 
-\begin{frame}{End view of coil in magnetic field}
+\begin{frame}{Cross-section of coil in magnetic field}
 
     \begin{center}
         \includegraphics<1>[width=0.8\linewidth]{image16-1}
@@ -239,22 +248,18 @@ electromagnetic torque because of mechanical losses
     \end{center}
 
 \only<3>{
-If current $I$ flows through coil of depth $L$ and it is in magnetic field $B$,
-coil pivots so it can rotate around its centre. 
+If current $I$ flows through a coil of depth $L$ with magnetic field $B$,
+the coil pivots and generates a torque $\tau$ given by:
 
-Then torque $\tau$ exerted of coil is given by:
+\begin{equation*}
+\begin{split}
+\tau = 2 (\frac{d}{2}) \cdot F \cdot cos(\theta) &= d \cdot B \cdot I \cdot L \cdot cos(\theta) \\
+                                                 &= d \cdot B \cdot I \cdot L
+                                                 \text{\hspace{2em} when } \theta = 0^\circ \\
+                                                 &= 0 \text{\hspace{2em} when } \theta = 90^\circ 
+\end{split}
+\end{equation*}
 
-\[
-    \tau = 2 (\frac{d}{2}) \cdot F \cdot cos(\theta) = d \cdot B \cdot I \cdot L \cdot cos(\theta)
-\]
-
-{\small
-Distance between coil sides = $d$; angle to horizontal = $\theta$
-}
-
-When θ = 0°
-
-When θ = 90°
 
 }
 
@@ -325,9 +330,8 @@ When θ = 90°
 
             So use commutator to switch it!
 
-            \vspace{2em}
             \begin{center}
-                \includegraphics[width=0.8\linewidth]{image22}
+                \includegraphics[width=1.2\columnwidth]{image22}
             \end{center}
         \end{column}
         \begin{column}{0.3\linewidth}
@@ -381,10 +385,9 @@ When θ = 90°
                 \resizebox{\linewidth}{!}{
                     \begin{tikzpicture}[>=latex]
 
-                        \coordinate (anchor) at (-1.7,0);
+                        \coordinate (anchor) at (-1.9,-0.1);
                             \node at (0,0) {\includegraphics[width=\linewidth]{precious-metal-commutators}};
-                            \node at (-0.2,-1) (caption) {\footnotesize silver
-                            commutator} edge[bend left,thick,->] (anchor);
+                            \node at (-0.2,-2) (caption) {\footnotesize silver commutator} edge[bend left,thick,->] (anchor);
                     \end{tikzpicture}
                 }
             \end{center}
@@ -420,7 +423,7 @@ When θ = 90°
 
                         \coordinate (anchor) at (-1.5,0);
                             \node at (0,0) {\includegraphics[width=\linewidth]{carbon-brush-commutators}};
-                            \node at (0,-1) (caption) {\footnotesize copper
+                            \node at (0,-1.5) (caption) {\footnotesize copper
                             commutator} edge[bend left,thick,->] (anchor);
                     \end{tikzpicture}
                 }
@@ -437,8 +440,8 @@ When θ = 90°
 \begin{frame}{DC Motor Torque Ripple}
 
     \begin{center}
-        \includegraphics[height=0.35\paperheight]{image24}\hspace{1em}
-        \video[1]{0.35\linewidth}{part3/figs/torque-ripple.mp4?autostart&loop}
+        \includegraphics[height=0.4\paperheight]{image24}\hspace{1em}
+        \video[1]{0.35\linewidth}{part2/figs/torque-ripple.mp4?autostart&loop}
     \end{center}
 
 \begin{itemize}
@@ -456,13 +459,13 @@ When θ = 90°
     \begin{columns}
         \begin{column}{0.5\linewidth}
             \begin{center}
-                \includegraphics[width=0.8\linewidth]{image26}
+                \includegraphics[width=\linewidth]{image26}
 
                 \vspace{2em}
 
                 \footnotesize Overall torque summed from both coils
 
-                \includegraphics[width=0.8\linewidth]{image26-2}
+                \includegraphics[width=\linewidth]{image26-2}
 
             \end{center}
         \end{column}
@@ -481,19 +484,15 @@ When θ = 90°
 
 \begin{frame}{Remember electromagnetic induction}
 
-  Moving a magnet in a coil will induce current
+  Moving a magnet in a coil induces current
 
 
     \begin{center}
         \includegraphics[width=0.6\linewidth]{image29}
+
+    \scalebox{1.5}{Faraday's law of induction: $\displaystyle\mathcal{E} = -N \cdot \frac{d\Phi_B}{dt}$}
+
     \end{center}
-
-Faraday's law of induction:
-    
-\[
-\epsilon = - N \frac{d\Phi_B}{dt}
-\]
-
 \end{frame}
 
 \begin{frame}{Electrical generator}
@@ -879,122 +878,133 @@ technology lead to \textbf{stronger motors}.
 
 \section{Some simple Newtonian mechanics}
 
-\begin{frame}{Compression \& extension springs}
+{\fullbackground[scale=0.9,page=2]{ian-simple-newtonian-mechanics.pdf}
+    \begin{frame}{Compression \& extension springs}
 
-Resists with opposing force proportional to extension of movement
-
-
-    \begin{columns}
-        \begin{column}{0.5\linewidth}
-            \begin{center}
-                \includegraphics[height=0.3\paperheight]{image52}
-            \end{center}
-        \end{column}
-        \begin{column}{0.5\linewidth}
-            TBD
-        \end{column}
-    \end{columns}
-
-where
-
-f is force in N
-
-k is the spring constant in N/m
+%Resists with opposing force proportional to extension of movement
+%
+%
+%    \begin{columns}
+%        \begin{column}{0.5\linewidth}
+%            \begin{center}
+%                \includegraphics[height=0.3\paperheight]{image52}
+%            \end{center}
+%        \end{column}
+%        \begin{column}{0.5\linewidth}
+%            TBD
+%        \end{column}
+%    \end{columns}
+%
+%where
+%
+%f is force in N
+%
+%k is the spring constant in N/m
 
 \end{frame}
+}
 
+
+{\fullbackground[scale=0.9,page=3]{ian-simple-newtonian-mechanics.pdf}
 \begin{frame}{Torsional springs}
-
-    \begin{columns}
-        \begin{column}{0.5\linewidth}
-            \begin{center}
-                \includegraphics[height=0.3\paperheight]{image54}
-            \end{center}
-        \end{column}
-        \begin{column}{0.5\linewidth}
-            TBD
-        \end{column}
-    \end{columns}
-where
-
-$T$ is torque in $N\cdot m$
-
-$k$ is the spring constant in $\frac{N\cdot m}{rad}$
-
+%
+%    \begin{columns}
+%        \begin{column}{0.5\linewidth}
+%            \begin{center}
+%                \includegraphics[height=0.3\paperheight]{image54}
+%            \end{center}
+%        \end{column}
+%        \begin{column}{0.5\linewidth}
+%            TBD
+%        \end{column}
+%    \end{columns}
+%where
+%
+%$T$ is torque in $N\cdot m$
+%
+%$k$ is the spring constant in $\frac{N\cdot m}{rad}$
+%
 \end{frame}
+}
 
+{\fullbackground[scale=0.9,page=4]{ian-simple-newtonian-mechanics.pdf}
 \begin{frame}{Dampers and dashpots}
 
-Resists with opposing force proportional to velocity of movement
-
-
-    \begin{columns}
-        \begin{column}{0.5\linewidth}
-            \begin{center}
-                \includegraphics[height=0.3\paperheight]{image57}
-            \end{center}
-        \end{column}
-        \begin{column}{0.5\linewidth}
-            TBD
-        \end{column}
-    \end{columns}
-
-where
-
-$f$ is force in $N$
-
-    $C$ is viscosity in $N\cdot \frac{s}{m}$
-
-Dampers/ shock absorber
+%Resists with opposing force proportional to velocity of movement
+%
+%
+%    \begin{columns}
+%        \begin{column}{0.5\linewidth}
+%            \begin{center}
+%                \includegraphics[height=0.3\paperheight]{image57}
+%            \end{center}
+%        \end{column}
+%        \begin{column}{0.5\linewidth}
+%            TBD
+%        \end{column}
+%    \end{columns}
+%
+%where
+%
+%$f$ is force in $N$
+%
+%    $C$ is viscosity in $N\cdot \frac{s}{m}$
+%
+%Dampers/ shock absorber
 
 \end{frame}
+}
 
+{\fullbackground[scale=0.9,page=5]{ian-simple-newtonian-mechanics.pdf}
 \begin{frame}{Inertial Mass}
-
-Resists with opposing force proportional to acceleration of movement
-
-    \begin{columns}
-        \begin{column}{0.5\linewidth}
-            \begin{center}
-                \includegraphics[height=0.3\paperheight]{image60}
-            \end{center}
-        \end{column}
-        \begin{column}{0.5\linewidth}
-            TBD
-        \end{column}
-    \end{columns}
-
-where
-
-$f$ is force in $N$
-
-$m$ is mass in $kg$
-
-$a$ is linear acceleration in $\frac{m}{s^2}$
-
+%
+%Resists with opposing force proportional to acceleration of movement
+%
+%    \begin{columns}
+%        \begin{column}{0.5\linewidth}
+%            \begin{center}
+%                \includegraphics[height=0.3\paperheight]{image60}
+%            \end{center}
+%        \end{column}
+%        \begin{column}{0.5\linewidth}
+%            TBD
+%        \end{column}
+%    \end{columns}
+%
+%where
+%
+%$f$ is force in $N$
+%
+%$m$ is mass in $kg$
+%
+%$a$ is linear acceleration in $\frac{m}{s^2}$
+%
 \end{frame}
+}
 
+{\fullbackground[scale=0.9,page=6]{ian-simple-newtonian-mechanics.pdf}
 \begin{frame}{Moment of Inertia}
-
-Resists with opposing torque proportional to angular acceleration
-
-    \begin{columns}
-        \begin{column}{0.5\linewidth}
-            \begin{center}
-                \includegraphics[height=0.3\paperheight]{image62}
-            \end{center}
-        \end{column}
-        \begin{column}{0.5\linewidth}
-            TBD
-        \end{column}
-    \end{columns}
-where
-
-$T$ is torque in $N\cdot m$
-
-$J$ is moment of inertial in $kg \cdot m^2$
-
+%
+%Resists with opposing torque proportional to angular acceleration
+%
+%    \begin{columns}
+%        \begin{column}{0.5\linewidth}
+%            \begin{center}
+%                \includegraphics[height=0.3\paperheight]{image62}
+%            \end{center}
+%        \end{column}
+%        \begin{column}{0.5\linewidth}
+%            TBD
+%        \end{column}
+%    \end{columns}
+%where
+%
+%$T$ is torque in $N\cdot m$
+%
+%$J$ is moment of inertial in $kg \cdot m^2$
+%
 \end{frame}
+}
 
 \section{Differential equation of DC motor rotation}
 
@@ -1011,50 +1021,66 @@ $J$ is moment of inertial in $kg \cdot m^2$
 \item $L$ = Armature inductance (in Henrys $H$) % CHECK
 \item $J$ = Moment of inertia for the motor rotor ($kg\cdot m^2$)
 \item $b$ = Motor viscous friction constant (in $N\cdot m\cdot s$)
-\item $Kt$ = Motor torque constant (in $N\cdot \frac{m}{A}$)
-\item $Ke$ = Electromotive force constant (in V/rad/sec) % CHECK
+\item $K_t$ = Motor torque constant (in $\frac{N\cdot m}{A}$)
+\item $K_e$ = Electromotive force constant (in $\frac{V\cdot rad^{-1}}{sec}$) % CHECK
 \end{itemize}
 }
-    \only<2> {
-    Motor torque $T_m$ is given by $T_m = K_t i(t)$
 
-Mechanical resisting torque $T_r$ is given by $T_r = b \dot\theta + J \ddot\theta$
+    \only<2> {
+    Motor torque $\tau_m$ is given by $\tau_m = K_t \cdot i(t)$
+
+Mechanical resisting torque $\tau_r$ is given by $\tau_r = b \cdot \dot\theta + J \cdot \ddot\theta$
+
+Under no load, $\tau_m = \tau_r$
 
 Therefore:
 \[
-    K_t i(t) = b \dot\theta + J \ddot\theta
+    K_t \cdot i(t) = b \cdot \dot\theta + J \cdot \ddot\theta
 \]
 
 }
     \only<3> {
 
-Using Kirchhoff's voltage law (voltage across resistor, inductance and
-  back EMF balance applied voltage
-
-Summing voltages gives:
+\textbf{Kirchhoff's voltage law}: voltage across resistor, inductance and
+back EMF balance applied voltage
 
     \[
-        v(t) = i(t) R + L \frac{di}{dt} + K_e \dot\theta
-        \]
+        v(t) = i(t) \cdot R + L \cdot \frac{di}{dt} + K_e \cdot \dot\theta
+    \]
 }
 \end{frame}
 
 \begin{frame}{Definition of Laplace transform}
 
+    \only<1>{
 The Laplace transform is a linear operator that maps a function $f(t)$ to
 $F(s)$.
+
 
 Specifically:
 
 \[
-F(s) = \mathcal{L} {f(t)} = \int^{\inf}_{0^-} e^{-st}f(t)dt
+    F(s) = \mathcal{L}\{f\}(s) =  \mathcal{L}\{f(t)\} = \int^{\inf}_{0} f(t)e^{-st}dt
 \]
 
 where $s = \sigma + i\omega$
 
-Go from time argument with real input to a complex angular frequency
-input which is complex.
+    Go from a function of a \emph{real} variable (here time $t$) to a complex
+    function of a complex variable (frequency, $s$).
 
+}
+
+    \only<2> {
+
+        Why bother?
+
+        Often \textbf{simplifies the process of analyzing the behavior of the
+        system}.
+
+        For example, Laplace transformation from the time domain to the
+        frequency domain \textbf{transforms differential equations into algebraic
+        equations}.
+    }
 \end{frame}
 
 \begin{frame}{Operations useful for solving differential equations}
@@ -1062,163 +1088,230 @@ input which is complex.
 \Large
 
 \[
-    \mathcal{L} {f'(t)} = sF(s) - f(0)
+    \mathcal{L} \{f'(t)\} = sF(s) - f(0)
 \]
 
 
 \[
-    \mathcal{L} {f''(t)} = s^2F(s) - sf(0) - f'(0)
+    \mathcal{L} \{f''(t)\} = s^2F(s) - sf(0) - f'(0)
 \]
 
 
 \[
-    \mathcal{L} {\int^{t}_{0}f(t)dt} = \frac{F(s)}{s}
+    \mathcal{L} \{\int^{t}_{0}f(t)dt\} = \frac{F(s)}{s}
 \]
 
+\vspace{2em}
+\small
+See
+    \href{https://en.wikipedia.org/wiki/Laplace_transform}{Wikipedia}
+    for more properties.
 
 \end{frame}
 
 \begin{frame}{Solution using Laplace transformations}
-%
-%Taking Laplace transforms of the differential equations that describe
-%the motor mechanical dynamics:
-%
-%\[
-%    K_t i(t) = b \dot\theta + J \ddot\theta
-%\]
-%
-%becomes:
-%
-%\[
-%    K_t I(s) = bs \theta(s) + Js^2 \theta(s)
-%
-%    I(s) = \frac{s(b+Js)\theta(s)}{K_t}
-%\]
-%
-%
-\end{frame}
 
-\begin{frame}{Solution using Laplace transformations}
+\only<1>{
+
+Taking Laplace transforms of the differential equations that describe
+the motor mechanical dynamics:
+
+\[
+   K_t \cdot i(t) = b \cdot \dot\theta + J \cdot \ddot\theta
+\]
+
+becomes:
+
+\[
+    K_t \cdot I(s) = b \cdot s \cdot \theta(s) + J \cdot s^2 \cdot \theta(s)
+\]
+
+\[
+    I(s) = \frac{s \cdot (b + J \cdot s) \cdot \theta(s)}{K_t}
+\]
+
+}
+
+    \only<2> {
 
 Taking Laplace transforms of the differential equations that describe
 the motor voltages:
 
-Becomes
+\[
+        v(t) = i(t) \cdot R + L \cdot \frac{di}{dt} + K_e \cdot \dot\theta
+\]
 
-\end{frame}
+becomes:
 
-\begin{frame}{Solution using Laplace transformations}
+\[
+    V(s) = I(s) \cdot (R + L\cdot s) + K_e \cdot s \cdot \theta(s)
+\]
+}
 
-Substituting
+    \only<3>{
 
-Into
+Substituting:
 
-Eliminating current I(s) and setting Kt = Ke= K gives
+\[
+    I(s) = \frac{s \cdot (b + J \cdot s) \cdot \theta(s)}{K_t}
+\]
+
+
+into:
+
+\[
+    V(s) = I(s) \cdot (R + L\cdot s) + K_e \cdot s \cdot \theta(s)
+\]
+
+Eliminating current $I(s)$ and setting $K_t = K_e = K$ gives:
+
+\[
+    \theta(s) = \frac{K}{s \cdot ( (J \cdot s + b) \cdot (L \cdot s+ R) + K^2)} \cdot V(s)
+\]
+
+}
 
 \end{frame}
 
 \begin{frame}{Transfer function}
 
-Result of a transfer response output position for a DC electric motor
-given its input voltage
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+
+            Result of a transfer response output position for a DC electric motor
+            given its input voltage
+
+        \end{column}
+        \begin{column}{0.5\linewidth}
+
+
+            \begin{center}
+                \includegraphics[width=0.9\columnwidth]{image63}
+            \end{center}
+
+        \end{column}
+    \end{columns}
+
+\[
+    \theta(s) = \frac{K}{s \cdot ( (J \cdot s + b) \cdot (L \cdot s+ R) + K^2)} \cdot V(s)
+\]
+
+\pause
 
 Can differentiate this expression to get the transfer function for speed
 
+\[
+    \dot\theta(s) = \frac{K}{(J \cdot s + b) \cdot (L \cdot s + R) + K^2} \cdot V(s)
+\]
+
+
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Brushless DC motors}
 
+{\fullbackground[scale=0.9,page=2]{ian-brushless-dc-motors.pdf}
 \begin{frame}{Problems of mechanical commutation}
 
-Can get potential difference across commutator segments
-
-\begin{itemize}
-
-\item Can get potential difference across commutator segments
-\item Commutation shorts out the commutator segments
-\item Arcing and sparkling at the brushes
-\item Brushless electronic switching solves this issue
-\end{itemize}
+%Can get potential difference across commutator segments
+%
+%\begin{itemize}
+%
+%\item Can get potential difference across commutator segments
+%\item Commutation shorts out the commutator segments
+%\item Arcing and sparkling at the brushes
+%\item Brushless electronic switching solves this issue
+%\end{itemize}
 
 \end{frame}
+}
 
+{\fullbackground[scale=0.9,page=3]{ian-brushless-dc-motors.pdf}
 \begin{frame}{Brushless DC Motor}
 
-This motor type looks like DC brushed motor turned inside out!
-
-\begin{itemize}
-
-\item This motor type looks like DC brushed motor turned inside out!
-\item In an EC (brushless) motor, commutation is performed electronically to
-  eliminate brushes
-\item The stator generally consists of several coils
-\item Current flow in the stator coils creates magnetic field
-\item This forces the permanent magnet rotor turn
-\item The rotor can be forced to rotate continuously by switching on current
-  in the stator coils in the appreciate sequence thereby generating a
-  sequenced magnetic field
-\item All brushless motors require a controller to work that must perform
-  the commutation operation
-\end{itemize}
+%This motor type looks like DC brushed motor turned inside out!
+%
+%\begin{itemize}
+%
+%\item This motor type looks like DC brushed motor turned inside out!
+%\item In an EC (brushless) motor, commutation is performed electronically to
+%  eliminate brushes
+%\item The stator generally consists of several coils
+%\item Current flow in the stator coils creates magnetic field
+%\item This forces the permanent magnet rotor turn
+%\item The rotor can be forced to rotate continuously by switching on current
+%  in the stator coils in the appreciate sequence thereby generating a
+%  sequenced magnetic field
+%\item All brushless motors require a controller to work that must perform
+%  the commutation operation
+%\end{itemize}
 
 \end{frame}
+}
 
-\imageframe[caption=Typical brushless motor]{image81}
+{\fullbackground[scale=0.9]{image81}
+\begin{frame}{Typical brushless motor}
+
+\end{frame}
+}
 
 
+{\fullbackground[scale=0.9,page=5]{ian-brushless-dc-motors.pdf}
 \begin{frame}{How do brushless motors work?}
 
-\begin{itemize}
-\item Electronic commutation is used to switch current in the stator could
-  so that the rotor is forced to rotate
-\item There is often a control magnet is in line with the poles of the large
-  magnet in the motor to identify rotor angle so that the controller can
-  switch current into the appropriate coils
-\item As it turns Hall sensors are stimulated by the magnetic flux.
-\item The Hall sensors are used to tell the controller what the orientation
-  is of the magnet with respect to the three winding phases.
-\item Current in the stator coils is turned on and off in sequence creating
-  motion from pole to pole.
-\end{itemize}
+%\begin{itemize}
+%\item Electronic commutation is used to switch current in the stator could
+%  so that the rotor is forced to rotate
+%\item There is often a control magnet is in line with the poles of the large
+%  magnet in the motor to identify rotor angle so that the controller can
+%  switch current into the appropriate coils
+%\item As it turns Hall sensors are stimulated by the magnetic flux.
+%\item The Hall sensors are used to tell the controller what the orientation
+%  is of the magnet with respect to the three winding phases.
+%\item Current in the stator coils is turned on and off in sequence creating
+%  motion from pole to pole.
+%\end{itemize}
 
 \end{frame}
+}
 
+{\fullbackground[scale=0.9,page=6]{ian-brushless-dc-motors.pdf}
 \begin{frame}{Block commutation}
 
-\begin{itemize}
-\item
-\end{itemize}
-
-\_
-
-HS3
-
-HS1
-
-HS2
-
-controller
-
-power stage
-
-(MOSFET)
-
-phase 1
-
-phase 2
-
-phase 3
-
-EC motor
-
-(magnet, winding, sensor)
-
-rotor position feedback
-
-commutation
-
-logics
-
+%\begin{itemize}
+%\item
+%\end{itemize}
+%
+%\_
+%
+%HS3
+%
+%HS1
+%
+%HS2
+%
+%controller
+%
+%power stage
+%
+%(MOSFET)
+%
+%phase 1
+%
+%phase 2
+%
+%phase 3
+%
+%EC motor
+%
+%(magnet, winding, sensor)
+%
+%rotor position feedback
+%
+%commutation
+%
+%logics
+%
     \note{
 
 \textbf{On the right} we have a schematic \textbf{cross section of a
@@ -1263,150 +1356,162 @@ initial configuration and the rotor has accomplished one turn.
 
 \end{frame}
 
+}
+
+{\fullbackground[scale=0.9,page=7]{ian-brushless-dc-motors.pdf}
 \begin{frame}{Brushless motor for RC aircraft}
 
 \end{frame}
+}
 
+{\fullbackground[scale=0.9,page=8]{ian-brushless-dc-motors.pdf}
 \begin{frame}{Maxon EC brushless motor}
 
-Permanent magnet
-
-Special Winding
-
-Rotating part -- permanent magnet
-
-Hall sensors
-
-Control Magnet
-
-Case / Magnetic
-
-return
+%Permanent magnet
+%
+%Special Winding
+%
+%Rotating part -- permanent magnet
+%
+%Hall sensors
+%
+%Control Magnet
+%
+%Case / Magnetic
+%
+%return
 
 \end{frame}
 
+}
+
+{\fullbackground[scale=0.9,page=9]{ian-brushless-dc-motors.pdf}
 \begin{frame}{Maxon EC flat brushless motor}
 
-Multi pole motor
-
-Flat design gives more torque as the flux is acting further from the
-centre of rotation
+%Multi pole motor
+%
+%Flat design gives more torque as the flux is acting further from the
+%centre of rotation
 
 \end{frame}
 
+}
+
+{\fullbackground[scale=0.9,page=10]{ian-brushless-dc-motors.pdf}
 \begin{frame}{Advantages and disadvantages of EC}
 
-\textbf{Brushed DC motors}
-
-\begin{itemize}
-
-\item Mechanical commutation
-\item Need periodic brush maintenance
-\item Power losses in brushes
-\item Sparking
-\item Can have noisy operation
-\item Linear torque characteristic at lower
-\item Change direction by changing voltage polarity
-\item Controller not always needed
-\end{itemize}
-
-\textbf{EC motors}
-
-\begin{itemize}
-
-\item Electronic commutation
-\item Low or no maintenance
-\item Less power loss
-\item No sparking
-\item Quieter operation
-\item More linear torque characteristic
-\item Change direction by changing switching sequence
-\item Always needs drive controller circuitry
-\item Requires sensors
-\item Higher reliability \& efficiency
-\item Stator on outside -- better for heat dissipation
-\item Longer life
-\item More expensive
-\end{itemize}
-
-\end{frame}
-
-\section{Some other motors}
-
-\begin{frame}{Wound field motors}
-
-\begin{itemize}
-
-\item What happens if we apply AC to a permanent magnet DC motor?
-\end{itemize}
+%\textbf{Brushed DC motors}
+%
+%\begin{itemize}
+%
+%\item Mechanical commutation
+%\item Need periodic brush maintenance
+%\item Power losses in brushes
+%\item Sparking
+%\item Can have noisy operation
+%\item Linear torque characteristic at lower
+%\item Change direction by changing voltage polarity
+%\item Controller not always needed
+%\end{itemize}
+%
+%\textbf{EC motors}
+%
+%\begin{itemize}
+%
+%\item Electronic commutation
+%\item Low or no maintenance
+%\item Less power loss
+%\item No sparking
+%\item Quieter operation
+%\item More linear torque characteristic
+%\item Change direction by changing switching sequence
+%\item Always needs drive controller circuitry
+%\item Requires sensors
+%\item Higher reliability \& efficiency
+%\item Stator on outside -- better for heat dissipation
+%\item Longer life
+%\item More expensive
+%\end{itemize}
 
 \end{frame}
+}
 
-\begin{frame}{Motor with stator winding}
-
-\end{frame}
-
-\begin{frame}{Shunt motor}
-
-\begin{itemize}
-\item Like DC motor but with electromagnet to generate static field
-\item Armature and field windings are connected in parallel
-\item Separate current through stator and armature
-\item Low Starting Torque
-\item Good Speed Regulation
-\item Used for fixed speed applications, windscreen wipers, fans
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}{Shunt motor}
-
-Consider motor behavior under load:
-
-\begin{itemize}
-
-\item On application of load speed will reduce
-\item But this reduced armature EMF
-\item Therefore armature current rises
-\item Therefore torque increases
-\item So speed increases too
-\item Therefore system can do some self regulation of speed
-\item Much like permanent magnet DC motor!
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}{Series motor}
-
-\begin{itemize}
-
-\item Armature and field windings are connected in series
-\item Same current goes through both
-\item High Starting Torque
-\item As the speed builds up so does the back EMF, reducing the current,
-  which causes a reduction in torque
-\item Poor Speed Regulation
-\item Used for starting heavy, industrial, high torque loads such as cranes,
-  hoists, elevators, trolleys and conveyors
-\item Cannot operate safely in an unloaded condition
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}{Universal Motors}
-
-\begin{itemize}
-
-\item Series motor
-\item Uses field coils and not permanent magnets
-\item AC and DC operation
-\item As current direction changes it changes field direction on stator
-  field and also armature
-\item So always rotates in same direction independent of applied current
-  direction
-\end{itemize}
-
-\end{frame}
+%\section{Some other motors}
+%
+%\begin{frame}{Wound field motors}
+%
+%\begin{itemize}
+%
+%\item What happens if we apply AC to a permanent magnet DC motor?
+%\end{itemize}
+%
+%\end{frame}
+%
+%\begin{frame}{Motor with stator winding}
+%
+%\end{frame}
+%
+%\begin{frame}{Shunt motor}
+%
+%\begin{itemize}
+%\item Like DC motor but with electromagnet to generate static field
+%\item Armature and field windings are connected in parallel
+%\item Separate current through stator and armature
+%\item Low Starting Torque
+%\item Good Speed Regulation
+%\item Used for fixed speed applications, windscreen wipers, fans
+%\end{itemize}
+%
+%\end{frame}
+%
+%\begin{frame}{Shunt motor}
+%
+%Consider motor behavior under load:
+%
+%\begin{itemize}
+%
+%\item On application of load speed will reduce
+%\item But this reduced armature EMF
+%\item Therefore armature current rises
+%\item Therefore torque increases
+%\item So speed increases too
+%\item Therefore system can do some self regulation of speed
+%\item Much like permanent magnet DC motor!
+%\end{itemize}
+%
+%\end{frame}
+%
+%\begin{frame}{Series motor}
+%
+%\begin{itemize}
+%
+%\item Armature and field windings are connected in series
+%\item Same current goes through both
+%\item High Starting Torque
+%\item As the speed builds up so does the back EMF, reducing the current,
+%  which causes a reduction in torque
+%\item Poor Speed Regulation
+%\item Used for starting heavy, industrial, high torque loads such as cranes,
+%  hoists, elevators, trolleys and conveyors
+%\item Cannot operate safely in an unloaded condition
+%\end{itemize}
+%
+%\end{frame}
+%
+%\begin{frame}{Universal Motors}
+%
+%\begin{itemize}
+%
+%\item Series motor
+%\item Uses field coils and not permanent magnets
+%\item AC and DC operation
+%\item As current direction changes it changes field direction on stator
+%  field and also armature
+%\item So always rotates in same direction independent of applied current
+%  direction
+%\end{itemize}
+%
+%\end{frame}
 
 \begin{frame}{Images and drawings from:}
 
