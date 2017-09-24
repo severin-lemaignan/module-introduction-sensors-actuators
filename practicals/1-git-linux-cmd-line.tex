@@ -9,9 +9,9 @@
 \date{\today}
 
 \summary{
-This first practical is headfirst in software engineering: you will discover and
-put to use several different tools (the Linux command-line, SSH, GIT,...) that
-form the core of the software toolkit of roboticists.
+Headfirst in software engineering for robotics: you will discover and
+put to use several tools (the Linux command-line, SSH, GIT,...) that
+make the core of the software toolkit of roboticists.
 }
 
 \objectives{
@@ -35,7 +35,7 @@ At the end of the practical, you should know how to:
         \item Getting acquainted to the Linux command-line;
         \item Create a mental model of how
     code is managed;
-        \item Hack into a robot
+        \item Hack into a robot!
     \end{itemize}
 }
 
@@ -58,12 +58,12 @@ you attend, and add it to your \textbf{lab journal} (cf below). This should desc
 \end{itemize}
 
 \begin{center}
-    \bf The lab journal is assessed and worth 60\% of your final mark for this
-    module!
-\end{center}
+    \textbf{The coursework is assessed and worth 60\% of your final mark for this
+    module.}
 
-You work in pairs for the practical sessions but
-submit a report \textbf{INDIVIDUALLY}
+    Also, you work in pairs for the practical sessions but
+    submit a report \textbf{INDIVIDUALLY}.
+\end{center}
 }
 
 
@@ -87,7 +87,7 @@ everything you have attempted, found out, learnt that week.
     useful.
 
     Check as well the \textbf{Objectives} listed at the top of the instruction
-    sheets: make sure your lab journal discuss all of these items.
+    sheets every weeks: make sure your lab journal discuss all the targets.
 }
 
 \step{Write your first Markdown document}
@@ -114,7 +114,7 @@ help (\texttt{man} stands for \emph{manual}).
 \begin{shcode}
 $ ls
 $ cd /tmp
-$ cd $HOME
+$ cd $HOME # what are those things starting with '$'?
 $ mkdir
 $ echo "Hello" > hello.md
 $ cat hello.md
@@ -126,36 +126,42 @@ $ cat /proc/cpuinfo # is 'cpuinfo' a file??
 \end{shcode}
 
 
-Create one \texttt{roco222} subdirectory in your \emph{home} directory, then one
-subdirectory for each of you, and then a sub-subdirectory named
+Create a \texttt{roco222} subdirectory in your \emph{home} directory, then one
+subdirectory for each of you, and finally a sub-subdirectory named
 \texttt{lab-journal}. Make a copy of your lab journal in each of
 these directories.
 
 \note{
     This step could easily be done with the file manager. But soon enough, you
     will be working remotely on robots or dev boards with no graphic interface.
-    Better to get used to the console now.
+    Better to get used to the console!
 }
 
 \step{Create a GitHub account}
 
 \git is a widely-used tool to manage code and other text-based documents. You
-are going to use it to manage your lab journal.
+will use it to manage your lab journal.
 
 GitHub is a (proprietary) online platform to share \git repositories. While not
-necessary to use \git, we will make use of GitHub today: if you do not already
+required to use \git, we will make use of GitHub today. If you do not already
 have an account, create one from the website: \url{https://github.com}.
 
 \step{Your first git repository}
 
-Initialise the \git \textbf{repositories} by navigating to each of the
-directories you created, and typing \sh{git init} in there. The name of the
+Initialise the each of your \git \textbf{repositories} by navigating to each of
+the directories you created. Type \sh{git init} in there. The name of the
 directory is the name of your repository.
 
-That's it: a \git \textbf{repository} is simply a regular directory, with one
+That's it: a \git repository is a regular directory, with one
 special item: an hidden \texttt{.git/} directory that stores all the
 \textbf{objects} \git manipulates (mainly binary blobs representing files or
 parts of files).
+
+\more{
+Type \sh{ls -al} to get a detailled list of all files in a directory, including hidden files.
+Try to figure out what the different informations on each line mean, and add
+it to your lab journal.
+}
 
 As this is the first time you are using \git, you need to tell it what is your
 name and what is your email address, so that all your changes are
@@ -169,7 +175,7 @@ $ git config user.email "<email>"
 \step{Your first commit}
 
 
-We are goin g to \textbf{commit} the current state of your lab journal: since
+We are going to \textbf{commit} the current state of your lab journal: since
 the file \texttt{journal.md} is
 not yet known to \git, first \textbf{add it}: \sh{git add journal.md}, and
 then create a new \textbf{commit} with \sh{git commit}.
@@ -332,12 +338,12 @@ nano editor
 running python program console
 \end{shcode}
 
-\part{Next steps}
-
 \section{Complete the lab journal}
 
 Complete your lab journal with your experience connecting to the robot, commit
-and push it to your \git repo.
+and push it to your \git repo. Include as well the Python script, either as a
+separate Python file, or directly in your Markdown document (research first how to
+include code snippets in a Markdown document).
 
 \important{
     Always push all your changes before leaving the lab: these computers are
@@ -346,6 +352,10 @@ and push it to your \git repo.
     
     (it should, though...)
 }
+
+
+\part{Next steps}
+
 
 \section{Getting familiar with git}
 

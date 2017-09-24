@@ -117,7 +117,7 @@
     \vskip 3em%
     {\LARGE \textbf{\@title} \par}%
     \vskip 2.5em%
-    {\large \@date \par}%       % Set date in \large size.
+    %{\large \@date \par}%       % Set date in \large size.
   \end{center}\par
 \vskip 3em%
 \noindent\textbf{Description}\par%
