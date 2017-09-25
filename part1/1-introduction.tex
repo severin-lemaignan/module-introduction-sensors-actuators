@@ -128,8 +128,8 @@
           \begin{tabular}{@{}llll@{}}
                 \toprule
                 Day?                & Time? & Where?   & Who? \\ \midrule
-                Monday -- Lab T1/\textbf{01} & ?     & SMB 307  & ? \& myself            \\
-                Friday -- Lab T1/\textbf{02} & ?     & SMB 307  & ? \& myself          \\ \bottomrule
+                Monday -- Lab 1/\textbf{02} & 09:00--11:00     & SMB 307  & Jake \& myself            \\
+                Thursday -- Lab 1/\textbf{01} & 11:00--13:00     & SMB 307  & Jake \& myself          \\ \bottomrule
             \end{tabular}
 
 
@@ -146,11 +146,9 @@
     \begin{itemize}
         \item There will be practical assessments in the form of laboratory
             practical work (60\%)
-        \item First practical needs to be submitted by 12:00, 17th October 2016
-            TODO: update date
+        \item First practical needs to be submitted by 16:00, 13th October 2017
         \item Feedback within 20 working days
-        \item Complete lab journal submitted Thursday 4pm, 12th January 2017
-            TODO: update date
+        \item Complete lab journal submitted Thursday 16:00, 11th January 2018
         \item There will be a final written exam (40\%) -- \textbf{note that the
             exam questions may be on material discussed during the labs}
     \end{itemize}
@@ -160,7 +158,14 @@
 
 \section{Robotics: what are your expectations?}
 
-\imageframe[color=black, caption=github.com/severin-lemaignan/module-introduction-sensors-actuators]{github}
+\begin{frame}[plain]
+    \begin{center}
+        \Large
+    \href{https://www.mentimeter.com/s/d42456cc370aa465642c7e815a68646b/4fdc61757b92}{Go to www.menti.com and use the code 60 34 45}
+    \end{center}
+\end{frame}
+
+
 
 \section{Module Overview}
 
@@ -170,66 +175,103 @@
 \begin{frame}{Module aims}
     \begin{itemize}
         \item<+-> Develop an in-depth understanding of what electical motors are,
-            how the work (hands-on!), how they are characterised
+            how they work (hands-on!), how they are characterised
         \item<+-> Learn how to control them, and program an embedded controller
             for your own motor
         \item<+-> Get a first hand-on experience with a complete robotic system:
             from the hardware, to the low-level closed-loop control, to
             system-level visualisation
+        \item<+-> We have a bit of room to touch one or two other topics
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Learning outcomes}
     \begin{enumerate}
         \item<+-> Demonstrate knowledge and critical understanding of the operating
-            \textbf{characteristics of electrical motors} (brush, brushless,
-            servo, stepper motors)
+            \textbf{characteristics of electrical motors} (brushed, brushless,
+            servo, stepper motors...)
+        \item<+-> Explore (some) robot sensors, integrate them into software
         \item<+-> Comprehend and characterise the effects of \textbf{closing the speed and current
             loops} in drive systems; demonstrate it practically by \textbf{creating a
             closed loop motor system}
-        \item<+-> Understand the fundamentals of the \textbf{ROS middleware}, and use it for
-            simple robot visualisations
-        \item<+-> Feel confident when using the \textbf{Linux command-line}
-        \item<+-> Know how to use and reflect on \textbf{document/code versioning and
+        \item<+-> Understand the fundamentals of the \textbf{ROS middleware},
+            and use it to control motors and run simple robot visualisations
+        \item<+-> Feel confident when using the \textbf{Linux command-line}; know how to use and reflect on \textbf{document/code versioning and
             sharing} (with git)
     \end{enumerate}
 \end{frame}
 
 \begin{frame}{In your curriculum...}
     \begin{itemize}
-        \item Lat year: TODO control?
-        \item Next term: \textbf{ROCO224} -- TODO
-        \item Next year: \textbf{ROCO318} -- sensors, algorithms, kinematics, AI (path
+        \item Last year: quite a lot of electronics, \textbf{ROCO103PP}?
+        \item Next term: \textbf{ROCO224} (Martin Stoelen) -- kinematics, mechanical engineering,
+            robot control
+        \item Next year: \textbf{ROCO318} -- sensors, algorithms, AI (path
             planning, localisation)
     \end{itemize}
+\end{frame}
+
+
+\begin{frame}{This year: ROCO222 and ROCO224}
+
+    \only<1>{
+    \Large
+    \textbf{From...}
+
+    \begin{center}
+        \includegraphics[width=0.5\paperheight]{better-dc-motor}
+    \end{center}
+
+    }
+    \only<2> {
+        \Large
+    \textbf{...to}
+
+    \begin{center}
+        \includegraphics[width=0.6\paperheight]{servo-arm}
+    \end{center}
+
+    }
+
 \end{frame}
 
 \begin{frame}{This module: syllabus}
 
 \begin{itemize}
-    \item<+-> DC motors, brushed \& brushless
-    \item<+-> the physics behind it (electromagnetics)
-    \item<+-> servo-motors, stepper motors
-    \item<+-> closed-loop motor control, PWM, PID, H-bridge
-    \item<+-> the ROS middleware, joint state, kinematics 101, visualisation
-    \item<+-> mechanical design principles \& mechanical components
+    \item<+-> \textbf{Week 1} -- Arduino + Encoders
+    \item<+-> \textbf{Week 2} -- The physics behind motors: electromagnetism, induction, magnetic
+        force
+    \item<+-> \textbf{Week 4} -- DC motors, brushed \& brushless
+    \item<+-> \textbf{Week 5} -- Closed-loop motor control, PWM, PID, H-bridge
+    \item<+-> \textbf{Week 6} -- Induction motors
+    \item<+-> \textbf{Week 7} -- Servo-motors \& stepper motors
+    \item<+-> \textbf{Week 9} -- Software engineering for robotics
+    \item<+-> \textbf{Week 10} -- ROS middleware, joint state, kinematics 101, visualisation
+    \item<+-> \textbf{Week 11} -- Sensors
 \end{itemize}
 
 \end{frame}
 
 \section{Laboratory Coursework}
 
-\begin{frame}{Lab journal \& Command-line 101}
+\begin{frame}{This week: Lab journal \& Command-line 101}
     \begin{itemize}
         \item Document versioning: what is GIT?
         \item Creating \& managing a lab journal with GIT and markdown
         \item Linux command-line
-        \item Compiling and running code
-        \item How to keep organised!
+        \item Remotely connecting to a robot
     \end{itemize}
+
+    \begin{exampleblock}{Tomorrow's practical}
+        If you want to, you can come from 11:00 to 13:00 to finish Monday's
+        practical (including connecting to the robot)
+    \end{exampleblock}
+
+
+
 \end{frame}
 
-\begin{frame}{Build a simple DC motor}
+\begin{frame}{Build a DC motor}
     \begin{columns}
         \begin{column}{0.45\linewidth}
             Build a DC brushed motor from first principles
@@ -251,7 +293,7 @@
         \begin{column}{0.45\linewidth}
 
             \begin{center}
-                \includegraphics[width=0.8\columnwidth]{simple-dc-motor}\\
+                \includegraphics[width=0.6\columnwidth]{better-dc-motor}\\
                 \includegraphics[width=0.8\columnwidth]{motor-characterisation}
             \end{center}
 
@@ -264,7 +306,7 @@
         \begin{column}{0.45\linewidth}
 
             \begin{itemize}
-                \item Controlling a DC motor using an Arduino
+                \item Controlling your DC motor using an Arduino
                 \item Build a speed-controlled electric fan \eg use
                     temperature sensor
 
@@ -274,7 +316,7 @@
         \begin{column}{0.45\linewidth}
 
             \begin{center}
-                \includegraphics[width=0.8\columnwidth]{arduino}\\
+                \includegraphics[width=0.8\columnwidth]{arduino-uno}\\
                 \includegraphics[width=0.8\columnwidth]{dc-motor-fan}\\
                 \includegraphics[width=0.8\columnwidth]{servo}\\
             \end{center}
@@ -284,28 +326,557 @@
 \end{frame}
 
 
-\begin{frame}{Attention: weeks off}
-    TODO Do I tell them now? I might be able to find someone to replace me
-    (Martin for instance)
+\begin{frame}{Build an incremental encoder}
+    \begin{columns}
+        \begin{column}{0.45\linewidth}
+
+            \begin{itemize}
+                    \item Build a simple encoder from first principles
+                    \item Use a LED and phototransistor
+                    \item Measure rotational speed of a small DC motor
+                    \item Integrate it with the Arduino
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.45\linewidth}
+
+            \begin{center}
+                \includegraphics[width=0.9\columnwidth]{encoder}\\
+            \end{center}
+
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+\begin{frame}{Write a PID controller for your DC motor}
+    \begin{center}
+        \includegraphics[width=0.8\linewidth]{pid}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Control a stepper motor with an Arduino}
+    \begin{center}
+        \includegraphics[width=0.8\linewidth]{stepper}
+    \end{center}
+
+    \begin{itemize}
+        \item Control a stepper motor from the Arduino
+        \item Implement stepper modes from first principles
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Mini project: a 3DoF robot arm controlled from ROS}
+    \begin{center}
+        \includegraphics[width=0.8\linewidth]{arm-rviz}
+    \end{center}
+
+    3 weeks to:
+
+    \begin{itemize}
+        \item Design and build a 3DoF (one stepper, 2 servos) robot arm
+        \item Create a 3D model and visualise it
+        \item Control it with ROS
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Attention: I am away on the 11th of October}
+    \begin{itemize}
+        \item On 11th October: no lecture
+        \item On 12th October: practical with Jake
+    \end{itemize}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{}
+\begin{frame}[plain]
     \begin{center}
         \Large
-        That's all, folks!\\[2em]
-        \normalsize
-        Questions:\\
-        Portland Square B316 or \url{severin.lemaignan@plymouth.ac.uk} \\[1em]
-
-        Slides:\\
-        \href{https://github.com/severin-lemaignan/module-mobile-and-humanoid-robots}{\small
-        github.com/severin-lemaignan/module-introduction-sensors-actuators}
-
+        10 min break, and off we start!\\[2em]
     \end{center}
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Intro to Arduino}
+
+
+\begin{frame}{The Arduino microcontroller}
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+            \begin{itemize}
+                \item What is an Arduino board?
+                \item Developing programs
+                \item Inputs and outputs
+                \item Running control loops
+                \item Using PWM to control motors
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            \begin{center}
+                \includegraphics[width=0.8\linewidth]{arduino-uno}
+            \end{center}
+        \end{column}
+    \end{columns}
+
+    \pause
+
+    \begin{itemize}
+        \item Arduino is an open-source electronics platform based on easy to
+            use hardware and software
+        \item it is intended for anyone making interactive projects
+        \item very relevant to robotics, including professional-grade projects!
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{The Arduino microcontroller ecosystem}
+    \begin{columns}
+        \begin{column}{0.3\linewidth}
+            \begin{center}
+                \includegraphics[width=\linewidth]{arduino-uno}
+                Controller
+            \end{center}
+        \end{column}
+        \begin{column}{0.3\linewidth}
+            \begin{center}
+                \includegraphics[width=\linewidth]{wifi-shield}
+                Wifi shield
+            \end{center}
+
+        \end{column}
+        \begin{column}{0.3\linewidth}
+            \begin{center}
+            \includegraphics[width=\linewidth]{motor-shield}
+            Motor shield
+            \end{center}
+
+        \end{column}
+    \end{columns}
+
+    \vspace{0.5em}
+
+    \begin{columns}
+        \begin{column}{0.25\linewidth}
+            \begin{center}
+                \includegraphics[width=0.9\linewidth]{us-sensor}
+                Ultrasonic sensor
+            \end{center}
+        \end{column}
+        \begin{column}{0.25\linewidth}
+            \begin{center}
+                \includegraphics[width=0.9\linewidth]{robot-car}
+                Robot car
+            \end{center}
+        \end{column}
+         \begin{column}{0.5\linewidth}
+             "Arduino is an open-source electronics prototyping
+             platform based on flexible,
+             easy-to-use hardware and
+             software. It's intended for
+             artists, designers, hobbyists
+             and anyone interested in
+             creating interactive objects
+             or environments"
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\imageframe[color=white, scale=0.95]{arduino-boards}
+
+\begin{frame}{Arduino Uno}
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+            \begin{itemize}
+                \item Relatively robust board
+                \item Microcontroller board based on the ATmega328
+                \item 14 digital Input/Output pins
+                \item 6 outputs can be used as PWM outputs
+                \item 6 analog inputs
+                \item 16MHz ceramic resonator
+                \item USB connection
+                \item power jack
+                \item ICSP header
+                \item reset button
+            \end{itemize}
+
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            \begin{center}
+                \includegraphics[width=\linewidth]{arduino-uno}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+{\fullbackground[scale=0.9,page=6]{ian-intro-arduino.pdf}
+    \begin{frame}{Arduino Uno}
+    \end{frame}
+}
+
+\imageframe{arduino-schematic}
+
+{\fullbackground[scale=0.9,page=8]{ian-intro-arduino.pdf}
+    \begin{frame}{Arduino Uno summary}
+    \end{frame}
+}
+
+    \begin{frame}{Powering Arduino Uno}
+        \begin{itemize}
+            \item via the USB connection
+            \item external power supply
+            \item the power source is selected automatically
+            \item external (non-USB) 2.1mm centre-positive plug into the board's
+                power jack
+            \item leads from a battery can be inserted in the \texttt{Gnd} and
+                \texttt{Vin} pin
+                headers of the \texttt{POWER} connector
+            \item recommended range is 7 to 12 volts
+        \end{itemize}
+    \end{frame}
+
+\begin{frame}{Some pins have specialized functions}
+
+    \only<1> {
+    \begin{itemize}
+        \item Serial: 0 (\texttt{RX}) and 1 (\texttt{TX}) \\
+                Used to receive (\texttt{RX}) and transmit (\texttt{TX}) TTL
+                serial data
+        \item external interrupts: 2 and 3 \\
+                Can be configured to trigger an interrupt on a low value, a
+                rising or falling edge, or a change in value
+        \item PWM: 3, 5, 6, 9, 10 and 11 \\
+                Provide 8-bit PWM output with the \cpp{analogWrite()} function
+    \end{itemize}
+}
+    \only<2> {
+        \begin{itemize}
+            \item SPI: 10 (\texttt{SS}), 11 (\texttt{MOSI}), 12 (\texttt{MISO}),
+                13 (\texttt{SCK}) \\
+                 Support SPI communication using the SPI library
+            \item LED: 13. Built-in LED connected to digital pin 13
+            \item The Uno has 6 analog inputs, labeled \texttt{A0} through
+                \texttt{A5}
+            \item I$^2$C: \texttt{A4} or \texttt{SDA} pin and \texttt{A5} or
+                \texttt{SCL} pin \\
+                  Support I$^2$C communication using the \texttt{Wire} library
+        \end{itemize}
+    }
+\end{frame}
+
+    \begin{frame}{How to start coding: software setup}
+        \begin{columns}
+            \begin{column}{0.5\linewidth}
+                \begin{center}
+                    \includegraphics[width=0.9\linewidth]{arduino-ide}
+                \end{center}
+            \end{column}
+            \begin{column}{0.5\linewidth}
+                \begin{itemize}
+                    \item install the IDE (download from \url{www.arduino.cc} or
+                        \sh{apt install arduino})
+                    \item open the Arduino IDE
+                    \item use a USB A to B cable to plug the board into your
+                        computer
+                    \item setup the board type and serial port from the
+                        \emph{Tools} menu
+                \end{itemize}
+            \end{column}
+        \end{columns}
+    \end{frame}
+
+    \begin{frame}{Programming the Arduino}
+        \begin{itemize}
+            \item Arduino's programming language is a version of C
+            \item Arduino calls a program a \textbf{sketch}. Sketches are saved
+                by default in your \textbf{sketchbook} (cf \emph{File >
+                Preferences})
+            \item Most C commands work in the sketch editor
+            \item 4 basic compoenents of an Arduino program:
+                \begin{itemize}
+                    \item initialization
+                    \item setup
+                    \item loop
+                    \item user defined functions
+                \end{itemize}
+            \item Arduino Uno is designed to allow it to be remotely reset by
+                software
+
+        \end{itemize}
+    \end{frame}
+
+{\fullbackground[scale=0.9,page=14]{ian-intro-arduino.pdf}
+    \begin{frame}{Programming the Arduino: initialization}
+    \end{frame}
+}
+
+\begin{frame}[fragile]{Programming the Arduino: setup}
+    \begin{itemize}
+        \item Initialization for the Arduino board
+        \item Usually initiate Serial communication
+        \item Usually assign digital pins to input or output
+        \item For example:
+    \end{itemize}
+
+            \begin{cppcode}
+void setup() // 'void' means setup() does not return anything
+{
+    pinMode(13, OUPUT); // pinMode sets the state of a digital pin,
+    pinMode(12, INPUT); // either to OUPUT or to INPUT
+
+    Serial.begin(9600); // initialises a serial console at 9600 bauds
+}
+
+            \end{cppcode}
+\end{frame}
+
+
+\begin{frame}[fragile]{Programming the Arduino: main loop}
+    \begin{itemize}
+        \item The loop is the main portion of your program
+        \item The microcontroller runs it forever
+        \item For instance:
+    \end{itemize}
+
+            \begin{cppcode}
+void loop()
+{
+    digitalWrite(13, HIGH); // set the LED on
+    delay(1000);            // wait for one second
+    digitalWrite(13, LOW);  // set the LED off
+    delay(1000);            // wait for one second
+}
+
+            \end{cppcode}
+\end{frame}
+
+
+{\fullbackground[scale=0.9,page=17]{ian-intro-arduino.pdf}
+    \begin{frame}{Programming the Arduino: user defined functions}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=18]{ian-intro-arduino.pdf}
+    \begin{frame}{Programming the Arduino: user defined functions}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=19]{ian-intro-arduino.pdf}
+    \begin{frame}{Programming the Arduino: digital I/O}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=20]{ian-intro-arduino.pdf}
+    \begin{frame}{Programming the Arduino: analog I/O}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=21]{ian-intro-arduino.pdf}
+    \begin{frame}{Programming the Arduino: serial communications}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=22]{ian-intro-arduino.pdf}
+    \begin{frame}{Programming the Arduino: serial library}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=23]{ian-intro-arduino.pdf}
+    \begin{frame}{Programming the Arduino: simple control}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=24]{ian-intro-arduino.pdf}
+    \begin{frame}{Compiling and uploading code}
+    \end{frame}
+}
+
+\section{Program Examples}
+
+\begin{frame}[fragile]{LED blinking}
+    \begin{columns}
+        \begin{column}{0.7\linewidth}
+\begin{cppcode}
+// Pin 13 has an LED connected on most Arduino boards.
+// give it a name:
+int led = 13;
+
+// the setup routine runs once when you press reset:
+void setup() {                
+  // initialize the digital pin as an output.
+  pinMode(led, OUTPUT);     
+}
+
+// the loop routine runs over and over again forever:
+void loop() {
+  digitalWrite(led, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(1000);               // wait for a second
+  digitalWrite(led, LOW);    // turn the LED off by making the voltage LOW
+  delay(1000);               // wait for a second
+}
+\end{cppcode}
+
+        \end{column}
+        \begin{column}{0.3\linewidth}
+            \begin{center}
+                \includegraphics[width=0.35\paperheight]{arduino-led}
+                \includegraphics[width=0.35\paperheight]{arduino-led-schematic}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+\begin{frame}[fragile]{Encoder}
+    \begin{columns}
+        \begin{column}{0.7\linewidth}
+\begin{cppcode}
+#include <Encoder.h>
+
+// Change these two numbers to the pins connected to your encoder.
+Encoder myEnc(5, 6);
+//   avoid using pins with LEDs attached
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println("Basic Encoder Test:");
+}
+
+long oldPosition  = -999;
+
+void loop() {
+  long newPosition = myEnc.read();
+  if (newPosition != oldPosition) {
+    oldPosition = newPosition;
+    Serial.println(newPosition);
+  }
+}
+\end{cppcode}
+
+        \end{column}
+        \begin{column}{0.3\linewidth}
+            \begin{center}
+                \includegraphics[width=\columnwidth]{encoders3}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Measuring position: encoders}
+
+{\fullbackground[scale=0.9,page=2]{ian-sensors.pdf}
+    \begin{frame}{Digital incremental encoder}
+    \end{frame}
+}
+{\fullbackground[scale=0.9,page=3]{ian-sensors.pdf}
+    \begin{frame}{Optical incremental encoder}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=4]{ian-sensors.pdf}
+    \begin{frame}{Quadrature output signal generation}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=5]{ian-sensors.pdf}
+    \begin{frame}{Quadrature output signal usage}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=6]{ian-sensors.pdf}
+    \begin{frame}{Incremental encoder index signal}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=7]{ian-sensors.pdf}
+    \begin{frame}{Using all edges increases resolution}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=8]{ian-sensors.pdf}
+    \begin{frame}{Budget wheel encoders/sensors}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=9]{ian-sensors.pdf}
+    \begin{frame}{Typical datasheet for encoder}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=10]{ian-sensors.pdf}
+    \begin{frame}{Absolute optical encoders}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=11]{ian-sensors.pdf}
+    \begin{frame}{Encoder signal conditioning}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=12]{ian-sensors.pdf}
+    \begin{frame}{Interface to encoders}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=13]{ian-sensors.pdf}
+    \begin{frame}{Interface to Arduino}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=14]{ian-sensors.pdf}
+    \begin{frame}{Resolver position measurement}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=15]{ian-sensors.pdf}
+    \begin{frame}{Resolver position measurement}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=16]{ian-sensors.pdf}
+    \begin{frame}{Tachometer velocity measurement}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=17]{ian-sensors.pdf}
+    \begin{frame}{Hall effect magnetic sensor}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=18]{ian-sensors.pdf}
+    \begin{frame}{Hall effect magnetic sensor circuit}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=19]{ian-sensors.pdf}
+    \begin{frame}{Hall effect magnetic rotary encoder}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=20]{ian-sensors.pdf}
+    \begin{frame}{Magnetic rotary encoder}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=21]{ian-sensors.pdf}
+    \begin{frame}{Electronic commutation systems}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=22]{ian-sensors.pdf}
+    \begin{frame}{Block commutation}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=23]{ian-sensors.pdf}
+    \begin{frame}{Components of an EC drive system}
+    \end{frame}
+}
 
 
 \end{document}
