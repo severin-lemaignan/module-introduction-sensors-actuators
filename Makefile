@@ -40,6 +40,11 @@ touch:
 
 force: touch paper
 
+%.nup: %.pdf
+	pdfnup --nup 2x5 --no-landscape $<
+
+nup: $(TARGET:.pdf=.nup)
+
 clean:
 	rm -f */*.vrb */*.spl */*.idx */*.aux */*.log */*.snm */*.out */*.toc */*.nav */*intermediate */*~ */*.glo */*.ist */*.bbl */*.blg */_minted* $(SVG:.svg=.pdf) $(DOT:.dot=.svg) $(DOT:.dot=.pdf)
 
