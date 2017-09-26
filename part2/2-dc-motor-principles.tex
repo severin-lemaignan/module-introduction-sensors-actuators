@@ -437,6 +437,89 @@ the coil pivots and generates a torque $\tau$ given by:
 
 \end{frame}
 
+{\fullbackground[scale=0.9,page=21]{../part1/figs/ian-sensors.pdf}
+    \begin{frame}{Electronic commutation systems}
+    \note {
+In this third part of the presentation we would like to understand the electronic commutation.
+There are different systems. maxon uses the following three :
+
+- Block commutation with or without Hall sensors
+- Sinusoidal commutation.
+
+As you can see the different maxon controller families perform different commutation types.
+
+Common to all these systems is that they should apply the current in a way, that the generated torque is as high as possible. As we have learned this is achieved by a perpendicular orientation of the magnetic fields of permanent magnet and winding. We have seen as well that we need to know the orientation of the permanent magnet to achieve this.
+
+We start with block commutation with Hall sensor position feedback. That's the standard commutation type. Once we have understood this the two other commutation schemes are easily derived from it.
+    }
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=22]{../part1/figs/ian-sensors.pdf}
+    \begin{frame}{Block commutation}
+
+\note{
+First we have to look at the Hall sensor feedback signals. Again we do this
+based on the simplest design, the slotless maxon EC motor with 1 pole pair.
+
+In the back of the motor there are three Hall sensor mounted on the PCB at an
+angle of 120°. The Hall sensor detect the magnetic poles of the control magnet
+which is mounted on the shaft. The control magnet exhibits the same two
+magnetic poles in the same orientation as the power magnet. (Basically the Hall
+sensors could monitor the power magnet directly but the control magnet offers
+two advantages: The magnetic transitions between north and south pole are more
+precisely defined. And an angular misalignment and tolerances between the
+relative position of winding and Hall sensors can be adjusted.)
+
+The digital Hall sensors used probe the direction of the magnetic field. They
+generates a high output signal (5V) if the north pole of the control magnet is
+close to them. A south pole produces a low level (Gnd).
+
+The actual position of the control magnet in the diagram generates the
+following signals:
+
+- The blue Hall sensor sees the north pole. Thus the signal output level is
+high and will remain high for the next 120°.
+- The green Hall sensor is close to the south pole. The output level is low for
+the next 60°. Then the north pole approaches and the output signal will switch
+to a high state.
+- The red Hall sensor has just switched from high to low where the signal level
+will stay for the next half a turn.
+
+The combination of the three Hall sensor signals is unique for each 60° of
+rotation. Looking at these signals allows to know the rotor position within
+60°. That exactly what we need for commutation. Remember there were 6 different
+ways of current flow through the motor at a commutation angle of 60°.
+
+The next slide shows how the complete block commutation system works.
+}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=23]{../part1/figs/ian-sensors.pdf}
+    \begin{frame}{Components of an EC drive system}
+\note{
+Let's first look at an EC drive system in general.
+
+The three phases of the EC motor cannot be connected directly to a DC power
+supply. The voltage needs to be switched in a sequence. This is done by the
+electronic commutation. For the correct switching the electronics needs rotor
+position information from the motor. This information is usually provided by
+the Hall sensors.
+
+An EC motor cannot operate on its own: It's always the combination of motor and
+electronics commutation that makes the full drive.
+
+
+For more sophisticated commutation and precise motor control, e.g. at very low
+speeds, the use of an encoder feedback might be necessary. Often the
+electronics not only performs the commutation but at the same time can be used
+to control speed or position.
+}
+    \end{frame}
+}
+
+
 \begin{frame}{DC Motor Torque Ripple}
 
     \begin{center}

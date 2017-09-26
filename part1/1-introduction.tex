@@ -1067,6 +1067,8 @@ void loop() {
     \end{frame}
 }
 
+\imageframe[color=black]{gray_code_encoder}
+
 {\fullbackground[scale=0.9,page=11]{ian-sensors.pdf}
     \begin{frame}{Encoder signal conditioning}
     \end{frame}
@@ -1093,25 +1095,79 @@ void loop() {
         \end{columns}
     \end{frame}
 
-{\fullbackground[scale=0.9,page=14]{ian-sensors.pdf}
-    \begin{frame}{Resolver position measurement}
-    \end{frame}
-}
+\begin{frame}{Resolver position measurement}
+    \begin{center}
+        \only<1> {
+        \includegraphics[width=0.5\paperheight]{maxon-resolver} \\
+        \source{https://www.maxonmotor.com}{Maxon}
+        }
+        \only<2->{
+        \includegraphics[width=0.5\paperheight]{resolver-schematic} \\
+        \source{}{Advanced Micro Controls, Inc.}
+        }
+    \end{center}
 
-{\fullbackground[scale=0.9,page=15]{ian-sensors.pdf}
-    \begin{frame}{Resolver position measurement}
-    \end{frame}
-}
+        \only<1-2>{
+        Electromechanical device with a mechanical design similar to
+        a motor.
+
+        \pause
+
+        \begin{itemize}
+            \item Analog rotor position signal
+            \item Indicates absolute position within a single revolution
+            \item Requires interfacing electronics
+            \item Resolvers are ``excited'' by an AC reference sine wave
+        \end{itemize}
+    }
+    \only<3>{
+        Compared to an encoder:
+        \begin{itemize}
+            \item more rugged: no sensitive optics $\rightarrow$ withstand
+                higher vibrations/shocks; resistant to electrical noise;
+                withstand higher temperatures; higher durability
+            \item encoders are cheaper; more accurate; smaller, lighter, less
+                inertia
+        \end{itemize}
+    }
+\end{frame}
+
 
 {\fullbackground[scale=0.9,page=16]{ian-sensors.pdf}
     \begin{frame}{Tachometer velocity measurement}
     \end{frame}
 }
 
-{\fullbackground[scale=0.9,page=17]{ian-sensors.pdf}
-    \begin{frame}{Hall effect magnetic sensor}
-    \end{frame}
-}
+\begin{frame}{Hall effect magnetic sensor}
+
+\begin{columns}
+    \begin{column}{0.5\linewidth}
+        \only<1> {
+            The \textbf{Hall effect} is the production of a potential difference
+            across an electrical conductor when a magnetic field is applied
+            perpendicular to the flow of current.
+        }
+
+         \only<2>{
+            Can be taken advantage of in semiconductor devices to implement
+            a switch activated by the application of a magnetic field.
+
+            $\rightarrow$ Hall effect sensors can be used for proximity switching.
+        }
+
+    \end{column}
+    \begin{column}{0.5\linewidth}
+        \begin{center}
+            \includegraphics[width=0.8\linewidth]{hall-effect}
+
+            \video[0.75]{\linewidth}{figs/hall_effect.webm} \\
+            \source{https://en.wikipedia.org/wiki/Hall_effect}{Wikipedia}
+
+        \end{center}
+
+    \end{column}
+\end{columns}
+\end{frame}
 
 {\fullbackground[scale=0.9,page=18]{ian-sensors.pdf}
     \begin{frame}{Hall effect magnetic sensor circuit}
@@ -1125,21 +1181,6 @@ void loop() {
 
 {\fullbackground[scale=0.9,page=20]{ian-sensors.pdf}
     \begin{frame}{Magnetic rotary encoder}
-    \end{frame}
-}
-
-{\fullbackground[scale=0.9,page=21]{ian-sensors.pdf}
-    \begin{frame}{Electronic commutation systems}
-    \end{frame}
-}
-
-{\fullbackground[scale=0.9,page=22]{ian-sensors.pdf}
-    \begin{frame}{Block commutation}
-    \end{frame}
-}
-
-{\fullbackground[scale=0.9,page=23]{ian-sensors.pdf}
-    \begin{frame}{Components of an EC drive system}
     \end{frame}
 }
 
