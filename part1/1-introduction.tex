@@ -480,20 +480,20 @@
     \begin{columns}
         \begin{column}{0.3\linewidth}
             \begin{center}
-                \includegraphics[width=\linewidth]{arduino-uno}
+                \includegraphics[width=\linewidth]{arduino-uno}\\
                 Controller
             \end{center}
         \end{column}
         \begin{column}{0.3\linewidth}
             \begin{center}
-                \includegraphics[width=\linewidth]{wifi-shield}
+                \includegraphics[width=\linewidth]{wifi-shield}\\
                 Wifi shield
             \end{center}
 
         \end{column}
         \begin{column}{0.3\linewidth}
             \begin{center}
-            \includegraphics[width=\linewidth]{motor-shield}
+            \includegraphics[width=\linewidth]{motor-shield}\\
             Motor shield
             \end{center}
 
@@ -505,13 +505,13 @@
     \begin{columns}
         \begin{column}{0.25\linewidth}
             \begin{center}
-                \includegraphics[width=0.9\linewidth]{us-sensor}
+                \includegraphics[width=0.9\linewidth]{us-sensor}\\
                 Ultrasonic sensor
             \end{center}
         \end{column}
         \begin{column}{0.25\linewidth}
             \begin{center}
-                \includegraphics[width=0.9\linewidth]{robot-car}
+                \includegraphics[width=0.9\linewidth]{robot-car}\\
                 Robot car
             \end{center}
         \end{column}
@@ -677,59 +677,59 @@ $\rightarrow$ \href{http://www.home-automation-community.com/arduino-low-power-h
     \end{columns}
 \end{frame}
 
-    \begin{frame}{How to start coding: software setup}
-        \begin{columns}
-            \begin{column}{0.5\linewidth}
-                \begin{center}
-                    \includegraphics[width=0.9\linewidth]{arduino-ide}
-                \end{center}
-            \end{column}
-            \begin{column}{0.5\linewidth}
-                \begin{itemize}
-                    \item install the IDE (download from \url{www.arduino.cc} or
-                        \sh{apt install arduino})
-                    \item open the Arduino IDE
-                    \item use a USB A to B cable to plug the board into your
-                        computer
-                    \item setup the board type and serial port from the
-                        \emph{Tools} menu
-                \end{itemize}
-            \end{column}
-        \end{columns}
-    \end{frame}
+\begin{frame}{How to start coding: software setup}
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+            \begin{center}
+                \includegraphics[width=0.9\linewidth]{arduino-ide}
+            \end{center}
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            \begin{itemize}
+                \item install the IDE (download from \url{www.arduino.cc} or
+                    \sh{apt install arduino})
+                \item open the Arduino IDE
+                \item use a USB A to B cable to plug the board into your
+                    computer
+                \item setup the board type and serial port from the
+                    \emph{Tools} menu
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
 
-    \begin{frame}{Programming the Arduino}
-        \begin{itemize}
-            \item Arduino's programming language is a version of C++ with a bit
-                of magic (pre-processing) to make it look simpler
+\begin{frame}{Programming the Arduino}
+    \begin{itemize}
+        \item Arduino's programming language is a version of C++ with a bit
+            of magic (pre-processing) to make it look simpler
 
-            \item Arduino calls a program a \textbf{sketch}. Sketches are saved
-                by default in your \textbf{sketchbook} (cf \emph{File >
-                Preferences})
-            \item Most C commands work in the sketch editor
-            \item 4 basic compoenents of an Arduino program:
-                \begin{itemize}
-                    \item initialization
-                    \item setup
-                    \item loop
-                    \item user defined functions
-                \end{itemize}
-            \item Arduino Uno is designed to allow it to be remotely reset by
-                software
+        \item Arduino calls a program a \textbf{sketch}. Sketches are saved
+            by default in your \textbf{sketchbook} (cf \emph{File >
+            Preferences})
+        \item Most C/C++ commands work in the sketch editor
+        \item 4 basic components of an Arduino program:
+            \begin{itemize}
+                \item initialization
+                \item setup
+                \item loop
+                \item user defined functions
+            \end{itemize}
+        \item Arduino Uno is designed to allow it to be remotely reset by
+            software
 
-        \end{itemize}
-    \end{frame}
+    \end{itemize}
+\end{frame}
 
-    \begin{frame}{Programming the Arduino: initialization}
-        \begin{itemize}
-            \item Include any extra libraries you are using
-            \item All variables need to be initialized
-            \item \cpp{a=4;} will not work, \cpp{int a=4;} will
-            \item Declare variables you will assign later: \cpp{int a, b, c;}
-            \item Remember datatypes: \cpp{bool}, \cpp{int}, \cpp{double}, \cpp{float}, \cpp{char}, \cpp{String}...
-            \item Full reference: \url{https://www.arduino.cc/en/Reference}
-        \end{itemize}
-    \end{frame}
+\begin{frame}{Programming the Arduino: initialization}
+    \begin{itemize}
+        \item Include any extra libraries you are using
+        \item All variables need to be initialized
+        \item \cpp{a=4;} will not work, \cpp{int a=4;} will
+        \item Declare variables you will assign later: \cpp{int a, b, c;}
+        \item Remember datatypes: \cpp{bool}, \cpp{int}, \cpp{double}, \cpp{float}, \cpp{char}, \cpp{String}...
+        \item Full reference: \url{https://www.arduino.cc/en/Reference}
+    \end{itemize}
+\end{frame}
 
 \begin{frame}[fragile]{Programming the Arduino: setup}
     \begin{itemize}
@@ -772,42 +772,153 @@ void loop()
 \end{frame}
 
 
-{\fullbackground[scale=0.9,page=17]{ian-intro-arduino.pdf}
-    \begin{frame}{Programming the Arduino: user defined functions}
-    \end{frame}
-}
+\begin{frame}[fragile]{Programming the Arduino: user defined functions}
 
-\miniframesoff
-{\fullbackground[scale=0.9,page=18]{ian-intro-arduino.pdf}
-    \begin{frame}{Programming the Arduino: user defined functions}
-    \end{frame}
-}
-\miniframeson
+    \only<1>{
+    \begin{itemize}
+        \item These functions can be called in the loop and are usually
+            responses to conditions that are met in the loop
+        \item These functions must be declared with a \emph{name}, a
+            \emph{return type} and optional \emph{input parameters} with their
+            types
+    \end{itemize}
 
-{\fullbackground[scale=0.9,page=19]{ian-intro-arduino.pdf}
-    \begin{frame}{Programming the Arduino: digital I/O}
-    \end{frame}
-}
 
-{\fullbackground[scale=0.9,page=20]{ian-intro-arduino.pdf}
-    \begin{frame}{Programming the Arduino: analog I/O}
-    \end{frame}
-}
+    The following function maps a user input \cpp{x} from one range to a new
+    range:
 
-{\fullbackground[scale=0.9,page=21]{ian-intro-arduino.pdf}
-    \begin{frame}{Programming the Arduino: serial communications}
-    \end{frame}
 }
+    \begin{cppcode}
+float map(float x,
+          float in_min, float in_max, 
+          float out_min, float out_max)
+{
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+    \end{cppcode}
 
-{\fullbackground[scale=0.9,page=22]{ian-intro-arduino.pdf}
-    \begin{frame}{Programming the Arduino: serial library}
-    \end{frame}
-}
+    \only<2> {
+    The function is defined over \emph{single precision floating numbers},
+    represented by the \cpp{float} C type.
 
-{\fullbackground[scale=0.9,page=23]{ian-intro-arduino.pdf}
-    \begin{frame}{Programming the Arduino: simple control}
-    \end{frame}
+    The \cpp{return} statement defines what the function outputs (here, a
+    floating number)
+
+    The curly brackets \cpp{{}} define what is inside the function (the
+    function \emph{body}). Curly brackets are generally required to separate
+    blocks of code.
+
+    The indentation of the code is up to you and does not matter (contrary to
+    other languages like Python!)
+
+    }
+\end{frame}
+
+\begin{frame}{Programming the Arduino: digital I/O}
+
+    Each of the 14 digital pins on the Uno can be used as an input or output.
+
+    \begin{itemize}
+        \item \cpp{pinMode(<pin>, <mode>)}: set a digital pin as \texttt{INPUT}
+            or \texttt{OUTPUT}
+        \item \cpp{digitalWrite(<pin>, <state>)}: writes to a digital pin
+            \texttt{HIGH} (5V) or \texttt{LOW} (\texttt{GND})
+        \item \cpp{digitalRead(<pin>)}: reads digital pin and returns
+            \texttt{HIGH} or \texttt{LOW}
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Programming the Arduino: analog I/O}
+    \begin{itemize}
+        \item \cpp{analogReference(<type>)}
+            \begin{itemize}
+                \item \texttt{DEFAULT}: 5V
+                \item \texttt{EXTERNAL}: voltage applied to \texttt{Vref}
+                \item \url{http://arduino.cc/en/Reference/AnalogReference}
+            \end{itemize}
+        \item \cpp{analogRead(<pin>)}: reads voltage on given pin, 10 bits
+            resolution (1024 values)
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Programming the Arduino: serial communications}
+    \begin{itemize}
+        \item The ATMega328 provides UART TTL serial communication
+        \item Available on the digital pins 0 (\texttt{RX}) and 1 (\texttt{TX})
+        \item \texttt{RX} and \texttt{TX} LEDs on the board will flash when data
+            is being transmitted via the USB-to-serial chip and the the USB
+            connection to the computer
+    \end{itemize}
+
+    \begin{itemize}
+        \item The Arduino IDE includes a serial monitor
+        \item It prints out whatever data is received on the serial port
+        \item You can also use it to send data using the keyboard
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Programming the Arduino: serial library}
+    \begin{itemize}
+        \item \cpp{Serial.begin(<baudrate>)}: opens serial port at
+            \texttt{baudrate}
+        \item \cpp{Serial.available()}: returns the nb of bytes available to
+            read
+        \item \cpp{Serial.read()}: returns the first byte of incoming serial
+            data available (or \texttt{-1} if no data is available)
+        \item \cpp{Serial.print(<data>, <format>)}: prints data to the serial
+            port as readable ASCII text
+         \item \cpp{Serial.println(<data>, <format>)}: prints data to the serial
+            port as readable ASCII text and adds a line ending
+            
+    \end{itemize}
+
+    \url{http://arduino.cc/en/Reference/Serial}
+\end{frame}
+
+\begin{frame}[fragile]{Programming the Arduino: control flow}
+
+\begin{columns}
+    \begin{column}{0.5\linewidth}
+        \begin{cppcode}
+if(<variable> <comparison operator> <condition>)
+{
+    // do something
 }
+else
+{
+    // do something else
+}
+        \end{cppcode}
+    \end{column}
+    \begin{column}{0.5\linewidth}
+        \vspace{1em}
+
+        $\rightarrow$ the MCU checks the condition and responds accordingly.
+
+    \end{column}
+\end{columns}
+
+\begin{columns}
+    \begin{column}{0.5\linewidth}
+         \begin{cppcode}
+for(<initialization>; <condition>; <increment>)
+{
+    // do something
+}
+        \end{cppcode}
+    \end{column}
+    \begin{column}{0.5\linewidth}
+        \vspace{4em}
+
+        $\rightarrow$ the MCU repeats something for a certain number of time.
+        For example, read 500 chars on the serial port.
+
+    \end{column}
+\end{columns}
+\end{frame}
 
 \begin{frame}{Compiling and uploading code}
 
@@ -847,9 +958,9 @@ void setup() {
 
 // the loop routine runs over and over again forever:
 void loop() {
-  digitalWrite(led, HIGH);   // turn the LED on (HIGH is the voltage level)
+  digitalWrite(led, HIGH);   // turn the LED on
   delay(1000);               // wait for a second
-  digitalWrite(led, LOW);    // turn the LED off by making the voltage LOW
+  digitalWrite(led, LOW);    // turn the LED off
   delay(1000);               // wait for a second
 }
 \end{cppcode}
@@ -857,7 +968,7 @@ void loop() {
         \end{column}
         \begin{column}{0.3\linewidth}
             \begin{center}
-                \includegraphics[width=0.35\paperheight]{arduino-led}
+                \includegraphics[width=0.35\paperheight]{arduino-led}\\
                 \includegraphics[width=0.3\paperheight]{arduino-led-schematic}
             \end{center}
         \end{column}
