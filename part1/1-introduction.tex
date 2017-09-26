@@ -31,6 +31,20 @@
 \makeatother
 \setcounter{subsection}{1}
 
+\makeatletter
+\let\beamer@writeslidentry@miniframeson=\beamer@writeslidentry
+\def\beamer@writeslidentry@miniframesoff{%
+  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}% does not happen normally
+  {%else
+    % removed \addtocontents commands
+    \clearpage\beamer@notesactions%
+  }
+}
+\newcommand*{\miniframeson}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframeson}
+\newcommand*{\miniframesoff}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframesoff}
+\makeatother
+
+
 \newcommand{\source}[2]{{\tiny\it Source: \href{#1}{#2}}}
 
 \usepackage{tikz}
@@ -38,8 +52,8 @@
 
 \graphicspath{{figs/}}
 
-\title{ROCO222 \newline Introduction to Sensors and Actuators}
-\subtitle{Part 1 -- Introduction}
+\title{ROCO222 \newline Intro to Sensors and Actuators}
+\subtitle{Introduction, Arduinos and Encoders}
 \date{}
 \author{Séverin Lemaignan}
 \institute{Centre for Neural Systems and Robotics\\{\bf Plymouth University}}
@@ -50,11 +64,12 @@
 
 \maketitle
 
-\begin{frame}{Who am I?}
-    I am Dr. Séverin Lemaignan. My office is B316 Portland Square
-\end{frame}
 
-\begin{frame}{And what do I do?}
+\begin{frame}{Who am I?}
+
+\begin{center}
+    \textbf{Séverin Lemaignan}, B316 Portland Square
+\end{center}
 
 \begin{multicols}{2}
 
@@ -69,7 +84,7 @@
   people use to communicate
 
     \begin{center}
-        \includegraphics[width=0.8\linewidth]{cowriter}
+        \includegraphics[width=0.7\linewidth]{cowriter}
     \end{center}
 
 \end{multicols}
@@ -85,7 +100,7 @@
     \end{itemize}
 
     \begin{center}
-        severin.lemaignan@plymouth.ac.uk
+        \texttt{severin.lemaignan@plymouth.ac.uk}
     \end{center}
 \end{frame}
 
@@ -119,7 +134,7 @@
 \begin{frame}{Labs}
     \begin{itemize}
         \item ROCO222 is also taught and supervised in a computer laboratory for
-            a TWO HOURS EACH WEEK.
+            TWO HOURS EACH WEEK.
         \item There are 2 labs so please go to your timetabled group and pair up
             with someone
     \end{itemize}
@@ -135,7 +150,7 @@
 
 \end{frame}
 
-\section{Assessment}
+\section[]{Assessment}
 
 \begin{frame}{Assessment}
     \begin{exampleblock}{Formative vs Summative}
@@ -146,17 +161,17 @@
     \begin{itemize}
         \item There will be practical assessments in the form of laboratory
             practical work (60\%)
-        \item First practical needs to be submitted by 16:00, 13th October 2017
+        \item \textbf{First practical needs to be submitted by 16:00, 13th October 2017}
         \item Feedback within 20 working days
-        \item Complete lab journal submitted Thursday 16:00, 11th January 2018
+        \item Complete lab journal submitted \textbf{Thursday 16:00, 11th January 2018}
         \item There will be a final written exam (40\%) -- \textbf{note that the
-            exam questions may be on material discussed during the labs}
+            exam questions may touch upon material discussed during the labs}
     \end{itemize}
 
 \end{frame}
 
 
-\section{Robotics: what are your expectations?}
+\section[]{Robotics: what are your expectations?}
 
 \begin{frame}[plain]
     \begin{center}
@@ -166,22 +181,21 @@
 \end{frame}
 
 
+\section[Overview]{Module Overview}
 
-\section{Module Overview}
-
-\videoframe[0.56]{part1/figs/NISSAN-ProPILOT-chair.mp4}
+\videoframe[0.56]{figs/NISSAN-ProPILOT-chair.mp4}
 
 
 \begin{frame}{Module aims}
     \begin{itemize}
-        \item<+-> Develop an in-depth understanding of what electical motors are,
-            how they work (hands-on!), how they are characterised
-        \item<+-> Learn how to control them, and program an embedded controller
+        \item<+-> Develop an in-depth understanding of \textbf{what electrical motors are},
+            \textbf{how they work} (hands-on!), how they are characterised
+        \item<+-> Learn how to \textbf{control them}, and \textbf{program an embedded controller}
             for your own motor
-        \item<+-> Get a first hand-on experience with a complete robotic system:
+        \item<+-> Get a first \textbf{hand-on experience with a complete robotic system}:
             from the hardware, to the low-level closed-loop control, to
-            system-level visualisation
-        \item<+-> We have a bit of room to touch one or two other topics
+            system-level programming and visualisation
+        \item<+-> \textbf{We have a bit of room to touch additional topics}
     \end{itemize}
 \end{frame}
 
@@ -190,18 +204,21 @@
         \item<+-> Demonstrate knowledge and critical understanding of the operating
             \textbf{characteristics of electrical motors} (brushed, brushless,
             servo, stepper motors...)
-        \item<+-> Explore (some) robot sensors, integrate them into software
+        \item<+-> Explore (some) \textbf{robot sensors}, integrate them into software
         \item<+-> Comprehend and characterise the effects of \textbf{closing the speed and current
             loops} in drive systems; demonstrate it practically by \textbf{creating a
             closed loop motor system}
         \item<+-> Understand the fundamentals of the \textbf{ROS middleware},
             and use it to control motors and run simple robot visualisations
-        \item<+-> Feel confident when using the \textbf{Linux command-line}; know how to use and reflect on \textbf{document/code versioning and
-            sharing} (with git)
+        \item<+-> Acquire the \textbf{basics of software engineering}; feel
+            confident when using the \textbf{Linux command-line}; know how to
+            use and reflect on \textbf{document/code versioning and sharing}
+            (with git)
+
     \end{enumerate}
 \end{frame}
 
-\begin{frame}{In your curriculum...}
+\begin{frame}{In your curriculum}
     \begin{itemize}
         \item Last year: quite a lot of electronics, \textbf{ROCO103PP}?
         \item Next term: \textbf{ROCO224} (Martin Stoelen) -- kinematics, mechanical engineering,
@@ -252,7 +269,7 @@
 
 \end{frame}
 
-\section{Laboratory Coursework}
+\section[Labs]{Laboratory Coursework}
 
 \begin{frame}{This week: Lab journal \& Command-line 101}
     \begin{itemize}
@@ -380,6 +397,31 @@
 
 \end{frame}
 
+\section[]{"Homework"}
+
+\miniframesoff
+
+\imageframe[scale=0.95]{survey/linux}
+\imageframe[scale=0.95]{survey/code}
+\imageframe[scale=0.95]{survey/boards}
+\imageframe[scale=0.95]{survey/tools}
+
+\miniframeson
+
+\begin{frame}{"Homework"}
+    \begin{itemize}
+        \item<+-> Thinker with hardware and software!
+        \item<+-> \textbf{Write code}, a lot of code -- preferably Python and C++ \\
+                I am happy to answer code-related questions
+        \item<+-> Invest \textsterling 30 and get a Arduino/RaspberryPI starter kit (like the \href{https://www.amazon.co.uk/s?merchant=A3DM8VCGJL5PKR&fallThrough=1}{Freenove ones})
+        \item<+-> \textbf{Make it fun}: come up with \textbf{small, rewarding projects} -- Tetris anyone?
+        \item<+-> \textbf{Install Linux} (and use it!) -- alongside Windows as a dualboot, or inside a VM
+        \item<+-> Get involved in an \textbf{open-source project}
+
+    \end{itemize}
+\end{frame}
+
+
 \begin{frame}{Attention: I am away on the 11th of October}
     \begin{itemize}
         \item On 11th October: no lecture
@@ -388,16 +430,21 @@
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\miniframesoff
 \begin{frame}[plain]
     \begin{center}
         \Large
         10 min break, and off we start!\\[2em]
     \end{center}
 \end{frame}
+\miniframeson
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Intro to Arduino}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section[Arduino]{Intro to Arduino}
 
 
 \begin{frame}{The Arduino microcontroller}
@@ -508,34 +555,99 @@
     \end{columns}
 \end{frame}
 
-{\fullbackground[scale=0.9,page=6]{ian-intro-arduino.pdf}
-    \begin{frame}{Arduino Uno}
-    \end{frame}
-}
+\begin{frame}{Arduino Uno}
+    \begin{center}
+        \includegraphics<1>[width=\linewidth]{arduino-labeled}
+        \includegraphics<2>[width=\linewidth]{arduino-labeled-photo}
+    \end{center}
+\end{frame}
 
 \imageframe{arduino-schematic}
 
-{\fullbackground[scale=0.9,page=8]{ian-intro-arduino.pdf}
-    \begin{frame}{Arduino Uno summary}
-    \end{frame}
-}
+\begin{frame}{Arduino Uno summary}
+    \begin{itemize}
+        \item Microcontroller: \textbf{ATMega328}
+        \item Operating voltage: \textbf{5V}
+        \item External input voltage (recommended): 7-12V
+        \item External input voltage (limits): \textbf{6-20V}
+    \end{itemize}
 
-    \begin{frame}{Powering Arduino Uno}
-        \begin{itemize}
-            \item via the USB connection
-            \item external power supply
-            \item the power source is selected automatically
-            \item external (non-USB) 2.1mm centre-positive plug into the board's
-                power jack
-            \item leads from a battery can be inserted in the \texttt{Gnd} and
-                \texttt{Vin} pin
-                headers of the \texttt{POWER} connector
-            \item recommended range is 7 to 12 volts
-        \end{itemize}
-    \end{frame}
+    \begin{itemize}
+        \item Digital I/O pins: 14, of which 6 provide PWM output
+        \item Analog input pins: 6
+        \item DC current per I/O pin: 40 mA
+        \item DC current for 3.3V pin: 50mA
+        \item pins have internal pull-up resistors (off by default) of 20-50 k$\Omega$
+    \end{itemize}
+
+    \begin{itemize}
+        \item RAM: \textbf{2KB}
+        \item Flash memory: \textbf{32KB}, of which 0.5KB used by boot loader
+        \item EEPROM: 1KB
+        \item Clock speed: \textbf{16MHz}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{What is a pull-up resistor?}
+
+    Prevent \emph{floating} values on the input pins.
+
+    \begin{center}
+        \includegraphics[width=0.5\linewidth]{pullup}
+    \end{center}
+
+    The ATmega328 microcontroller has internal pull-ups that can be enabled and disabled:
+
+    \begin{cppcode}
+    pinMode(5, INPUT_PULLUP); // Enable internal pull-up resistor on pin 5
+    \end{cppcode}
+
+\end{frame}
+
+
+
+\begin{frame}{Powering Arduino Uno}
+    \begin{itemize}
+        \item via the USB connection
+        \item external power supply
+        \item the power source is selected automatically
+        \item external (non-USB) 2.1mm centre-positive plug into the board's
+            power jack
+        \item leads from a battery can be inserted in the \texttt{Gnd} and
+            \texttt{Vin} pin
+            headers of the \texttt{POWER} connector
+        \item recommended range is 7 to 12 volts
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Power comparison}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Board}   & \textbf{Power Consumption}           \\ \midrule
+RaspberryPI A+   & 80 mA (0.4W)                         \\
+RaspberryPI A+   & 160 mA (0.8W) with Wifi dongle       \\
+RaspberryPI B+   & 180 mA (0.9W)                        \\
+RaspberryPI2 B   & 200 mA (1.0W)                        \\
+RaspberryPI Zero & 80 mA (0.4W)                         \\
+RaspberryPI Zero & 120 mA (0.7W)                        \\
+Arduino Uno      & 30-50mA, can go down to \textless1mA \\ \bottomrule
+\end{tabular}
+
+\vspace{1em}
+$\rightarrow$ \href{http://www.home-automation-community.com/arduino-low-power-how-to-run-atmega328p-for-a-year-on-coin-cell-battery/}{Arduino for a year on a coin cell}
+
+\end{frame}
 
 \begin{frame}{Some pins have specialized functions}
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+    \begin{center}
+        \includegraphics[width=\linewidth]{arduino}
+    \end{center}
 
+
+        \end{column}
+        \begin{column}{0.5\linewidth}
     \only<1> {
     \begin{itemize}
         \item Serial: 0 (\texttt{RX}) and 1 (\texttt{TX}) \\
@@ -561,6 +673,8 @@
                   Support I$^2$C communication using the \texttt{Wire} library
         \end{itemize}
     }
+        \end{column}
+    \end{columns}
 \end{frame}
 
     \begin{frame}{How to start coding: software setup}
@@ -586,7 +700,9 @@
 
     \begin{frame}{Programming the Arduino}
         \begin{itemize}
-            \item Arduino's programming language is a version of C
+            \item Arduino's programming language is a version of C++ with a bit
+                of magic (pre-processing) to make it look simpler
+
             \item Arduino calls a program a \textbf{sketch}. Sketches are saved
                 by default in your \textbf{sketchbook} (cf \emph{File >
                 Preferences})
@@ -604,10 +720,16 @@
         \end{itemize}
     \end{frame}
 
-{\fullbackground[scale=0.9,page=14]{ian-intro-arduino.pdf}
     \begin{frame}{Programming the Arduino: initialization}
+        \begin{itemize}
+            \item Include any extra libraries you are using
+            \item All variables need to be initialized
+            \item \cpp{a=4;} will not work, \cpp{int a=4;} will
+            \item Declare variables you will assign later: \cpp{int a, b, c;}
+            \item Remember datatypes: \cpp{bool}, \cpp{int}, \cpp{double}, \cpp{float}, \cpp{char}, \cpp{String}...
+            \item Full reference: \url{https://www.arduino.cc/en/Reference}
+        \end{itemize}
     \end{frame}
-}
 
 \begin{frame}[fragile]{Programming the Arduino: setup}
     \begin{itemize}
@@ -655,10 +777,12 @@ void loop()
     \end{frame}
 }
 
+\miniframesoff
 {\fullbackground[scale=0.9,page=18]{ian-intro-arduino.pdf}
     \begin{frame}{Programming the Arduino: user defined functions}
     \end{frame}
 }
+\miniframeson
 
 {\fullbackground[scale=0.9,page=19]{ian-intro-arduino.pdf}
     \begin{frame}{Programming the Arduino: digital I/O}
@@ -685,12 +809,27 @@ void loop()
     \end{frame}
 }
 
-{\fullbackground[scale=0.9,page=24]{ian-intro-arduino.pdf}
-    \begin{frame}{Compiling and uploading code}
-    \end{frame}
-}
+\begin{frame}{Compiling and uploading code}
 
-\section{Program Examples}
+    \begin{center}
+        \begin{tikzpicture}[>=latex]
+
+            \coordinate (compile) at (-4.5,-0.2);
+            \coordinate (upload) at (-4,-0.2);
+            \coordinate (serial) at (4.4,-0.2);
+            \node at (0,0) {\includegraphics[width=0.9\linewidth]{arduino-ide-detail}};
+            \node at (-5,-2) {compile} edge[bend left,ultra thick,double arrow=4pt colored by white and black] (compile);
+            \node at (-2.5,-2) {compile + upload} edge[bend right,double arrow=4pt colored by white and black] (upload);
+            \node at (3,-2) {serial monitor} edge[bend right,double arrow=4pt colored by white and black] (serial);
+        \end{tikzpicture}
+    \end{center}
+
+
+
+    Under tools, make sure \texttt{Board} matches the actual board you are using and \texttt{Serial port} is the correct one.
+\end{frame}
+
+\section[]{Program Examples}
 
 \begin{frame}[fragile]{LED blinking}
     \begin{columns}
@@ -719,7 +858,7 @@ void loop() {
         \begin{column}{0.3\linewidth}
             \begin{center}
                 \includegraphics[width=0.35\paperheight]{arduino-led}
-                \includegraphics[width=0.35\paperheight]{arduino-led-schematic}
+                \includegraphics[width=0.3\paperheight]{arduino-led-schematic}
             \end{center}
         \end{column}
     \end{columns}
@@ -767,7 +906,11 @@ void loop() {
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Measuring position: encoders}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section[Encoders]{Measuring position: encoders}
 
 {\fullbackground[scale=0.9,page=2]{ian-sensors.pdf}
     \begin{frame}{Digital incremental encoder}
@@ -823,10 +966,21 @@ void loop() {
     \end{frame}
 }
 
-{\fullbackground[scale=0.9,page=13]{ian-sensors.pdf}
     \begin{frame}{Interface to Arduino}
+        \begin{columns}
+            \begin{column}{0.5\linewidth}
+                \begin{itemize}
+                    \item use interrupt inputs
+                    \item count the pulses
+                \end{itemize}
+            \end{column}
+            \begin{column}{0.5\linewidth}
+                \begin{center}
+                    \includegraphics[width=\linewidth]{arduino-encoder}
+                \end{center}
+            \end{column}
+        \end{columns}
     \end{frame}
-}
 
 {\fullbackground[scale=0.9,page=14]{ian-sensors.pdf}
     \begin{frame}{Resolver position measurement}
@@ -877,6 +1031,28 @@ void loop() {
     \begin{frame}{Components of an EC drive system}
     \end{frame}
 }
+
+\miniframesoff
+\begin{frame}{}
+    \begin{center}
+        \Large
+        That's all, folks!\\[2em]
+
+            \includegraphics[width=0.25\linewidth]{encoder}
+
+        \normalsize
+        \textbf{Questions}:\\
+        Portland Square B316 or \url{severin.lemaignan@plymouth.ac.uk} \\[1em]
+
+        \textbf{Slides}:\\
+        \href{https://github.com/severin-lemaignan/module-introduction-sensors-actuators}{\small
+        github.com/severin-lemaignan/module-introduction-sensors-actuators} \\
+
+        ...or the DLE!
+
+
+    \end{center}
+\end{frame}
 
 
 \end{document}
