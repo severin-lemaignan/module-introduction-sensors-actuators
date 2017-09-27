@@ -120,7 +120,7 @@
     %{\large \@date \par}%       % Set date in \large size.
   \end{center}\par
 \vskip 3em%
-\noindent\textbf{Description}\par%
+\noindent\textbf{What is it about?}\par%
 \@thesummary%
 \par\vspace{1em}%
 \noindent\textbf{Objectives}\par%
