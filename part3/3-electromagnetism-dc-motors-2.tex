@@ -1,0 +1,881 @@
+%!TEX program = xelatex
+
+\documentclass[compress]{beamer}
+%--------------------------------------------------------------------------
+% Common packages
+%--------------------------------------------------------------------------
+
+\definecolor{links}{HTML}{663000}
+\hypersetup{colorlinks,linkcolor=,urlcolor=links}
+
+\usepackage[english]{babel}
+\usepackage{pgfpages} % required for notes on second screen
+\usepackage{graphicx}
+
+\usepackage{multicol}
+
+\usepackage{tabularx,ragged2e}
+\usepackage{booktabs}
+
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+\usetheme{hri}
+
+% Display the navigation bullet even without subsections
+\usepackage{remreset}% tiny package containing just the \@removefromreset command
+\makeatletter
+\@removefromreset{subsection}{section}
+\makeatother
+\setcounter{subsection}{1}
+
+\makeatletter
+\let\beamer@writeslidentry@miniframeson=\beamer@writeslidentry
+\def\beamer@writeslidentry@miniframesoff{%
+  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}% does not happen normally
+  {%else
+    % removed \addtocontents commands
+    \clearpage\beamer@notesactions%
+  }
+}
+\newcommand*{\miniframeson}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframeson}
+\newcommand*{\miniframesoff}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframesoff}
+\makeatother
+
+
+
+\newcommand{\source}[2]{{\tiny\it Source: \href{#1}{#2}}}
+
+\usepackage{tikz}
+\usetikzlibrary{mindmap,backgrounds,positioning,calc,patterns}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepackage{circuitikz}
+
+\graphicspath{{figs/}}
+
+\title{ROCO222 \newline Intro to Sensors and Actuators}
+\subtitle{Electromagnetism \& DC motor -- Part 2}
+
+\date{}
+\author{Séverin Lemaignan}
+\institute{Centre for Robotics and Neural Systems\\{\bf Plymouth University}}
+
+\begin{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\licenseframe{github.com/severin-lemaignan/module-introduction-sensors-actuators}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{DC motors datasheets}
+
+{\fullbackground[scale=0.9,page=2]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{Maxon DC motor variants}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=3]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{Development of permanent magnets}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=4]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{Permanent magnets}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=5]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{Understanding motor datasheets}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=6]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{DC motor data}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=7]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{Speed-voltage characteristic}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=8]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{Speed-torque characteristic}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=9]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{Motor values at nominal voltage}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=10]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{Operating points}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=11]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{Effect of changing the windings}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=12]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{Torque constant $K_M$}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=13]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{Torque constant $K_M$}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=14]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{Speed constant $K_n$}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=15]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{Nominal motor characteristics}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=16]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{List of main motor parameters}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=17]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{Motor thermal considerations}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=18]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{Influence of temperature on motor operation}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=19]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{Nominal torque and temperature}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=20]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{Motor limits: operation ranges}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=21]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{Short-term overload operation}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=22]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{List of main thermal motor parameters}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=23]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{List of main mechanical motor parameters}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=24]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{List of main mechanical motor parameters}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=25]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{Other specifications}
+    \end{frame}
+}
+
+
+{\fullbackground[scale=0.9,page=26]{ian-dc-motor-datasheet.pdf}
+    \begin{frame}{Motor size selection}
+    \end{frame}
+}
+
+
+\miniframesoff
+\begin{frame}[plain]
+    \begin{center}
+        \Large
+        10 min break\\[2em]
+    \end{center}
+\end{frame}
+\miniframeson
+
+\section[Recap]{So far in electromagnetism...}
+
+\begin{frame}{Recap of last lecture}
+    \begin{itemize}
+        \item Ampère's law
+        \item Faraday's law of induction: $\displaystyle\mathcal{E} = -N \cdot \frac{d\Phi_B}{dt}$
+        \item Lenz law
+        \item Lorentz law
+    \end{itemize}
+\end{frame}
+
+\section{Inductance}
+
+{\fullbackground[scale=0.9,page=39]{ian-electromagnetism.pdf}
+    \begin{frame}{Electrical resistance}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=40]{ian-electromagnetism.pdf}
+    \begin{frame}{Electrical inductance}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=41]{ian-electromagnetism.pdf}
+    \begin{frame}{Current in an LR circuit}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=42]{ian-electromagnetism.pdf}
+    \begin{frame}{Current in an LR circuit}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=43]{ian-electromagnetism.pdf}
+    \begin{frame}{Definition of inductance}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=44]{ian-electromagnetism.pdf}
+    \begin{frame}{Inductance of a solenoid}
+    \end{frame}
+}
+
+
+\begin{frame}{Consequence for motors}
+
+  Moving a magnet in a coil induces current
+
+
+    \begin{center}
+        \includegraphics[width=0.6\linewidth]{image29}
+
+    \scalebox{1.5}{Faraday's law of induction: $\displaystyle\mathcal{E} = -N \cdot \frac{d\Phi_B}{dt}$}
+
+    \end{center}
+\end{frame}
+
+\begin{frame}{Electrical generator}
+
+    \begin{center}
+        \includegraphics[width=0.6\linewidth]{image30}
+    \end{center}
+
+\begin{itemize}
+
+\item Speed of rotation affects voltage generated
+\item So how fast will a motor rotate with applied voltage $V$?
+\item Lets consider the equivalent circuit for a DC motor
+\end{itemize}
+\end{frame}
+
+\begin{frame}{DC motor equivalent circuit}
+
+    \begin{center}
+        \resizebox{0.6\linewidth}{!}{
+            % Based on http://texample.net/tikz/examples/induction-machine/
+            \begin{circuitikz}
+                \draw
+                % rotor circuit
+                (0,0) to [short, *-] (6,0)
+                to [V, l_={EMF}] (6,2) % rotor emf
+
+                % stator circuit
+                (0,0) to [open, v^>=$V$] (0,2) % stator voltage
+                to [short, *- ,i=$I$] (1,2) % stator current
+                to [R, l=$R$] (3,2) % stator resistance
+                to [L, l=$L$] (6,2); % leakage inductance
+            \end{circuitikz}
+        }
+    \end{center}
+
+\footnotesize
+\begin{itemize}
+
+\item $V$ is the applied voltage, $I$ is the drawn current
+\item Resistance $R$ arises from the coil and the brushes
+\item Inductance $L$ arises from the coil
+\item Back EMF arises from rotation of the coil in the magnetic field
+  created by the stator magnets
+\item Therefore in no-load condition motor will speed up and reach steady
+  state when: $V$ = back EMF
+\end{itemize}
+
+\end{frame}
+
+
+\section[Diff. equations]{Differential equation of DC motor rotation}
+
+{\fullbackground[scale=0.9,page=6]{ian-simple-newtonian-mechanics.pdf}
+\begin{frame}{Moment of Inertia}
+%
+%Resists with opposing torque proportional to angular acceleration
+%
+%    \begin{columns}
+%        \begin{column}{0.5\linewidth}
+%            \begin{center}
+%                \includegraphics[height=0.3\paperheight]{image62}
+%            \end{center}
+%        \end{column}
+%        \begin{column}{0.5\linewidth}
+%            TBD
+%        \end{column}
+%    \end{columns}
+%where
+%
+%$T$ is torque in $N\cdot m$
+%
+%$J$ is moment of inertial in $kg \cdot m^2$
+%
+\end{frame}
+}
+
+\begin{frame}{DC motor dynamics}
+
+    \begin{center}
+        \includegraphics[width=0.5\linewidth]{image63}
+    \end{center}
+
+\only<1> {
+\begin{itemize}
+
+\item $R$ = Armature resistance (in ohms $\Omega$)
+\item $L$ = Armature inductance (in Henrys $H$) % CHECK
+\item $J$ = Moment of inertia for the motor rotor ($kg\cdot m^2$)
+\item $b$ = Motor viscous friction constant (in $N\cdot m\cdot s$)
+\item $K_t$ = Motor torque constant (in $\frac{N\cdot m}{A}$)
+\item $K_e$ = Electromotive force constant (in $\frac{V\cdot rad^{-1}}{sec}$) % CHECK
+\end{itemize}
+}
+
+    \only<2> {
+    Motor torque $\tau_m$ is given by $\tau_m = K_t \cdot i(t)$
+
+Mechanical resisting torque $\tau_r$ is given by $\tau_r = b \cdot \dot\theta + J \cdot \ddot\theta$
+
+Under no load, $\tau_m = \tau_r$
+
+Therefore:
+\[
+    K_t \cdot i(t) = b \cdot \dot\theta + J \cdot \ddot\theta
+\]
+
+}
+    \only<3> {
+
+\textbf{Kirchhoff's voltage law}: voltage across resistor, inductance and
+back EMF balance applied voltage
+
+    \[
+        v(t) = i(t) \cdot R + L \cdot \frac{di}{dt} + K_e \cdot \dot\theta
+    \]
+}
+\end{frame}
+
+\begin{frame}{Definition of Laplace transform}
+
+    \only<1>{
+The Laplace transform is a linear operator that maps a function $f(t)$ to
+$F(s)$.
+
+
+Specifically:
+
+\[
+    F(s) = \mathcal{L}\{f\}(s) =  \mathcal{L}\{f(t)\} = \int^{\inf}_{0} f(t)e^{-st}dt
+\]
+
+where $s = \sigma + i\omega$
+
+    Go from a function of a \emph{real} variable (here time $t$) to a complex
+    function of a complex variable (frequency, $s$).
+
+}
+
+    \only<2> {
+
+        Why bother?
+
+        Often \textbf{simplifies the process of analyzing the behavior of the
+        system}.
+
+        For example, Laplace transformation from the time domain to the
+        frequency domain \textbf{transforms differential equations into algebraic
+        equations}.
+    }
+\end{frame}
+
+\begin{frame}{Operations useful for solving differential equations}
+
+\Large
+
+\[
+    \mathcal{L} \{f'(t)\} = sF(s) - f(0)
+\]
+
+
+\[
+    \mathcal{L} \{f''(t)\} = s^2F(s) - sf(0) - f'(0)
+\]
+
+
+\[
+    \mathcal{L} \{\int^{t}_{0}f(t)dt\} = \frac{F(s)}{s}
+\]
+
+\vspace{2em}
+\small
+See
+    \href{https://en.wikipedia.org/wiki/Laplace_transform}{Wikipedia}
+    for more properties.
+
+\end{frame}
+
+\begin{frame}{Solution using Laplace transformations}
+
+\only<1>{
+
+Taking Laplace transforms of the differential equations that describe
+the motor mechanical dynamics:
+
+\[
+   K_t \cdot i(t) = b \cdot \dot\theta + J \cdot \ddot\theta
+\]
+
+becomes:
+
+\[
+    K_t \cdot I(s) = b \cdot s \cdot \theta(s) + J \cdot s^2 \cdot \theta(s)
+\]
+
+\[
+    I(s) = \frac{s \cdot (b + J \cdot s) \cdot \theta(s)}{K_t}
+\]
+
+}
+
+    \only<2> {
+
+Taking Laplace transforms of the differential equations that describe
+the motor voltages:
+
+\[
+        v(t) = i(t) \cdot R + L \cdot \frac{di}{dt} + K_e \cdot \dot\theta
+\]
+
+becomes:
+
+\[
+    V(s) = I(s) \cdot (R + L\cdot s) + K_e \cdot s \cdot \theta(s)
+\]
+}
+
+    \only<3>{
+
+Substituting:
+
+\[
+    I(s) = \frac{s \cdot (b + J \cdot s) \cdot \theta(s)}{K_t}
+\]
+
+
+into:
+
+\[
+    V(s) = I(s) \cdot (R + L\cdot s) + K_e \cdot s \cdot \theta(s)
+\]
+
+Eliminating current $I(s)$ and setting $K_t = K_e = K$ gives:
+
+\[
+    \theta(s) = \frac{K}{s \cdot ( (J \cdot s + b) \cdot (L \cdot s+ R) + K^2)} \cdot V(s)
+\]
+
+}
+
+\end{frame}
+
+\begin{frame}{Transfer function}
+
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+
+            Result of a transfer response output position for a DC electric motor
+            given its input voltage
+
+        \end{column}
+        \begin{column}{0.5\linewidth}
+
+
+            \begin{center}
+                \includegraphics[width=0.9\columnwidth]{image63}
+            \end{center}
+
+        \end{column}
+    \end{columns}
+
+\[
+    \theta(s) = \frac{K}{s \cdot ( (J \cdot s + b) \cdot (L \cdot s+ R) + K^2)} \cdot V(s)
+\]
+
+\pause
+
+Can differentiate this expression to get the transfer function for speed
+
+\[
+    \dot\theta(s) = \frac{K}{(J \cdot s + b) \cdot (L \cdot s + R) + K^2} \cdot V(s)
+\]
+
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Brushless DC motors}
+
+{\fullbackground[scale=0.9,page=2]{ian-brushless-dc-motors.pdf}
+\begin{frame}{Problems of mechanical commutation}
+
+%Can get potential difference across commutator segments
+%
+%\begin{itemize}
+%
+%\item Can get potential difference across commutator segments
+%\item Commutation shorts out the commutator segments
+%\item Arcing and sparkling at the brushes
+%\item Brushless electronic switching solves this issue
+%\end{itemize}
+
+\end{frame}
+}
+
+{\fullbackground[scale=0.9,page=3]{ian-brushless-dc-motors.pdf}
+\begin{frame}{Brushless DC Motor}
+
+%This motor type looks like DC brushed motor turned inside out!
+%
+%\begin{itemize}
+%
+%\item This motor type looks like DC brushed motor turned inside out!
+%\item In an EC (brushless) motor, commutation is performed electronically to
+%  eliminate brushes
+%\item The stator generally consists of several coils
+%\item Current flow in the stator coils creates magnetic field
+%\item This forces the permanent magnet rotor turn
+%\item The rotor can be forced to rotate continuously by switching on current
+%  in the stator coils in the appreciate sequence thereby generating a
+%  sequenced magnetic field
+%\item All brushless motors require a controller to work that must perform
+%  the commutation operation
+%\end{itemize}
+
+\end{frame}
+}
+
+{\fullbackground[scale=0.9]{image81}
+\begin{frame}{Typical brushless motor}
+
+\end{frame}
+}
+
+
+{\fullbackground[scale=0.9,page=5]{ian-brushless-dc-motors.pdf}
+\begin{frame}{How do brushless motors work?}
+
+%\begin{itemize}
+%\item Electronic commutation is used to switch current in the stator could
+%  so that the rotor is forced to rotate
+%\item There is often a control magnet is in line with the poles of the large
+%  magnet in the motor to identify rotor angle so that the controller can
+%  switch current into the appropriate coils
+%\item As it turns Hall sensors are stimulated by the magnetic flux.
+%\item The Hall sensors are used to tell the controller what the orientation
+%  is of the magnet with respect to the three winding phases.
+%\item Current in the stator coils is turned on and off in sequence creating
+%  motion from pole to pole.
+%\end{itemize}
+
+\end{frame}
+}
+
+{\fullbackground[scale=0.9,page=6]{ian-brushless-dc-motors.pdf}
+\begin{frame}{Block commutation}
+
+%\begin{itemize}
+%\item
+%\end{itemize}
+%
+%\_
+%
+%HS3
+%
+%HS1
+%
+%HS2
+%
+%controller
+%
+%power stage
+%
+%(MOSFET)
+%
+%phase 1
+%
+%phase 2
+%
+%phase 3
+%
+%EC motor
+%
+%(magnet, winding, sensor)
+%
+%rotor position feedback
+%
+%commutation
+%
+%logics
+%
+    \note{
+
+\textbf{On the right} we have a schematic \textbf{cross section of a
+maxon EC motor} with 2 pole permanent magnet in the center, the three
+phase winding and the three Hall sensors placed at 120°. For simplicity
+we assume the Hall sensors to probe the power magnet directly.
+
+\textbf{On the left} we have the \textbf{commutation electronics} which
+is fed with a DC supply voltage. There is a power bridge made of 6
+MOSFETs. Three of them are needed to contact the motor phases to the
+positive supply voltage. The lower three MOSFETs make the contact to the
+supply ground. The power bridge is controlled by a commutation logic
+that evaluates the Hall sensor signals and, accordingly, switches the
+power on the three motor phases.
+
+\textbf{Comments on the animation:}
+
+In this starting position the Hall sensors give the following signal:
+HS1 has just switched to a high state, HS2 is low and HS3 is high.
+
+The commutation logic knows that for this signal combination and
+clockwise motor rotation the current must flow from phase 1 to 2 and
+powers the respective two MOSFETs.
+
+The winding produces a magnetic field and the magnetic rotor tries to
+align.
+
+After 60° the HS3 starts seeing the south pole. Its output switches to
+low and the commutation logic switches the current from phase 1 to 3.
+The field of the winding advances by 60° and the rotor continues to
+rotate.
+
+Again after 60° the Hall sensor pattern changes, HS2 switches to a high
+output level. Accordingly the electronics commutates the current to flow
+from phase 2 to 3. Again the field of the winding advances by another
+60° and the rotor continues.
+
+And so on \ldots{} . After 6 commutation intervals we are back at the
+initial configuration and the rotor has accomplished one turn.
+
+}
+
+\end{frame}
+
+}
+
+{\fullbackground[scale=0.9,page=7]{ian-brushless-dc-motors.pdf}
+\begin{frame}{Brushless motor for RC aircraft}
+
+\end{frame}
+}
+
+{\fullbackground[scale=0.9,page=8]{ian-brushless-dc-motors.pdf}
+\begin{frame}{Maxon EC brushless motor}
+
+%Permanent magnet
+%
+%Special Winding
+%
+%Rotating part -- permanent magnet
+%
+%Hall sensors
+%
+%Control Magnet
+%
+%Case / Magnetic
+%
+%return
+
+\end{frame}
+
+}
+
+{\fullbackground[scale=0.9,page=9]{ian-brushless-dc-motors.pdf}
+\begin{frame}{Maxon EC flat brushless motor}
+
+%Multi pole motor
+%
+%Flat design gives more torque as the flux is acting further from the
+%centre of rotation
+
+\end{frame}
+
+}
+
+{\fullbackground[scale=0.9,page=10]{ian-brushless-dc-motors.pdf}
+\begin{frame}{Advantages and disadvantages of EC}
+
+%\textbf{Brushed DC motors}
+%
+%\begin{itemize}
+%
+%\item Mechanical commutation
+%\item Need periodic brush maintenance
+%\item Power losses in brushes
+%\item Sparking
+%\item Can have noisy operation
+%\item Linear torque characteristic at lower
+%\item Change direction by changing voltage polarity
+%\item Controller not always needed
+%\end{itemize}
+%
+%\textbf{EC motors}
+%
+%\begin{itemize}
+%
+%\item Electronic commutation
+%\item Low or no maintenance
+%\item Less power loss
+%\item No sparking
+%\item Quieter operation
+%\item More linear torque characteristic
+%\item Change direction by changing switching sequence
+%\item Always needs drive controller circuitry
+%\item Requires sensors
+%\item Higher reliability \& efficiency
+%\item Stator on outside -- better for heat dissipation
+%\item Longer life
+%\item More expensive
+%\end{itemize}
+
+\end{frame}
+}
+
+%\section{Some other motors}
+%
+%\begin{frame}{Wound field motors}
+%
+%\begin{itemize}
+%
+%\item What happens if we apply AC to a permanent magnet DC motor?
+%\end{itemize}
+%
+%\end{frame}
+%
+%\begin{frame}{Motor with stator winding}
+%
+%\end{frame}
+%
+%\begin{frame}{Shunt motor}
+%
+%\begin{itemize}
+%\item Like DC motor but with electromagnet to generate static field
+%\item Armature and field windings are connected in parallel
+%\item Separate current through stator and armature
+%\item Low Starting Torque
+%\item Good Speed Regulation
+%\item Used for fixed speed applications, windscreen wipers, fans
+%\end{itemize}
+%
+%\end{frame}
+%
+%\begin{frame}{Shunt motor}
+%
+%Consider motor behavior under load:
+%
+%\begin{itemize}
+%
+%\item On application of load speed will reduce
+%\item But this reduced armature EMF
+%\item Therefore armature current rises
+%\item Therefore torque increases
+%\item So speed increases too
+%\item Therefore system can do some self regulation of speed
+%\item Much like permanent magnet DC motor!
+%\end{itemize}
+%
+%\end{frame}
+%
+%\begin{frame}{Series motor}
+%
+%\begin{itemize}
+%
+%\item Armature and field windings are connected in series
+%\item Same current goes through both
+%\item High Starting Torque
+%\item As the speed builds up so does the back EMF, reducing the current,
+%  which causes a reduction in torque
+%\item Poor Speed Regulation
+%\item Used for starting heavy, industrial, high torque loads such as cranes,
+%  hoists, elevators, trolleys and conveyors
+%\item Cannot operate safely in an unloaded condition
+%\end{itemize}
+%
+%\end{frame}
+%
+%\begin{frame}{Universal Motors}
+%
+%\begin{itemize}
+%
+%\item Series motor
+%\item Uses field coils and not permanent magnets
+%\item AC and DC operation
+%\item As current direction changes it changes field direction on stator
+%  field and also armature
+%\item So always rotates in same direction independent of applied current
+%  direction
+%\end{itemize}
+%
+%\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\miniframesoff
+\begin{frame}{}
+    \begin{center}
+        \Large
+        That's all, folks!\\[2em]
+
+        \normalsize
+        \textbf{Questions}:\\
+        Portland Square B316 or \url{severin.lemaignan@plymouth.ac.uk} \\[1em]
+
+        \textbf{Slides}:\\
+        \href{https://github.com/severin-lemaignan/module-introduction-sensors-actuators}{\small
+        github.com/severin-lemaignan/module-introduction-sensors-actuators} \\
+
+        ...or the DLE!
+
+
+    \end{center}
+\end{frame}
+
+
+
+
+\end{document}
