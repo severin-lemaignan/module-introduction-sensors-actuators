@@ -976,6 +976,42 @@ void loop() {
 \end{frame}
 
 
+\begin{frame}[fragile]{Knob}
+    \begin{columns}
+        \begin{column}{0.7\linewidth}
+\begin{cppcode}
+
+#include <Servo.h>
+
+Servo myservo;  // create servo object
+
+int potpin = 0;  // analog pin used for potentiometer
+int val;    // variable to read analog value
+
+void setup() {
+  myservo.attach(9);  // attaches the servo on pin 9
+}
+
+void loop() {
+  val = analogRead(potpin); // reads potentiometer
+  val = map(val, 0, 1023, 0, 180); // map it to servo
+  myservo.write(val); // sets the servo position
+  delay(15); // waits for the servo to get there
+}
+
+\end{cppcode}
+
+        \end{column}
+        \begin{column}{0.3\linewidth}
+            \begin{center}
+                \includegraphics[width=0.35\paperheight]{knob_bb}\\
+                \includegraphics[width=0.3\paperheight]{knob_schem}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
 \begin{frame}[fragile]{Encoder}
     \begin{columns}
         \begin{column}{0.7\linewidth}
