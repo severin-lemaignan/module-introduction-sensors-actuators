@@ -8,17 +8,9 @@
 \RequirePackage{ifluatex}
 \RequirePackage{ifxetex}
 
-\ifluatex
-\RequirePackage{fontspec}
-\setmainfont[Ligatures=TeX,BoldFont=FlamaBook,ItalicFont=Flama Italic]{FlamaLight}
-\else
-\ifxetex
-\RequirePackage{fontspec}
-\setmainfont[Ligatures=TeX,BoldFont=FlamaBook,ItalicFont=Flama Italic]{FlamaLight}
-\else
-\RequirePackage[utf8x]{inputenc}
-\fi
-\fi
+\usepackage{fontspec}
+\setmainfont{Flama}[Extension=.otf,UprightFont=*Light,BoldFont=*Medium,ItalicFont=*Italic]
+\setsansfont{Flama}[Extension=.otf,UprightFont=*Light,BoldFont=*Medium,ItalicFont=*Italic]
 
 \RequirePackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
 
@@ -123,7 +115,7 @@
 \noindent\textbf{What is it about?}\par%
 \@thesummary%
 \par\vspace{1em}%
-\noindent\textbf{Objectives}\par%
+\noindent\textbf{Aims}\par%
 \@theobjectives%
 \par\vspace{1em}%
 \noindent\textbf{Specific Challenges}\par%
