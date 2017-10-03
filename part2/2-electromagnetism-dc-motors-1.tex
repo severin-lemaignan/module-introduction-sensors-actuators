@@ -74,6 +74,142 @@
 
 \maketitle
 
+\miniframesoff
+\section[]{You said ``more programming''?}
+
+\begin{frame}{Introducing the Code Golf}
+
+    \begin{itemize}
+        \item Each week, a coding challenge (in Python or C++)
+        \item Submit your code online on the DLE for some quick feedback
+        \item I'll pick one submission to show everyone one possible solution
+    \end{itemize}
+
+    \begin{itemize}
+        \item Sharpen your programming skills
+        \item For the fun
+        \item Not assessed
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{This week's challenge}
+
+Code a \sh{trumpsays} in Python:
+
+\begin{verbatim}
+$ trumpsays "Being nice to Rocket Man has failed."
+   ,------._      ________________________
+  /         :    /                        \
+ /  ,-__-.  :   | Being nice to Rocket Man |
+; ,' _   _`-|  /  has failed.              |
+|/  - ||-   | / __________________________/
+|\   /_\    |---
+:|         |;
+ \    O    ;
+  \        ;
+   `--+---'
+\end{verbatim}
+
+Bonus point for automatically fetching the actual tweets!
+
+\end{frame}
+\miniframeson
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section[Datasheets]{Motors datasheets}
+
+\begin{frame}[plain]{}
+    Take 10 min to answer the following questions (you can work in small
+    groups):
+
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+            \begin{enumerate}
+                \item My nominal voltage is 5V and I want to lift a 500g weight.
+                    Which motor?
+                \item I need to power the PR2's mobile base, which motor do I use?
+                \item How expensive each motor is?
+            \end{enumerate}
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            \begin{center}
+                \includegraphics[width=0.8\linewidth]{pr2}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+\begin{frame}{Torque?}
+
+    \begin{center}
+
+        \includegraphics[width=0.8\linewidth]{torque-dc-motor}
+
+        \source{https://www.precisionmicrodrives.com/tech-blog/2013/09/23/torque-calculations-gearmotor-applications}{Precision
+        microdrives}
+
+\begin{align*}
+   \tau &= F \times L \\
+        &= (mass \: [kg] \times g) \times radius \: [m] \\
+        &= 0.5 \times 9.81 \times 0.001 \\
+        &= 4.9 mN\cdot m \\
+    \tau / g    &= 5 . 10^{-4} kg\cdot m = 0.05 kg\cdot cm = 50 g\cdot cm
+\end{align*}
+
+    \end{center}
+\end{frame}
+
+\begin{frame}{3 datasheets}
+
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+            Maxon Amax32
+
+            \textsterling 130
+
+            \vspace{2em}
+
+
+            'Size 130' DC hobby motor
+
+            \textsterling 1.5
+
+            \vspace{2em}
+
+            Feedback 360 Degree -- High Speed Continuous Rotation Servo
+
+            \textsterling 15
+        \end{column}
+        \begin{column}{0.5\linewidth}
+
+            \begin{center}
+                \includegraphics[height=0.3\paperheight]{maxon-amax32}
+
+                \includegraphics[height=0.22\paperheight]{size130-dc-hobby-motor}
+
+                \includegraphics[height=0.22\paperheight]{feedback360}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\miniframesoff
+\begin{frame}{Today's objectives}
+
+    \begin{itemize}
+        \item \textbf{Understand the physics} behind a DC motor (why does it spin at all??)
+        \item Know how to \textbf{characterise a magnetic field}
+        \item Know the \textbf{relationships between force, current \& magnetic
+            field}
+        \item Know \textbf{how a DC motor is built}, and why that way.
+    \end{itemize}
+\end{frame}
+\miniframeson
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Electromagnetism}
@@ -84,11 +220,6 @@
     \begin{frame}{Lines of field from a bar magnet}
     \end{frame}
 }
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-    \begin{frame}{Like poles repel and unlike poles attract}
-    \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -250,34 +381,46 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 {\fullbackground[scale=0.9,page=28]{ian-electromagnetism.pdf}
-    \begin{frame}{Iron filings show field inside toroid}
+    \begin{frame}{Iron filings show field inside a toroid}
     \end{frame}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 {\fullbackground[scale=0.9,page=29]{ian-electromagnetism.pdf}
-    \begin{frame}{B inside toroid coil}
+    \begin{frame}{B inside a toroid coil}
     \end{frame}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 {\fullbackground[scale=0.9,page=30]{ian-electromagnetism.pdf}
-    \begin{frame}{B outside toroid coil}
+    \begin{frame}{B outside a toroid coil}
     \end{frame}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Conductors in magnetic field}
+\section[Force]{Conductors in magnetic field}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-{\fullbackground[scale=0.9,page=32]{ian-electromagnetism.pdf}
-    \begin{frame}{Magnetic force on wire}
-    \end{frame}
-}
+\begin{frame}{Magnetic force on wire}
+
+    \begin{center}
+        \includegraphics[width=0.8\linewidth]{lorentz-force-right-hand-rule}
+
+        \source{https://en.wikipedia.org/wiki/Lorentz_force}{Wikipedia}
+    \end{center}
+
+    Force on straight wire of length L:
+
+    \begin{center}
+    \Large
+    $\vec{F} = \vec{I} L \times \vec{B}$
+    \end{center}
+
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -301,7 +444,7 @@
 
 
     \begin{center}
-        \includegraphics[width=0.6\linewidth]{../part2/figs/image29}
+        \includegraphics[width=0.6\linewidth]{../part3/figs/image29}
 
     \scalebox{1.5}{Faraday's law of induction: $\displaystyle\mathcal{E} = -N \cdot \frac{d\Phi_B}{dt}$}
 
@@ -400,7 +543,7 @@
     \end{center}
 
 \end{frame}
-\videoframe{part2/figs/homopolarmotor.ogv?start=1}
+\videoframe{figs/homopolarmotor.ogv?start=1}
 
 \begin{frame}{Homopolar Motor}
 
@@ -419,71 +562,13 @@
     \source{https://en.wikipedia.org/wiki/Homopolar_motor}{Wikipedia}
 \end{frame}
 
-\begin{frame}{Fleming's Left Hand (Motor) Rule}
-
-Used to determine the direction of DC current carrying conductor in a
-fixed magnetic field
+\begin{frame}{Force on a single coil in a magnetic field}
 
     \begin{center}
-        \resizebox{0.9\linewidth}{!}{
-            \begin{tikzpicture}[>=latex]
-                \node at (0,0) (hand) {\includegraphics[width=4cm]{left-hand}};
-                \coordinate (origin) at (0.45,0.2);
-
-                \draw[ultra thick, ->, blue] (origin) -- ($(origin) + (0,2)$);
-                \draw[ultra thick, ->, green] (origin) -- ($(origin) + (2,0)$);
-                \draw[ultra thick, ->, red] (origin) -- ($(origin) + (1,-1.4)$);
-
-                \node[below left=2.3 of origin] {\large \bf left hand!};
-                \node[align=left,above left=0.7 of origin] {\textbf{Thumb}: \\
-                direction of \\ conductor motion};
-
-                \node[align=left,above right=0.5 of origin] {\textbf{Fore
-                Finger}:\\ direction of fixed \\magnetic field (N to S)};
-
-                \node[align=left,below right=of origin] {\textbf{Middle
-                Finger}:\\ conventional current direction};
-            \end{tikzpicture}
-        }
+        \includegraphics<1>[width=0.8\linewidth]{conductor-in-magnetic-field-1}
+        \includegraphics<2>[width=0.8\linewidth]{conductor-in-magnetic-field-2}
     \end{center}
-
-
-
-
 \end{frame}
-
-{\fullbackground[scale=1]{ian-dc-motors-p6.pdf}
-\begin{frame}{Using Fleming's Left Hand (Motor) Rule}
-%
-%The Left Hand Rule to determines the movement direction of conductor
-%carrying current
-%
-%    \begin{center}
-%        \resizebox{0.6\linewidth}{!}{
-%            \begin{tikzpicture}[>=latex]
-%                \node at (0,0) (hand) {\includegraphics[width=4cm]{left-hand}};
-%                \coordinate (origin) at (0.45,0.2);
-%
-%                \draw[ultra thick, ->, blue] (origin) -- ($(origin) + (0,2)$);
-%                \draw[ultra thick, ->, green] (origin) -- ($(origin) + (2,0)$);
-%                \draw[ultra thick, ->, red] (origin) -- ($(origin) + (1,-1.4)$);
-%
-%                \node[below left=2.3 of origin] {\large \bf left hand!};
-%                \node[align=left,above left=0.7 of origin] {\textbf{Thumb}: \\
-%                direction of \\ conductor motion};
-%
-%                \node[align=left,above right=0.5 of origin] {\textbf{Fore
-%                Finger}:\\ direction of fixed \\magnetic field (N to S)};
-%
-%                \node[align=left,below right=of origin] {\textbf{Middle
-%                Finger}:\\ conventional current direction};
-%            \end{tikzpicture}
-%        }
-%        \includegraphics[width=0.6\linewidth]{image13}
-%    \end{center}
-%
-\end{frame}
-}
 
 \begin{frame}{Single coil in magnetic field}
 
@@ -642,6 +727,9 @@ the coil pivots and generates a torque $\tau$ given by:
 
 
 \end{frame}
+
+\imageframe[color=black]{simple-dc-motor}
+
 
 \begin{frame}{Precious metal commutators}
 
@@ -804,7 +892,7 @@ to control speed or position.
 
     \begin{center}
         \includegraphics[height=0.4\paperheight]{image24}\hspace{1em}
-        \video[1]{0.35\linewidth}{part2/figs/torque-ripple.mp4?autostart&loop}
+        \video[1]{0.35\linewidth}{figs/torque-ripple.mp4?autostart&loop}
     \end{center}
 
 \begin{itemize}
@@ -844,6 +932,8 @@ to control speed or position.
 
 
 \end{frame}
+
+\videoframe[0.56]{figs/dc-motor-zbyszek.mkv}
 
 \begin{frame}{DC motor as an energy converter}
 
@@ -1186,6 +1276,8 @@ technology lead to \textbf{stronger motors}.
     \begin{center}
         \Large
         That's all, folks!\\[2em]
+
+        \textbf{NO LECTURE NEXT WEEK!}
 
         \normalsize
         \textbf{Questions}:\\
