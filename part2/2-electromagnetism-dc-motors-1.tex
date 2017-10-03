@@ -114,6 +114,19 @@ $ trumpsays "Being nice to Rocket Man has failed."
 Bonus point for automatically fetching the actual tweets!
 
 \end{frame}
+
+
+\begin{frame}{Lab journal}
+
+    \begin{center}
+    \Large
+    Do not forget to submit your lab journal on the DLE for formative feedback!
+
+    \normalsize
+    Deadline: 13th October, 16:00
+    \end{center}
+
+\end{frame}
 \miniframeson
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -417,7 +430,7 @@ Bonus point for automatically fetching the actual tweets!
 
     \begin{center}
     \Large
-    $\vec{F} = \vec{I} L \times \vec{B}$
+        $\highlight<1>{\vec{F} = \vec{I} L \times \vec{B}}$
     \end{center}
 
 \end{frame}
@@ -431,10 +444,12 @@ Bonus point for automatically fetching the actual tweets!
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-{\fullbackground[scale=0.9,page=34]{ian-electromagnetism.pdf}
-    \begin{frame}{Magnetic force between two wires}
-    \end{frame}
-}
+\begin{frame}{Magnetic force between two wires}
+    \begin{center}
+        \includegraphics<1>[width=\linewidth]{parallel-wires}
+        \includegraphics<2>[width=\linewidth]{parallel-wires-solution}
+    \end{center}
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -461,7 +476,7 @@ Bonus point for automatically fetching the actual tweets!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 {\fullbackground[scale=0.9,page=37]{ian-electromagnetism.pdf}
-    \begin{frame}{Power used moving conduction in magnetic field B}
+    \begin{frame}{Moving a conductor in a magnetic field B}
     \end{frame}
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -565,8 +580,9 @@ Bonus point for automatically fetching the actual tweets!
 \begin{frame}{Force on a single coil in a magnetic field}
 
     \begin{center}
-        \includegraphics<1>[width=0.8\linewidth]{conductor-in-magnetic-field-1}
-        \includegraphics<2>[width=0.8\linewidth]{conductor-in-magnetic-field-2}
+        \includegraphics<1>[width=0.8\linewidth]{conductor-in-magnetic-field-0}
+        \includegraphics<2>[width=0.8\linewidth]{conductor-in-magnetic-field-1}
+        \includegraphics<3>[width=0.8\linewidth]{conductor-in-magnetic-field-2}
     \end{center}
 \end{frame}
 
@@ -612,15 +628,14 @@ electromagnetic torque because of mechanical losses
         \includegraphics<3->[width=0.8\linewidth]{image16-3}
     \end{center}
 
-\only<3>{
-If current $I$ flows through a coil of depth $L$ with magnetic field $B$,
+\only<3-4>{
+If current $I$ flows through a coil of depth $L$ and width $d$, with magnetic field $B$,
 the coil pivots and generates a torque $\tau$ given by:
 
 \begin{equation*}
 \begin{split}
-\tau = 2 (\frac{d}{2}) \cdot F \cdot cos(\theta) &= d \cdot B \cdot I \cdot L \cdot cos(\theta) \\
-                                                 &= d \cdot B \cdot I \cdot L
-                                                 \text{\hspace{2em} when } \theta = 0^\circ \\
+    \tau = 2 (\frac{d}{2}) \cdot F \cdot cos(\theta) &= \highlight<4>{d \cdot B \cdot I \cdot L \cdot cos(\theta)} \\
+                                                 &= d \cdot B \cdot I \cdot L \text{\hspace{2em} when } \theta = 0^\circ \\
                                                  &= 0 \text{\hspace{2em} when } \theta = 90^\circ 
 \end{split}
 \end{equation*}
@@ -628,7 +643,7 @@ the coil pivots and generates a torque $\tau$ given by:
 
 }
 
-    \only<4>{
+    \only<5>{
 
         \begin{columns}
             \begin{column}{0.7\linewidth}
@@ -647,7 +662,7 @@ the coil pivots and generates a torque $\tau$ given by:
     \resizebox{\linewidth}{!}{
         \begin{tikzpicture} 
             \begin{axis}[
-                    xtick distance=180,
+                    xtick distance=90,
                     ytick distance=1,
                     no markers, samples=200,
                     axis x line=bottom,
@@ -669,14 +684,14 @@ the coil pivots and generates a torque $\tau$ given by:
 
     \begin{columns}
         \begin{column}{0.3\linewidth}
-            So coil of wire with fixed current direction has torque that changes
+            A coil of wire with fixed current direction $\rightarrow$ torque changes
             sign as it rotates
 
             \vspace{2em}
-            \resizebox{\linewidth}{!}{
+            \resizebox{!}{0.3\paperheight}{
                 \begin{tikzpicture} 
                     \begin{axis}[
-                            xtick distance=180,
+                            xtick distance=90,
                         ytick distance=1,
                         no markers, samples=200,
                         axis x line=bottom,
@@ -691,24 +706,27 @@ the coil pivots and generates a torque $\tau$ given by:
             }
         \end{column}
         \begin{column}{0.3\linewidth}
-            But we want torque always to be in the same direction!
+            \only<2->{
+            We want torque always to be in the same direction!
 
-            So use commutator to switch it!
+            Use a \textbf{commutator} to switch it!
 
             \begin{center}
-                \includegraphics[width=1.2\columnwidth]{image22}
+                \includegraphics[height=0.3\paperheight]{image22}
             \end{center}
+            }
         \end{column}
         \begin{column}{0.3\linewidth}
 
-            Switching current direction before torque direction flips ensures
-            that it is always in same direction
+            \only<3>{
+            Switching current direction before torque flips ensures
+            torque has constant sign
             
             \vspace{2em}
-            \resizebox{\linewidth}{!}{
+            \resizebox{!}{0.3\paperheight}{
                 \begin{tikzpicture} 
                     \begin{axis}[
-                            xtick distance=180,
+                        xtick distance=90,
                         ytick distance=1,
                         no markers, samples=200,
                         axis x line=bottom,
@@ -721,6 +739,7 @@ the coil pivots and generates a torque $\tau$ given by:
                     \end{axis}
                 \end{tikzpicture} 
             }
+        }
         \end{column}
     \end{columns}
 
@@ -728,7 +747,7 @@ the coil pivots and generates a torque $\tau$ given by:
 
 \end{frame}
 
-\imageframe[color=black]{simple-dc-motor}
+\imageframe[color=black,caption=What is the issue with a single coil?]{simple-dc-motor}
 
 
 \begin{frame}{Precious metal commutators}
@@ -763,6 +782,8 @@ the coil pivots and generates a torque $\tau$ given by:
     \end{columns}
 
 \end{frame}
+
+\imageframe[color=black]{zipzaps-toy-commutator}
 
 \begin{frame}{Carbon brush commutators}
     \begin{columns}
@@ -805,88 +826,21 @@ the coil pivots and generates a torque $\tau$ given by:
 
 \end{frame}
 
-{\fullbackground[scale=0.9,page=21]{../part1/figs/ian-sensors.pdf}
-    \begin{frame}{Electronic commutation systems}
-    \note {
-In this third part of the presentation we would like to understand the electronic commutation.
-There are different systems. maxon uses the following three :
+{\fullbackground[scale=0.9,page=2]{../part3/figs/ian-brushless-dc-motors.pdf}
+\begin{frame}{Problems of mechanical commutation}
 
-- Block commutation with or without Hall sensors
-- Sinusoidal commutation.
+%Can get potential difference across commutator segments
+%
+%\begin{itemize}
+%
+%\item Can get potential difference across commutator segments
+%\item Commutation shorts out the commutator segments
+%\item Arcing and sparkling at the brushes
+%\item Brushless electronic switching solves this issue
+%\end{itemize}
 
-As you can see the different maxon controller families perform different commutation types.
-
-Common to all these systems is that they should apply the current in a way, that the generated torque is as high as possible. As we have learned this is achieved by a perpendicular orientation of the magnetic fields of permanent magnet and winding. We have seen as well that we need to know the orientation of the permanent magnet to achieve this.
-
-We start with block commutation with Hall sensor position feedback. That's the standard commutation type. Once we have understood this the two other commutation schemes are easily derived from it.
-    }
-    \end{frame}
+\end{frame}
 }
-
-{\fullbackground[scale=0.9,page=22]{../part1/figs/ian-sensors.pdf}
-    \begin{frame}{Block commutation}
-
-\note{
-First we have to look at the Hall sensor feedback signals. Again we do this
-based on the simplest design, the slotless maxon EC motor with 1 pole pair.
-
-In the back of the motor there are three Hall sensor mounted on the PCB at an
-angle of 120°. The Hall sensor detect the magnetic poles of the control magnet
-which is mounted on the shaft. The control magnet exhibits the same two
-magnetic poles in the same orientation as the power magnet. (Basically the Hall
-sensors could monitor the power magnet directly but the control magnet offers
-two advantages: The magnetic transitions between north and south pole are more
-precisely defined. And an angular misalignment and tolerances between the
-relative position of winding and Hall sensors can be adjusted.)
-
-The digital Hall sensors used probe the direction of the magnetic field. They
-generates a high output signal (5V) if the north pole of the control magnet is
-close to them. A south pole produces a low level (Gnd).
-
-The actual position of the control magnet in the diagram generates the
-following signals:
-
-- The blue Hall sensor sees the north pole. Thus the signal output level is
-high and will remain high for the next 120°.
-- The green Hall sensor is close to the south pole. The output level is low for
-the next 60°. Then the north pole approaches and the output signal will switch
-to a high state.
-- The red Hall sensor has just switched from high to low where the signal level
-will stay for the next half a turn.
-
-The combination of the three Hall sensor signals is unique for each 60° of
-rotation. Looking at these signals allows to know the rotor position within
-60°. That exactly what we need for commutation. Remember there were 6 different
-ways of current flow through the motor at a commutation angle of 60°.
-
-The next slide shows how the complete block commutation system works.
-}
-    \end{frame}
-}
-
-{\fullbackground[scale=0.9,page=23]{../part1/figs/ian-sensors.pdf}
-    \begin{frame}{Components of an EC drive system}
-\note{
-Let's first look at an EC drive system in general.
-
-The three phases of the EC motor cannot be connected directly to a DC power
-supply. The voltage needs to be switched in a sequence. This is done by the
-electronic commutation. For the correct switching the electronics needs rotor
-position information from the motor. This information is usually provided by
-the Hall sensors.
-
-An EC motor cannot operate on its own: It's always the combination of motor and
-electronics commutation that makes the full drive.
-
-
-For more sophisticated commutation and precise motor control, e.g. at very low
-speeds, the use of an encoder feedback might be necessary. Often the
-electronics not only performs the commutation but at the same time can be used
-to control speed or position.
-}
-    \end{frame}
-}
-
 
 \begin{frame}{DC Motor Torque Ripple}
 
@@ -1011,7 +965,7 @@ particular to the maxon DC motor and the brushless maxon EC motor.
         \item Armature may have skewed coil slots to reduce cogging
     \end{itemize}
 
-    \resizebox{\columnwidth}{!}{
+    \resizebox{0.9\columnwidth}{!}{
     \begin{tikzpicture}[>=latex]
         \node at (0,0) {\includegraphics[width=0.9\columnwidth]{image39}};
         \node at (-2,1.5) {\footnotesize brushes} edge[bend left,thick,->] (-1.2,0.5);
@@ -1024,19 +978,19 @@ particular to the maxon DC motor and the brushless maxon EC motor.
 
 
     \end{column}
-    \begin{column}{0.5\linewidth}
+    \begin{column}{0.6\linewidth}
     \begin{itemize}
         \item Stator magnets generate magnetic field so current in coils generate
-        toque
+        torque
         \item Armature rotor consists of laminated iron core wrapped with coils to
-        give mow reluctance but avoid eddy current
-        \item Commutator used so switch current direction and permit continuous
+        provide higher reluctance while avoiding eddy currents
+        \item Commutator used to switch current direction and permit continuous
         rotation
-        \item Brushes provide contact to commutator
+        \item Brushes enable a current flow to the commutator
     \end{itemize}
 
 
-    \resizebox{\columnwidth}{!}{
+    \resizebox{0.7\columnwidth}{!}{
         \begin{tikzpicture}[>=latex]
             \node at (0,0) {\includegraphics[width=0.9\columnwidth]{image38}};
         \end{tikzpicture}
@@ -1175,14 +1129,12 @@ Conventional motor with rotating magnet and iron core
             \end{center}
 
 
-Maxon motor with stationary magnet and special winding
+Coreless motor with stationary magnet and special winding
 
 \begin{itemize}
-\item Smooth
-\item Linear Characteristic
-\item Efficient
-\item Responsive
-\item Powerful
+    \item Better position control (no cogging)
+    \item Smooth, less noise/vibrations
+    \item Linear Characteristic
 \end{itemize}
 
         \end{column}
@@ -1198,8 +1150,7 @@ Maxon motor with stationary magnet and special winding
 \begin{itemize}
 
 \item No iron core - no iron losses
-\item Constantly impressed magnetization
-\item High efficiency, up to over 90\%
+\item High efficiency, up to over 85\%
 \item No saturation effects in the iron core
 \item Even at the highest currents the produced torque is proportional to
   the motor current
@@ -1267,17 +1218,28 @@ technology lead to \textbf{stronger motors}.
 
 \end{frame}
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \miniframesoff
+\begin{frame}{Next lecture}
+    \begin{center}
+        \textbf{NO LECTURE NEXT WEEK!}
+    \end{center}
+
+
+    \begin{itemize}
+        \item Everything about motors' datasheets
+        \item Another dive into electromagnetism and induction
+        \item Brushless DC motors
+    \end{itemize}
+\end{frame}
+
 \begin{frame}{}
     \begin{center}
         \Large
         That's all, folks!\\[2em]
 
-        \textbf{NO LECTURE NEXT WEEK!}
 
         \normalsize
         \textbf{Questions}:\\

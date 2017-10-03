@@ -13,7 +13,7 @@
    inkscape:export-ydpi="90.000000"
    inkscape:export-xdpi="90.000000"
    inkscape:export-filename="/home/silsor/graphics/mine/stop_hand.png"
-   sodipodi:docname="conductor-in-magnetic-field-1.svg"
+   sodipodi:docname="conductor-in-magnetic-field-0.svg"
    height="150.3932mm"
    width="189.72441mm"
    inkscape:version="0.91 r13725"
@@ -161,7 +161,7 @@
      inkscape:window-y="64"
      inkscape:window-x="0"
      inkscape:cy="319.82792"
-     inkscape:cx="116.6203"
+     inkscape:cx="-114.69664"
      inkscape:zoom="1.0137606"
      gridtolerance="50"
      inkscape:grid-points="false"
@@ -201,12 +201,12 @@
   <image
      sodipodi:absref="/home/skadge/teaching/roco222/part2/figs/image13.png"
      xlink:href="image13.png"
-     y="16.660769"
-     x="0"
-     id="image4898"
-     preserveAspectRatio="none"
+     width="640"
      height="480"
-     width="640" />
+     preserveAspectRatio="none"
+     id="image4898"
+     x="0"
+     y="16.660769" />
   <text
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;font-size:74.58717346px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -231,36 +231,6 @@
        x="566.85699"
        id="tspan4905"
        sodipodi:role="line">S</tspan></text>
-  <g
-     id="g4923"
-     transform="matrix(2.0588823,0,0,2.0252831,29.351053,-10.115237)"
-     style="stroke-width:0.48971269">
-    <text
-       id="text4917"
-       style="line-height:0%;stroke-width:0.48971269"
-       x="224.94655"
-       y="31.039135"
-       sodipodi:linespacing="0%">
-      <tspan
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26px;line-height:125%;font-family:'Bitstream Vera Sans', Sans;text-align:start;text-anchor:start;fill:#fc0000;fill-opacity:1;stroke-width:0.48971269"
-         y="31.039135"
-         x="224.94655"
-         id="tspan4915"
-         sodipodi:role="line">F</tspan>
-    </text>
-    <path
-       sodipodi:nodetypes="cccccc"
-       id="path4919"
-       d="m 225.24418,6.8678336 13.65539,-0.023725 0.004,-1.3728101 4.15569,1.357583 -4.15253,1.2327702 0.0155,-1.2601666"
-       style="display:inline;overflow:visible;visibility:visible;fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#ff0000;stroke-width:0.69235581;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0pt;stroke-opacity:1;marker:none"
-       inkscape:connector-curvature="0" />
-    <path
-       style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#ff0000;stroke-width:4.76049709;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 208.40969,128.59014 0.17329,-102.464774 3.2084,-0.0077 -3.1813,-10.646056 -2.74091,10.43198 2.79485,0.162951"
-       id="path4921"
-       sodipodi:nodetypes="cccccc"
-       inkscape:connector-curvature="0" />
-  </g>
   <g
      id="g4939"
      transform="matrix(1.915679,0,0,1.9136451,-137.38571,-150.73479)"

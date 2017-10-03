@@ -14,9 +14,9 @@
    inkscape:export-xdpi="90.000000"
    inkscape:export-filename="/home/silsor/graphics/mine/stop_hand.png"
    sodipodi:docname="conductor-in-magnetic-field-2.svg"
-   height="140.99362mm"
-   width="177.86664mm"
-   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
+   height="150.3932mm"
+   width="189.72441mm"
+   inkscape:version="0.91 r13725"
    sodipodi:version="0.32"
    id="svg1337"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
@@ -158,10 +158,10 @@
   </defs>
   <sodipodi:namedview
      inkscape:current-layer="g5018"
-     inkscape:window-y="873"
+     inkscape:window-y="64"
      inkscape:window-x="0"
-     inkscape:cy="286.52232"
-     inkscape:cx="-125.54733"
+     inkscape:cy="319.82792"
+     inkscape:cx="116.6203"
      inkscape:zoom="1.0137606"
      gridtolerance="50"
      inkscape:grid-points="false"
@@ -174,7 +174,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:window-width="2560"
-     inkscape:window-height="1011"
+     inkscape:window-height="1304"
      showguides="true"
      inkscape:guide-bbox="true"
      inkscape:window-maximized="1"
@@ -187,7 +187,7 @@
        id="GridFromPre046Settings"
        type="xygrid"
        originx="-643.95697"
-       originy="182.76238"
+       originy="216.06798"
        spacingx="1"
        spacingy="1"
        color="#0000ff"
@@ -199,20 +199,21 @@
        enabled="true" />
   </sodipodi:namedview>
   <image
-     sodipodi:absref="/home/slemaignan/teaching/roco222/part2/figs/image13.png"
+     sodipodi:absref="/home/skadge/teaching/roco222/part2/figs/image13.png"
      xlink:href="image13.png"
-     width="640"
-     height="480"
-     preserveAspectRatio="none"
-     id="image4898"
+     y="16.660769"
      x="0"
-     y="16.660769" />
+     id="image4898"
+     preserveAspectRatio="none"
+     height="480"
+     width="640" />
   <text
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;font-size:74.58717346px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="47.010437"
      y="376.76044"
-     id="text4903"><tspan
+     id="text4903"
+     sodipodi:linespacing="125%"><tspan
        sodipodi:role="line"
        id="tspan4901"
        x="47.010437"
@@ -223,7 +224,8 @@
      y="300.8056"
      x="566.85699"
      style="font-style:normal;font-weight:normal;font-size:74.58717346px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     xml:space="preserve"><tspan
+     xml:space="preserve"
+     sodipodi:linespacing="125%"><tspan
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:FlamaMedium;-inkscape-font-specification:FlamaMedium;stroke-width:0.53628528px"
        y="300.8056"
        x="566.85699"
@@ -237,7 +239,8 @@
        id="text4917"
        style="line-height:0%;stroke-width:0.48971269"
        x="224.94655"
-       y="31.039135">
+       y="31.039135"
+       sodipodi:linespacing="0%">
       <tspan
          style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26px;line-height:125%;font-family:'Bitstream Vera Sans', Sans;text-align:start;text-anchor:start;fill:#fc0000;fill-opacity:1;stroke-width:0.48971269"
          y="31.039135"
@@ -266,7 +269,8 @@
        id="text4933"
        style="line-height:0%;stroke-width:0.52228546"
        x="319.4639"
-       y="285.42441">
+       y="285.42441"
+       sodipodi:linespacing="0%">
       <tspan
          style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26px;line-height:125%;font-family:'Bitstream Vera Sans', Sans;text-align:start;text-anchor:start;fill:#007f00;fill-opacity:1;stroke-width:0.52228546"
          y="285.42441"
@@ -297,7 +301,8 @@
        y="214.65923"
        x="219.19725"
        style="line-height:0%;stroke-width:0.48971269"
-       id="text4978">
+       id="text4978"
+       sodipodi:linespacing="0%">
       <tspan
          sodipodi:role="line"
          id="tspan4976"
@@ -326,7 +331,8 @@
        y="158.61885"
        x="240.16583"
        style="line-height:0%;stroke-width:0.52228546"
-       id="text4988">
+       id="text4988"
+       sodipodi:linespacing="0%">
       <tspan
          sodipodi:role="line"
          id="tspan4986"
@@ -357,7 +363,8 @@
        y="321.06622"
        x="210.21935"
        style="line-height:0%;stroke-width:0.51032734"
-       id="text4998">
+       id="text4998"
+       sodipodi:linespacing="0%">
       <tspan
          sodipodi:role="line"
          id="tspan4996"
@@ -396,7 +403,8 @@
        id="text5010"
        style="line-height:0%;stroke-width:0.51032734"
        x="205.65266"
-       y="266.62903">
+       y="266.62903"
+       sodipodi:linespacing="0%">
       <tspan
          style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26px;line-height:125%;font-family:'Bitstream Vera Sans', Sans;text-align:start;text-anchor:start;fill:#0000d7;fill-opacity:1;stroke-width:0.51032734"
          y="266.62903"
