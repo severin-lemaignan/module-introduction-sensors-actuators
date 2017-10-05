@@ -260,15 +260,43 @@
 
 \begin{frame}{Consequence for motors}
 
-  Moving a magnet in a coil induces current
+    \only<1>{
+  Moving a magnet in a coil induces current:
 
 
     \begin{center}
         \includegraphics[width=0.6\linewidth]{image29}
 
-    \scalebox{1.5}{Faraday's law of induction: $\displaystyle\mathcal{E} = -N \cdot \frac{d\Phi_B}{dt}$}
+    \scalebox{1.5}{Faraday's law of induction: $\displaystyle\mathcal{E} = - \cdot \frac{d\Phi_B}{dt}$}
 
     \end{center}
+}
+
+    \only<2>{
+        
+    If a coil consists of N loops with the same area, the total induced EMF in
+    the coil is given by:
+
+\[
+        \mathcal{E} = -N \cdot \frac{d\Phi_B}{dt}
+\]
+
+In a uniform magnetic field, the induced EMF can be expressed as:
+
+\[
+    \mathcal{E} = -N \cdot \frac{d}{dt} (B A cos(\theta)) = - N \cdot B \cdot A \frac{d cos(\theta)}{dt} = -N \cdot B \cdot A \cdot sin(\theta) \cdot \dot\theta
+\]
+
+With enough coils,
+
+\[
+    \mathcal{E} = - N \cdot B \cdot A \cdot \dot\theta = K_e \dot\theta
+\]
+
+    $K_e$ is the \textbf{back-EMF} constant of the motor.
+
+
+    }
 \end{frame}
 
 \begin{frame}{Electrical generator}
@@ -313,12 +341,209 @@
 \item Inductance $L$ arises from the coil
 \item Back EMF arises from rotation of the coil in the magnetic field
   created by the stator magnets
-\item Therefore in no-load condition motor will speed up and reach steady
-  state when: $V$ = back EMF
 \end{itemize}
 
 \end{frame}
 
+\begin{frame}{Voltage in a DC motor}
+
+    \begin{center}
+        \resizebox{0.6\linewidth}{!}{
+            % Based on http://texample.net/tikz/examples/induction-machine/
+            \begin{circuitikz}
+                \draw
+                % rotor circuit
+                (0,0) to [short, *-] (6,0)
+                to [V, l_={EMF $\mathcal{E}$}] (6,2) % rotor emf
+
+                % stator circuit
+                (0,0) to [open, v^>=$V$] (0,2) % stator voltage
+                to [short, *- ,i=$I$] (1,2) % stator current
+                to [R, l=$R$] (3,2) % stator resistance
+                to [L, l=$L$] (6,2); % leakage inductance
+            \end{circuitikz}
+        }
+    \end{center}
+
+\textbf{Kirchhoff's voltage law}: voltage across resistor, inductance and
+back EMF balance applied voltage
+
+\begin{align*}
+    V &= I \cdot R + L \cdot \frac{dI}{dt} + \mathcal{E} \\
+      &= I \cdot R + L \cdot \frac{dI}{dt} + K_e \cdot \dot\theta
+\end{align*}
+
+\pause
+
+How to know $I$?
+
+\end{frame}
+
+
+\begin{frame}{Conservation of energy!}
+
+
+    \textbf{Conservation of energy means electrical power in = mechanical power out +
+    losses}
+
+
+
+    \begin{columns}
+        \begin{column}{0.7\linewidth}
+    \begin{center}
+        \resizebox{0.9\linewidth}{!}{
+            \begin{tikzpicture}[>=latex]
+
+                \node at (0,0) (motor) {\includegraphics[width=3cm]{../part2/figs/maxon}};
+                \node[below left=0.5 of motor] (pmech) {$P_{mech}= \tau \cdot \dot\theta$};
+                \node[above right=0.5 of motor] (pel) {$P_{el}= V \cdot I$};
+                \node[below right=0.5 of motor] (pr) {$P_{r}=R \cdot I^2$};
+                \draw[ultra thick, red,->] (motor) -- (pmech);
+                \draw[ultra thick, red,->] (pel) -- (motor);
+                \draw[ultra thick, orange,->] (motor) -- (pr);
+            \end{tikzpicture}
+        }
+
+    \end{center}
+
+        \end{column}
+        \begin{column}{0.3\linewidth}
+    \footnotesize
+    where:
+
+        $\tau$ = torque;
+        
+        $\dot\theta$ = angular velocity;
+        
+        $I$ = input current;
+        
+        $V$ = applied voltage;
+
+        $R$ = windings resistance
+            
+        \end{column}
+    \end{columns}
+
+        \begin{center}
+    \[
+        P_{el} = P_{mech} + P_{r}
+    \]
+        \end{center}
+
+\end{frame}
+
+
+\begin{frame}{Remember torque}
+
+\only<1>{
+    \begin{center}
+        \includegraphics[width=0.8\linewidth]{../part2/figs/image16-3}
+    \end{center}
+
+If current $I$ flows through a coil of depth $L$ and width $d$ with $n$ turns,
+    with magnetic field $B$, the coil pivots and generates a torque $\tau$ given
+    by:
+
+\[
+\tau = n \cdot 2 (\frac{d}{2}) \cdot F \cdot cos(\theta) = n \cdot d \cdot B \cdot I \cdot L \cdot cos(\theta)
+\]
+}
+
+    \only<2>{
+With enough coils, we can remove the $cos(\theta)$ term:
+\[
+\tau = n \cdot d \cdot B \cdot I \cdot L = K_\tau \cdot I
+\]
+
+
+$K_\tau$ is the motor's torque constant.
+
+}
+
+\end{frame}
+
+\begin{frame}{Putting it all together}
+
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+
+    \begin{itemize}
+        \item $V = K_e \cdot \dot\theta + I \cdot R$
+        \item $\tau = K_\tau \cdot I$
+
+    \end{itemize}
+        \end{column}
+        \begin{column}{0.5\linewidth}
+    $V$ = applied voltage
+            
+    $\dot\theta$ = motor angular velocity
+            
+    $I$ = motor current
+    
+    $R$ = motor resistance
+    
+    $\tau$ = torque, including frictional losses
+        \end{column}
+    \end{columns}
+
+
+    \pause 
+
+    \begin{itemize}
+        \item Electrical power in: $V \cdot I = K_e \cdot \dot\theta \cdot I + I^2 \cdot R$
+        \item Mechanical power out: $\tau \cdot \dot\theta = K_\tau \cdot I \cdot \dot\theta$
+        \item Losses: $I^2 \cdot R$
+    \end{itemize}
+
+    \pause
+
+    Conservation of energy means electrical power in = mechanical power out +
+    losses.
+
+    This is true if and only if $K_e=K_\tau$.
+
+    \pause
+
+    \textbf{In a DC motor, the torque constant and back-EMF constants are equal.}
+\end{frame}
+
+\begin{frame}{Back to the voltage}
+
+
+\begin{align*}
+    V &= K_e \cdot \dot\theta + I \cdot R \\
+    \tau &= K_\tau \cdot I \Rightarrow I = \frac{\tau}{k_\tau}
+\end{align*}
+
+\begin{equation*}
+\begin{split}
+    \Rightarrow V &= \frac{\tau}{K_\tau} \cdot R + K_e \cdot \dot\theta \\
+    \Rightarrow \dot\theta &= \frac{V}{K} - \frac{\tau}{K^2} \cdot R
+\end{split}
+\end{equation*}
+
+\end{frame}
+
+
+\begin{frame}{How to choose the motor constants?}
+
+    Rule of thumb with DC motor selection (also true for brushless DC motors to
+    a large extent) -- pick a motor with a $K_T$ and back-EMF constant such that
+    the supply voltage you have available is well-matched with the back-emf at
+    your maximum speed. You usually want back-emf voltage to be 80-95\% of the
+    supply voltage, but the exact number depends on the load torque and the $I R$
+    drop in the motor at that operating point.
+
+    If you pick a $K_T=K_e$ too high, you'll run out of voltage and won't be
+    able to achieve the speed you need. If you pick a $K_T=K_e$ too low, the
+    current needed to achieve the torque you need will be higher than necessary.
+
+    \source{https://electronics.stackexchange.com/questions/33315/understanding-motor-constants-kt-and-kemf-for-comparing-brushless-dc-motors}{stackexchange}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 
 \section[Diff. equations]{Differential equation of DC motor rotation}
 
