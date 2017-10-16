@@ -1,7 +1,7 @@
 
 LATEX=lualatex
 
-TEXTARGETS=$(wildcard ./part[1-9]*/[1-9]*.tex)
+TEXTARGETS=$(wildcard ./part[1-9]*/[1-9a-z]*.tex)
 
 TARGET=$(TEXTARGETS:.tex=.pdf)
 

@@ -74,9 +74,740 @@
 
 \maketitle
 
+\miniframesoff
+\begin{frame}[fragile]{Last week's programming challenge}
+
+Code a \sh{trumpsays} in Python:
+
+\begin{verbatim}
+$ trumpsays "Being nice to Rocket Man has failed."
+   ,------._      ________________________
+  /         :    /                        \
+ /  ,-__-.  :   | Being nice to Rocket Man |
+; ,' _   _`-|  /  has failed.              |
+|/  - ||-   | / __________________________/
+|\   /_\    |---
+:|         |;
+ \    O    ;
+  \        ;
+   `--+---'
+\end{verbatim}
+
+Bonus point for automatically fetching the actual tweets!
+
+\end{frame}
+
+
+\begin{frame}[fragile]{This week's challenge}
+
+    \Large
+    Console-based image viewer
+
+        \begin{center}
+            \includegraphics[width=0.7\linewidth]{coding-challenge-terminal-image}
+        \end{center}
+
+\end{frame}
+
+\miniframeson
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{DC motors datasheets}
+
+\miniframesoff
+
+\section[]{So far in electromagnetism...}
+
+\begin{frame}{Recap of last lecture}
+    \begin{itemize}
+        \item Ampère's law: $\displaystyle\oint \vec{B} \cdot d\vec{l} = \mu_0 \cdot I$
+        \item Faraday's law of induction: $\displaystyle\mathcal{E} = -N \cdot
+            \frac{d\Phi_B}{dt}$ (with $\Phi_B = B\cdot A \cdot cos(\theta)$ iff
+            $\vec{B}$ is uniform)
+        \item Lenz law: (the minus in Faraday's law)
+        \item Lorentz law: $\displaystyle \vec{F} = \vec{I} \cdot L \times \vec{B}$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Today's objectives}
+
+    \begin{itemize}
+        \item Understand and know how to characterise \textbf{electrical inductance}
+        \item Describe a motor from \textbf{its equivalent circuit}
+        \item \textbf{Relate a motor's angular velocity to voltage and torque}
+        \item Model the motor's \textbf{dynamics} and use \textbf{Laplace
+            transforms} to solve the motor differential equations
+        \item Know how to read and interpret a \textbf{motor datasheet}
+        \item Undertand the working principle of a \textbf{brushless motor} and
+            how it compares to brushed DC motors
+    \end{itemize}
+\end{frame}
+\miniframeson
+
+
+
+\section{Inductance}
+
+{\fullbackground[scale=0.9,page=39]{ian-electromagnetism.pdf}
+    \begin{frame}{Electrical resistance}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=40]{ian-electromagnetism.pdf}
+    \begin{frame}{Electrical inductance}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=41]{ian-electromagnetism.pdf}
+    \begin{frame}{Current in an LR circuit}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=42]{ian-electromagnetism.pdf}
+    \begin{frame}{Current in an LR circuit}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=43]{ian-electromagnetism.pdf}
+    \begin{frame}{Definition of inductance}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=44]{ian-electromagnetism.pdf}
+    \begin{frame}{Inductance of a solenoid}
+    \end{frame}
+}
+
+
+\begin{frame}{Consequence for motors}
+
+    \only<1>{
+  Moving a magnet in a coil induces current:
+
+
+    \begin{center}
+        \includegraphics[width=0.6\linewidth]{image29}
+
+    \scalebox{1.5}{Faraday's law of induction: $\displaystyle\mathcal{E} = - \frac{d\Phi_B}{dt}$}
+
+    \end{center}
+}
+
+    \only<2>{
+        
+    If a coil consists of N loops with the same area, the total induced EMF in
+    the coil is given by:
+
+\[
+        \mathcal{E} = -N \cdot \frac{d\Phi_B}{dt}
+\]
+
+In a uniform magnetic field, the induced EMF can be expressed as:
+
+\[
+    \mathcal{E} = -N \cdot \frac{d}{dt} (B A cos(\theta)) = - N \cdot B \cdot A \frac{d cos(\theta)}{dt} = -N \cdot B \cdot A \cdot sin(\theta) \cdot \dot\theta
+\]
+
+With enough coils,
+
+\[
+    \mathcal{E} = - N \cdot B \cdot A \cdot \dot\theta = - K_e \dot\theta
+\]
+
+    $K_e$ is the \textbf{back-EMF} constant of the motor.
+
+
+    }
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[Voltage]{Voltage in a motor}
+
+\begin{frame}{Electrical generator}
+
+    \begin{center}
+        \includegraphics[width=0.6\linewidth]{image30}
+    \end{center}
+
+\begin{itemize}
+
+\item Speed of rotation affects voltage generated
+\item So how fast will a motor rotate with applied voltage $V$?
+\item Lets consider the equivalent circuit for a DC motor
+\end{itemize}
+\end{frame}
+
+\begin{frame}{DC motor equivalent circuit}
+
+    \begin{center}
+        \resizebox{0.6\linewidth}{!}{
+            % Based on http://texample.net/tikz/examples/induction-machine/
+            \begin{circuitikz}
+                \draw
+                % rotor circuit
+                (0,0) to [short, *-] (6,0)
+                to [V, l_={EMF}] (6,2) % rotor emf
+
+                % stator circuit
+                (0,0) to [open, v^>=$V$] (0,2) % stator voltage
+                to [short, *- ,i=$I$] (1,2) % stator current
+                to [R, l=$R$] (3,2) % stator resistance
+                to [L, l=$L$] (6,2); % leakage inductance
+            \end{circuitikz}
+        }
+    \end{center}
+
+\footnotesize
+\begin{itemize}
+
+\item $V$ is the applied voltage, $I$ is the drawn current
+\item Resistance $R$ arises from the coil and the brushes
+\item Inductance $L$ arises from the coil
+\item Back EMF arises from rotation of the coil in the magnetic field
+  created by the stator magnets
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Voltage in a DC motor}
+
+    \begin{center}
+        \resizebox{0.6\linewidth}{!}{
+            % Based on http://texample.net/tikz/examples/induction-machine/
+            \begin{circuitikz}
+                \draw
+                % rotor circuit
+                (0,0) to [short, *-] (6,0)
+                to [V, l_={EMF $\mathcal{E}$}] (6,2) % rotor emf
+
+                % stator circuit
+                (0,0) to [open, v^>=$V$] (0,2) % stator voltage
+                to [short, *- ,i=$I$] (1,2) % stator current
+                to [R, l=$R$] (3,2) % stator resistance
+                to [L, l=$L$] (6,2); % leakage inductance
+            \end{circuitikz}
+        }
+    \end{center}
+
+\textbf{Kirchhoff's voltage law}: voltage across resistor, inductance and
+back EMF balance applied voltage
+
+\begin{align*}
+    V &= I \cdot R + L \cdot \frac{dI}{dt} + \mathcal{E} \\
+      &= I \cdot R + L \cdot \frac{dI}{dt} - K_e \cdot \dot\theta
+\end{align*}
+
+\pause
+
+How to know $I$?
+
+\end{frame}
+
+
+\begin{frame}{Conservation of energy!}
+
+
+    \textbf{Conservation of energy means electrical power in = mechanical power out +
+    losses}
+
+
+
+    \begin{columns}
+        \begin{column}{0.7\linewidth}
+    \begin{center}
+        \resizebox{0.9\linewidth}{!}{
+            \begin{tikzpicture}[>=latex]
+
+                \node at (0,0) (motor) {\includegraphics[width=3cm]{../part2/figs/maxon}};
+                \node[below left=0.5 of motor] (pmech) {$P_{mech}= \tau \cdot \dot\theta$};
+                \node[above right=0.5 of motor] (pel) {$P_{el}= V \cdot I$};
+                \node[below right=0.5 of motor] (pr) {$P_{r}=R \cdot I^2$};
+                \draw[ultra thick, red,->] (motor) -- (pmech);
+                \draw[ultra thick, red,->] (pel) -- (motor);
+                \draw[ultra thick, orange,->] (motor) -- (pr);
+            \end{tikzpicture}
+        }
+
+    \end{center}
+
+        \end{column}
+        \begin{column}{0.3\linewidth}
+    \footnotesize
+    where:
+
+        $\tau$ = torque;
+        
+        $\dot\theta$ = angular velocity;
+        
+        $I$ = input current;
+        
+        $V$ = applied voltage;
+
+        $R$ = windings resistance
+            
+        \end{column}
+    \end{columns}
+
+        \begin{center}
+    \[
+        P_{el} = P_{mech} + P_{r}
+    \]
+        \end{center}
+
+\end{frame}
+
+
+\begin{frame}{Remember torque}
+
+\only<1>{
+    \begin{center}
+        \includegraphics[width=0.8\linewidth]{../part2/figs/image16-3}
+    \end{center}
+
+If current $I$ flows through a coil of depth $L$ and width $d$ with $N$ turns,
+    with magnetic field $B$, the coil pivots and generates a torque $\tau$ given
+    by:
+
+\[
+\tau = N \cdot 2 (\frac{d}{2}) \cdot F \cdot cos(\theta) = N \cdot d \cdot B \cdot I \cdot L \cdot cos(\theta)
+\]
+}
+
+    \only<2>{
+With enough coils, we can remove the $cos(\theta)$ term:
+\[
+\tau = N \cdot d \cdot B \cdot I \cdot L = K_\tau \cdot I
+\]
+
+
+$K_\tau$ is the motor's torque constant.
+
+}
+
+\end{frame}
+
+\begin{frame}{Putting it all together}
+
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+
+    \begin{itemize}
+        \item $V = - K_e \cdot \dot\theta + I \cdot R$
+        \item $\tau = K_\tau \cdot I$
+
+    \end{itemize}
+        \end{column}
+        \begin{column}{0.5\linewidth}
+    $V$ = applied voltage
+            
+    $\dot\theta$ = motor angular velocity
+            
+    $I$ = motor current
+    
+    $R$ = motor resistance
+    
+    $\tau$ = torque, including frictional losses
+        \end{column}
+    \end{columns}
+
+
+    \pause 
+
+    \begin{itemize}
+        \item Electrical power in: $V \cdot I = - K_e \cdot \dot\theta \cdot I + I^2 \cdot R$
+        \item Mechanical power out: $\tau \cdot \dot\theta = K_\tau \cdot I \cdot \dot\theta$
+        \item Losses: $I^2 \cdot R$
+    \end{itemize}
+
+    \pause
+
+    Conservation of energy means electrical power in = mechanical power out +
+    losses.
+
+    This is true if and only if $K_e=K_\tau$.
+
+    \pause
+
+    \textbf{In a DC motor, the torque constant and back-EMF constants are equal.}
+\end{frame}
+
+\begin{frame}{Back to the voltage}
+
+
+\begin{align*}
+    V &= K_e \cdot \dot\theta + I \cdot R \\
+    \tau &= K_\tau \cdot I \Rightarrow I = \frac{\tau}{K_\tau}
+\end{align*}
+
+\Large
+\begin{equation*}
+\begin{split}
+    \Rightarrow V &= \frac{\tau}{K_\tau} \cdot R + K_e \cdot \dot\theta \\
+    \Rightarrow \dot\theta &= \frac{V\bubblemark{voltage}}{K} - R \cdot \frac{\tau\bubblemark{torque}}{K^2}
+\end{split}
+\end{equation*}
+
+\bubble<2>[-10][2][2cm]{voltage}{Speed is a linear function of both voltage...}
+\bubble<2>[190][2][2cm]{torque}{...and torque}
+\end{frame}
+
+
+\begin{frame}{Motor constants}
+
+\begin{align*}
+    \mathcal{E} &= - N \cdot B \cdot A \cdot \dot\theta = - K_e \cdot \dot\theta \\
+    \Rightarrow K_e &= N \cdot B \cdot A
+\end{align*}
+
+\begin{align*}
+    \tau &= N \cdot d \cdot B \cdot I \cdot L = K_\tau \cdot I \\
+    \Rightarrow K_\tau &= N\bubblemark{turns} \cdot d\bubblemark{width} \cdot B\bubblemark{magneticfield} \cdot L\bubblemark{length}
+\end{align*}
+
+\bubble<1->[10][3][2cm]{turns}{turns per coil}
+\bubble<1->[50][1][2cm]{width}{coil width}
+\bubble<1->[130][1][2cm]{magneticfield}{permanent magnetic field}
+\bubble<1->[170][3][2cm]{length}{coil length}
+
+\pause
+
+\begin{align*}
+    K_e &= K_\tau \\
+    \Rightarrow N \cdot B \cdot A &= N \cdot d \cdot B \cdot L
+\end{align*}
+
+\end{frame}
+
+\begin{frame}{How to choose the motor constants?}
+
+\begin{align*}
+    V &= I \cdot R + L \cdot \frac{dI}{dt} - K_e \cdot \dot\theta \\
+    \mathcal{E} &= - K_e \cdot \dot\theta \\
+    \tau &= K_\tau \cdot I \\
+\end{align*}
+
+    \only<1>{
+    If you pick a $K_\tau=K_e$ \textbf{too high}, you `run out of voltage' and
+    \textbf{can not achieve the speed you need}. 
+
+    If you pick a $K_\tau=K_e$ \textbf{too low}, the current needed to achieve
+    the torque you need will be higher than necessary.
+}
+    \only<2>{
+    Rule of thumb with DC motor selection: \textbf{pick a motor with a $K_\tau$ and
+    back-EMF constant $K_e$ such that the supply voltage you have available is
+    well-matched with the back-EMF at your maximum speed}.
+}
+
+    \source{https://electronics.stackexchange.com/questions/33315/understanding-motor-constants-kt-and-kemf-for-comparing-brushless-dc-motors}{stackexchange}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+\section[Motor dynamics]{DC motor dynamics}
+
+
+\begin{frame}{DC motor dynamics}
+
+    \Large
+    So far, we have been considering the motor in \textbf{steady state}: the
+    current, the voltage, the angular velocity do not change over time.
+
+    \hspace{2em}
+
+    What about the dynamics?
+
+    \only<1>{
+
+        \begin{center}
+            \includegraphics[width=0.5\linewidth]{image63}
+        \end{center}
+
+    }
+
+    \only<2>{
+        Notation:
+
+        \begin{itemize}
+            \item $I \rightarrow i(t)$
+            \item $V \rightarrow v(t)$
+            \item $\theta \rightarrow \theta(t)$
+        \end{itemize}
+    }
+\end{frame}
+
+\begin{frame}{Moment of Inertia}
+
+    Resists with opposing torque proportional to angular acceleration
+
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+            \begin{center}
+                \includegraphics[height=0.4\paperheight]{image62}
+            \end{center}
+
+            where
+
+            $\tau$ is the torque, in $N\cdot m$
+
+            $J$ is the moment of inertia, in $kg \cdot m^2$
+
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            \begin{center}
+                \includegraphics[width=0.8\linewidth]{torque}
+
+            \Huge
+            $\displaystyle\tau = J \cdot \frac{d^2 \theta}{dt^2}$
+            \end{center}
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\begin{frame}{DC motor dynamics}
+
+    \begin{center}
+        \includegraphics[width=0.5\linewidth]{image63}
+    \end{center}
+
+\only<1> {
+\begin{itemize}
+
+\item $R$ = Armature resistance (in ohms $\Omega$)
+\item $L$ = Armature inductance (in Henrys $H$) % CHECK
+\item $J$ = Moment of inertia for the motor rotor ($kg\cdot m^2$)
+\item $b$ = Motor viscous friction constant (in $N\cdot m\cdot s$)
+\item $K_t$ = Motor torque constant (in $\frac{N\cdot m}{A}$)
+\item $K_e$ = Electromotive force constant (in $\frac{V\cdot rad^{-1}}{sec}$) % CHECK
+\end{itemize}
+}
+
+    \only<2> {
+    Motor torque $\tau_m$ is given by $\tau_m = K_\tau \cdot i(t)$
+
+Mechanical resisting torque $\tau_r$ is given by $\tau_r = b \cdot \dot\theta + J \cdot \ddot\theta$
+
+Under no load, $\tau_m = \tau_r$
+
+Therefore:
+\[
+    K_\tau \cdot i(t) = b \cdot \dot\theta + J \cdot \ddot\theta
+\]
+
+}
+    \only<3> {
+
+\textbf{Kirchhoff's voltage law}: voltage across resistor, inductance and
+back EMF balance applied voltage
+
+    \[
+        v(t) = i(t) \cdot R + L \cdot \frac{di}{dt} - K_e \cdot \dot\theta
+    \]
+}
+\end{frame}
+
+\begin{frame}{Differential equation of a DC motor}
+
+    \Large
+\begin{align*}
+    \only<1->{
+        K \cdot i(t) &= b \cdot \dot\theta + J \cdot \ddot\theta \\
+            v(t) &= i(t) \cdot R + L \cdot \frac{di}{dt} - K \cdot \dot\theta \\
+    }
+    \only<2->{
+    \Rightarrow v(t) &= (\frac{b}{K} - K) \cdot \dot\theta + \frac{J}{K} \cdot \ddot\theta + L \frac{d (\frac{b}{K} \cdot \dot\theta + \frac{J}{K} \cdot \ddot\theta)}{dt} \\
+    }
+    \only<3->{
+        \Rightarrow v(t) &= (\frac{b}{K} - K) \cdot \dot\theta + (\frac{J}{K} + \frac{L\cdot b}{K}) \cdot \ddot\theta + \frac{L \cdot J}{K} \cdot \dddot\theta
+}
+\end{align*}
+
+    \only<3-> {
+\normalsize
+We can integrate 3 times, or...
+}
+
+\end{frame}
+
+\begin{frame}{Laplace transform}
+
+    \only<1>{
+The Laplace transform is a linear operator that maps a function $f(t)$ to
+$F(s)$.
+
+
+Specifically:
+
+\[
+    F(s) = \mathcal{L}\{f\}(s) =  \mathcal{L}\{f(t)\} = \int^{\inf}_{0} f(t)e^{-st}dt
+\]
+
+where $s = \sigma + i\omega$
+
+    Go from a function of a \emph{real} variable (here time $t$) to a complex
+    function of a complex variable (frequency, $s$).
+
+}
+
+    \only<2> {
+
+        Why bother?
+
+        Often \textbf{simplifies the process of analyzing the behavior of the
+        system}.
+
+        For example, Laplace transformation from the time domain to the
+        frequency domain \textbf{transforms differential equations into algebraic
+        equations}.
+    }
+\end{frame}
+
+\begin{frame}{Operations useful for solving differential equations}
+
+\Large
+
+\[
+    \mathcal{L} \{f'(t)\} = sF(s) - f(0)
+\]
+
+
+\[
+    \mathcal{L} \{f''(t)\} = s^2F(s) - sf(0) - f'(0)
+\]
+
+
+\[
+    \mathcal{L} \{\int^{t}_{0}f(t)dt\} = \frac{F(s)}{s}
+\]
+
+\vspace{2em}
+\small
+See
+    \href{https://en.wikipedia.org/wiki/Laplace_transform}{Wikipedia}
+    for more properties.
+
+\end{frame}
+
+\begin{frame}{Solution using Laplace transformations}
+
+\only<1>{
+
+Taking Laplace transforms of the differential equations that describe
+the motor mechanical dynamics:
+
+\[
+   K \cdot i(t) = b \cdot \dot\theta + J \cdot \ddot\theta
+\]
+
+becomes:
+
+\[
+    K \cdot I(s) = b \cdot s \cdot \theta(s) + J \cdot s^2 \cdot \theta(s)
+\]
+
+\[
+    I(s) = \frac{s \cdot (b + J \cdot s) \cdot \theta(s)}{K}
+\]
+
+}
+
+    \only<2> {
+
+Taking Laplace transforms of the differential equations that describe
+the motor voltages:
+
+\[
+        v(t) = i(t) \cdot R + L \cdot \frac{di}{dt} + K \cdot \dot\theta
+\]
+
+becomes:
+
+\[
+    V(s) = I(s) \cdot (R + L\cdot s) + K \cdot s \cdot \theta(s)
+\]
+}
+
+    \only<3>{
+
+Substituting:
+
+\[
+    I(s) = \frac{s \cdot (b + J \cdot s) \cdot \theta(s)}{K}
+\]
+
+
+into:
+
+\[
+    V(s) = I(s) \cdot (R + L\cdot s) + K \cdot s \cdot \theta(s)
+\]
+
+by eliminating current $I(s)$ gives:
+
+\[
+    \theta(s) = \frac{K}{s \cdot ( (J \cdot s + b) \cdot (L \cdot s+ R) + K^2)} \cdot V(s)
+\]
+
+}
+
+\end{frame}
+
+\begin{frame}{Transfer function}
+
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+
+            Result of a transfer response output position for a DC electric motor
+            given its input voltage
+
+        \end{column}
+        \begin{column}{0.5\linewidth}
+
+
+            \begin{center}
+                \includegraphics[width=0.9\columnwidth]{image63}
+            \end{center}
+
+        \end{column}
+    \end{columns}
+
+\[
+    \theta(s) = \frac{K}{s \cdot ( (J \cdot s + b) \cdot (L \cdot s+ R) + K^2)} \cdot V(s)
+\]
+
+\pause
+
+Can differentiate this expression to get the transfer function for speed
+
+\[
+    \dot\theta(s) = \frac{K}{(J \cdot s + b) \cdot (L \cdot s + R) + K^2} \cdot V(s)
+\]
+
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\miniframesoff
+\begin{frame}[plain]
+    \begin{center}
+        \Large
+        10 min break\\[2em]
+    \end{center}
+\end{frame}
+\miniframeson
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section[Datasheets]{Wrap-up on DC motors: another look at datasheets}
 
 {\fullbackground[scale=0.9,page=2]{ian-dc-motor-datasheet.pdf}
     \begin{frame}{Maxon DC motor variants}
@@ -203,572 +934,6 @@
     \begin{frame}{Motor size selection}
     \end{frame}
 }
-
-
-\miniframesoff
-\begin{frame}[plain]
-    \begin{center}
-        \Large
-        10 min break\\[2em]
-    \end{center}
-\end{frame}
-\miniframeson
-
-\section[Recap]{So far in electromagnetism...}
-
-\begin{frame}{Recap of last lecture}
-    \begin{itemize}
-        \item Ampère's law
-        \item Faraday's law of induction: $\displaystyle\mathcal{E} = -N \cdot \frac{d\Phi_B}{dt}$
-        \item Lenz law
-        \item Lorentz law
-    \end{itemize}
-\end{frame}
-
-\section{Inductance}
-
-{\fullbackground[scale=0.9,page=39]{ian-electromagnetism.pdf}
-    \begin{frame}{Electrical resistance}
-    \end{frame}
-}
-
-{\fullbackground[scale=0.9,page=40]{ian-electromagnetism.pdf}
-    \begin{frame}{Electrical inductance}
-    \end{frame}
-}
-
-{\fullbackground[scale=0.9,page=41]{ian-electromagnetism.pdf}
-    \begin{frame}{Current in an LR circuit}
-    \end{frame}
-}
-
-{\fullbackground[scale=0.9,page=42]{ian-electromagnetism.pdf}
-    \begin{frame}{Current in an LR circuit}
-    \end{frame}
-}
-
-{\fullbackground[scale=0.9,page=43]{ian-electromagnetism.pdf}
-    \begin{frame}{Definition of inductance}
-    \end{frame}
-}
-
-{\fullbackground[scale=0.9,page=44]{ian-electromagnetism.pdf}
-    \begin{frame}{Inductance of a solenoid}
-    \end{frame}
-}
-
-
-\begin{frame}{Consequence for motors}
-
-    \only<1>{
-  Moving a magnet in a coil induces current:
-
-
-    \begin{center}
-        \includegraphics[width=0.6\linewidth]{image29}
-
-    \scalebox{1.5}{Faraday's law of induction: $\displaystyle\mathcal{E} = - \cdot \frac{d\Phi_B}{dt}$}
-
-    \end{center}
-}
-
-    \only<2>{
-        
-    If a coil consists of N loops with the same area, the total induced EMF in
-    the coil is given by:
-
-\[
-        \mathcal{E} = -N \cdot \frac{d\Phi_B}{dt}
-\]
-
-In a uniform magnetic field, the induced EMF can be expressed as:
-
-\[
-    \mathcal{E} = -N \cdot \frac{d}{dt} (B A cos(\theta)) = - N \cdot B \cdot A \frac{d cos(\theta)}{dt} = -N \cdot B \cdot A \cdot sin(\theta) \cdot \dot\theta
-\]
-
-With enough coils,
-
-\[
-    \mathcal{E} = - N \cdot B \cdot A \cdot \dot\theta = K_e \dot\theta
-\]
-
-    $K_e$ is the \textbf{back-EMF} constant of the motor.
-
-
-    }
-\end{frame}
-
-\begin{frame}{Electrical generator}
-
-    \begin{center}
-        \includegraphics[width=0.6\linewidth]{image30}
-    \end{center}
-
-\begin{itemize}
-
-\item Speed of rotation affects voltage generated
-\item So how fast will a motor rotate with applied voltage $V$?
-\item Lets consider the equivalent circuit for a DC motor
-\end{itemize}
-\end{frame}
-
-\begin{frame}{DC motor equivalent circuit}
-
-    \begin{center}
-        \resizebox{0.6\linewidth}{!}{
-            % Based on http://texample.net/tikz/examples/induction-machine/
-            \begin{circuitikz}
-                \draw
-                % rotor circuit
-                (0,0) to [short, *-] (6,0)
-                to [V, l_={EMF}] (6,2) % rotor emf
-
-                % stator circuit
-                (0,0) to [open, v^>=$V$] (0,2) % stator voltage
-                to [short, *- ,i=$I$] (1,2) % stator current
-                to [R, l=$R$] (3,2) % stator resistance
-                to [L, l=$L$] (6,2); % leakage inductance
-            \end{circuitikz}
-        }
-    \end{center}
-
-\footnotesize
-\begin{itemize}
-
-\item $V$ is the applied voltage, $I$ is the drawn current
-\item Resistance $R$ arises from the coil and the brushes
-\item Inductance $L$ arises from the coil
-\item Back EMF arises from rotation of the coil in the magnetic field
-  created by the stator magnets
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}{Voltage in a DC motor}
-
-    \begin{center}
-        \resizebox{0.6\linewidth}{!}{
-            % Based on http://texample.net/tikz/examples/induction-machine/
-            \begin{circuitikz}
-                \draw
-                % rotor circuit
-                (0,0) to [short, *-] (6,0)
-                to [V, l_={EMF $\mathcal{E}$}] (6,2) % rotor emf
-
-                % stator circuit
-                (0,0) to [open, v^>=$V$] (0,2) % stator voltage
-                to [short, *- ,i=$I$] (1,2) % stator current
-                to [R, l=$R$] (3,2) % stator resistance
-                to [L, l=$L$] (6,2); % leakage inductance
-            \end{circuitikz}
-        }
-    \end{center}
-
-\textbf{Kirchhoff's voltage law}: voltage across resistor, inductance and
-back EMF balance applied voltage
-
-\begin{align*}
-    V &= I \cdot R + L \cdot \frac{dI}{dt} + \mathcal{E} \\
-      &= I \cdot R + L \cdot \frac{dI}{dt} + K_e \cdot \dot\theta
-\end{align*}
-
-\pause
-
-How to know $I$?
-
-\end{frame}
-
-
-\begin{frame}{Conservation of energy!}
-
-
-    \textbf{Conservation of energy means electrical power in = mechanical power out +
-    losses}
-
-
-
-    \begin{columns}
-        \begin{column}{0.7\linewidth}
-    \begin{center}
-        \resizebox{0.9\linewidth}{!}{
-            \begin{tikzpicture}[>=latex]
-
-                \node at (0,0) (motor) {\includegraphics[width=3cm]{../part2/figs/maxon}};
-                \node[below left=0.5 of motor] (pmech) {$P_{mech}= \tau \cdot \dot\theta$};
-                \node[above right=0.5 of motor] (pel) {$P_{el}= V \cdot I$};
-                \node[below right=0.5 of motor] (pr) {$P_{r}=R \cdot I^2$};
-                \draw[ultra thick, red,->] (motor) -- (pmech);
-                \draw[ultra thick, red,->] (pel) -- (motor);
-                \draw[ultra thick, orange,->] (motor) -- (pr);
-            \end{tikzpicture}
-        }
-
-    \end{center}
-
-        \end{column}
-        \begin{column}{0.3\linewidth}
-    \footnotesize
-    where:
-
-        $\tau$ = torque;
-        
-        $\dot\theta$ = angular velocity;
-        
-        $I$ = input current;
-        
-        $V$ = applied voltage;
-
-        $R$ = windings resistance
-            
-        \end{column}
-    \end{columns}
-
-        \begin{center}
-    \[
-        P_{el} = P_{mech} + P_{r}
-    \]
-        \end{center}
-
-\end{frame}
-
-
-\begin{frame}{Remember torque}
-
-\only<1>{
-    \begin{center}
-        \includegraphics[width=0.8\linewidth]{../part2/figs/image16-3}
-    \end{center}
-
-If current $I$ flows through a coil of depth $L$ and width $d$ with $n$ turns,
-    with magnetic field $B$, the coil pivots and generates a torque $\tau$ given
-    by:
-
-\[
-\tau = n \cdot 2 (\frac{d}{2}) \cdot F \cdot cos(\theta) = n \cdot d \cdot B \cdot I \cdot L \cdot cos(\theta)
-\]
-}
-
-    \only<2>{
-With enough coils, we can remove the $cos(\theta)$ term:
-\[
-\tau = n \cdot d \cdot B \cdot I \cdot L = K_\tau \cdot I
-\]
-
-
-$K_\tau$ is the motor's torque constant.
-
-}
-
-\end{frame}
-
-\begin{frame}{Putting it all together}
-
-    \begin{columns}
-        \begin{column}{0.5\linewidth}
-
-    \begin{itemize}
-        \item $V = K_e \cdot \dot\theta + I \cdot R$
-        \item $\tau = K_\tau \cdot I$
-
-    \end{itemize}
-        \end{column}
-        \begin{column}{0.5\linewidth}
-    $V$ = applied voltage
-            
-    $\dot\theta$ = motor angular velocity
-            
-    $I$ = motor current
-    
-    $R$ = motor resistance
-    
-    $\tau$ = torque, including frictional losses
-        \end{column}
-    \end{columns}
-
-
-    \pause 
-
-    \begin{itemize}
-        \item Electrical power in: $V \cdot I = K_e \cdot \dot\theta \cdot I + I^2 \cdot R$
-        \item Mechanical power out: $\tau \cdot \dot\theta = K_\tau \cdot I \cdot \dot\theta$
-        \item Losses: $I^2 \cdot R$
-    \end{itemize}
-
-    \pause
-
-    Conservation of energy means electrical power in = mechanical power out +
-    losses.
-
-    This is true if and only if $K_e=K_\tau$.
-
-    \pause
-
-    \textbf{In a DC motor, the torque constant and back-EMF constants are equal.}
-\end{frame}
-
-\begin{frame}{Back to the voltage}
-
-
-\begin{align*}
-    V &= K_e \cdot \dot\theta + I \cdot R \\
-    \tau &= K_\tau \cdot I \Rightarrow I = \frac{\tau}{k_\tau}
-\end{align*}
-
-\begin{equation*}
-\begin{split}
-    \Rightarrow V &= \frac{\tau}{K_\tau} \cdot R + K_e \cdot \dot\theta \\
-    \Rightarrow \dot\theta &= \frac{V}{K} - \frac{\tau}{K^2} \cdot R
-\end{split}
-\end{equation*}
-
-\end{frame}
-
-
-\begin{frame}{How to choose the motor constants?}
-
-    Rule of thumb with DC motor selection (also true for brushless DC motors to
-    a large extent) -- pick a motor with a $K_T$ and back-EMF constant such that
-    the supply voltage you have available is well-matched with the back-emf at
-    your maximum speed. You usually want back-emf voltage to be 80-95\% of the
-    supply voltage, but the exact number depends on the load torque and the $I R$
-    drop in the motor at that operating point.
-
-    If you pick a $K_T=K_e$ too high, you'll run out of voltage and won't be
-    able to achieve the speed you need. If you pick a $K_T=K_e$ too low, the
-    current needed to achieve the torque you need will be higher than necessary.
-
-    \source{https://electronics.stackexchange.com/questions/33315/understanding-motor-constants-kt-and-kemf-for-comparing-brushless-dc-motors}{stackexchange}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-
-\section[Diff. equations]{Differential equation of DC motor rotation}
-
-{\fullbackground[scale=0.9,page=6]{ian-simple-newtonian-mechanics.pdf}
-\begin{frame}{Moment of Inertia}
-%
-%Resists with opposing torque proportional to angular acceleration
-%
-%    \begin{columns}
-%        \begin{column}{0.5\linewidth}
-%            \begin{center}
-%                \includegraphics[height=0.3\paperheight]{image62}
-%            \end{center}
-%        \end{column}
-%        \begin{column}{0.5\linewidth}
-%            TBD
-%        \end{column}
-%    \end{columns}
-%where
-%
-%$T$ is torque in $N\cdot m$
-%
-%$J$ is moment of inertial in $kg \cdot m^2$
-%
-\end{frame}
-}
-
-\begin{frame}{DC motor dynamics}
-
-    \begin{center}
-        \includegraphics[width=0.5\linewidth]{image63}
-    \end{center}
-
-\only<1> {
-\begin{itemize}
-
-\item $R$ = Armature resistance (in ohms $\Omega$)
-\item $L$ = Armature inductance (in Henrys $H$) % CHECK
-\item $J$ = Moment of inertia for the motor rotor ($kg\cdot m^2$)
-\item $b$ = Motor viscous friction constant (in $N\cdot m\cdot s$)
-\item $K_t$ = Motor torque constant (in $\frac{N\cdot m}{A}$)
-\item $K_e$ = Electromotive force constant (in $\frac{V\cdot rad^{-1}}{sec}$) % CHECK
-\end{itemize}
-}
-
-    \only<2> {
-    Motor torque $\tau_m$ is given by $\tau_m = K_t \cdot i(t)$
-
-Mechanical resisting torque $\tau_r$ is given by $\tau_r = b \cdot \dot\theta + J \cdot \ddot\theta$
-
-Under no load, $\tau_m = \tau_r$
-
-Therefore:
-\[
-    K_t \cdot i(t) = b \cdot \dot\theta + J \cdot \ddot\theta
-\]
-
-}
-    \only<3> {
-
-\textbf{Kirchhoff's voltage law}: voltage across resistor, inductance and
-back EMF balance applied voltage
-
-    \[
-        v(t) = i(t) \cdot R + L \cdot \frac{di}{dt} + K_e \cdot \dot\theta
-    \]
-}
-\end{frame}
-
-\begin{frame}{Definition of Laplace transform}
-
-    \only<1>{
-The Laplace transform is a linear operator that maps a function $f(t)$ to
-$F(s)$.
-
-
-Specifically:
-
-\[
-    F(s) = \mathcal{L}\{f\}(s) =  \mathcal{L}\{f(t)\} = \int^{\inf}_{0} f(t)e^{-st}dt
-\]
-
-where $s = \sigma + i\omega$
-
-    Go from a function of a \emph{real} variable (here time $t$) to a complex
-    function of a complex variable (frequency, $s$).
-
-}
-
-    \only<2> {
-
-        Why bother?
-
-        Often \textbf{simplifies the process of analyzing the behavior of the
-        system}.
-
-        For example, Laplace transformation from the time domain to the
-        frequency domain \textbf{transforms differential equations into algebraic
-        equations}.
-    }
-\end{frame}
-
-\begin{frame}{Operations useful for solving differential equations}
-
-\Large
-
-\[
-    \mathcal{L} \{f'(t)\} = sF(s) - f(0)
-\]
-
-
-\[
-    \mathcal{L} \{f''(t)\} = s^2F(s) - sf(0) - f'(0)
-\]
-
-
-\[
-    \mathcal{L} \{\int^{t}_{0}f(t)dt\} = \frac{F(s)}{s}
-\]
-
-\vspace{2em}
-\small
-See
-    \href{https://en.wikipedia.org/wiki/Laplace_transform}{Wikipedia}
-    for more properties.
-
-\end{frame}
-
-\begin{frame}{Solution using Laplace transformations}
-
-\only<1>{
-
-Taking Laplace transforms of the differential equations that describe
-the motor mechanical dynamics:
-
-\[
-   K_t \cdot i(t) = b \cdot \dot\theta + J \cdot \ddot\theta
-\]
-
-becomes:
-
-\[
-    K_t \cdot I(s) = b \cdot s \cdot \theta(s) + J \cdot s^2 \cdot \theta(s)
-\]
-
-\[
-    I(s) = \frac{s \cdot (b + J \cdot s) \cdot \theta(s)}{K_t}
-\]
-
-}
-
-    \only<2> {
-
-Taking Laplace transforms of the differential equations that describe
-the motor voltages:
-
-\[
-        v(t) = i(t) \cdot R + L \cdot \frac{di}{dt} + K_e \cdot \dot\theta
-\]
-
-becomes:
-
-\[
-    V(s) = I(s) \cdot (R + L\cdot s) + K_e \cdot s \cdot \theta(s)
-\]
-}
-
-    \only<3>{
-
-Substituting:
-
-\[
-    I(s) = \frac{s \cdot (b + J \cdot s) \cdot \theta(s)}{K_t}
-\]
-
-
-into:
-
-\[
-    V(s) = I(s) \cdot (R + L\cdot s) + K_e \cdot s \cdot \theta(s)
-\]
-
-Eliminating current $I(s)$ and setting $K_t = K_e = K$ gives:
-
-\[
-    \theta(s) = \frac{K}{s \cdot ( (J \cdot s + b) \cdot (L \cdot s+ R) + K^2)} \cdot V(s)
-\]
-
-}
-
-\end{frame}
-
-\begin{frame}{Transfer function}
-
-    \begin{columns}
-        \begin{column}{0.5\linewidth}
-
-            Result of a transfer response output position for a DC electric motor
-            given its input voltage
-
-        \end{column}
-        \begin{column}{0.5\linewidth}
-
-
-            \begin{center}
-                \includegraphics[width=0.9\columnwidth]{image63}
-            \end{center}
-
-        \end{column}
-    \end{columns}
-
-\[
-    \theta(s) = \frac{K}{s \cdot ( (J \cdot s + b) \cdot (L \cdot s+ R) + K^2)} \cdot V(s)
-\]
-
-\pause
-
-Can differentiate this expression to get the transfer function for speed
-
-\[
-    \dot\theta(s) = \frac{K}{(J \cdot s + b) \cdot (L \cdot s + R) + K^2} \cdot V(s)
-\]
-
-
-\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Brushless DC motors}
