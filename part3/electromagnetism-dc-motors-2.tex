@@ -236,10 +236,36 @@ r, g, b = rgb_im.getpixel((1, 1))
     \end{frame}
 }
 
-{\fullbackground[scale=0.9,page=41]{ian-electromagnetism.pdf}
-    \begin{frame}{Current in an LR circuit}
-    \end{frame}
-}
+\begin{frame}{Current in an LR circuit}
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+            \begin{align*}
+                V &= V_R + V_L \\
+                V_R &= I \cdot R \\
+                V_L &= L \cdot \frac{dI}{dt} \\
+                \Rightarrow V &= I \cdot R + L \cdot \frac{dI}{dt} \\
+            \end{align*}
+        \end{column}
+        \begin{column}{0.5\linewidth}
+        \begin{center}
+            \resizebox{\linewidth}{!}{
+                \begin{circuitikz}
+                    \draw
+                    (0,0) to [open, v^>=$V$] (0,3) 
+                    to [short, *- ,i=$I$] (1,3) 
+                    to [R, l=$R$] (3,3) 
+                    to [L, l=$L$] (3,0)
+                    to [short, -*] (0,0);
+                \end{circuitikz}
+            }
+        \end{center}
+        \end{column}
+    \end{columns}
+
+    \begin{center}
+        This is a first-order linear differential equation.
+    \end{center}
+\end{frame}
 
 {\fullbackground[scale=0.9,page=42]{ian-electromagnetism.pdf}
     \begin{frame}{Current in an LR circuit}
@@ -715,7 +741,7 @@ We can integrate 3 times, or...
 
     \only<1>{
 The Laplace transform is a linear operator that maps a function $f(t)$ to
-$F(s)$.
+$F(s)$ in the frequency domain.
 
 
 Specifically:
@@ -724,7 +750,7 @@ Specifically:
     F(s) = \mathcal{L}\{f\}(s) =  \mathcal{L}\{f(t)\} = \int^{\inf}_{0} f(t)e^{-st}dt
 \]
 
-where $s = \sigma + i\omega$
+where $s = \sigma + i\omega$ (the complex number frequency parameter)
 
     Go from a function of a \emph{real} variable (here time $t$) to a complex
     function of a complex variable (frequency, $s$).
@@ -859,7 +885,7 @@ by eliminating current $I(s)$ gives:
 
 \pause
 
-Can differentiate this expression to get the transfer function for speed
+We can differentiate this expression to get the transfer function for speed
 
 \[
     \dot\theta(s) = \frac{K}{(J \cdot s + b) \cdot (L \cdot s + R) + K^2} \cdot V(s)
@@ -888,18 +914,101 @@ Can differentiate this expression to get the transfer function for speed
 
 {\fullbackground[scale=0.9,page=2]{ian-dc-motor-datasheet.pdf}
     \begin{frame}{Maxon DC motor variants}
+
+        \note{
+            What are the differences of the different maxon motors?
+
+        Basic possibilities for variation
+        different magnetic materials: AlNiCo, NdFeB, ferrite, …
+        Commutation: Graphite brushes or precious metal brushes
+        Bearings: Sintered sleeve bearings or ball bearings
+
+        The motor family reflects the magnet type used: e.g. RE motors have NdFeB
+        magnets.
+        Depending on operation conditions and power each DC motor type can be
+        equipped with either bearing or commutation type.
+
+        }
     \end{frame}
 }
 
-{\fullbackground[scale=0.9,page=3]{ian-dc-motor-datasheet.pdf}
-    \begin{frame}{Development of permanent magnets}
-    \end{frame}
-}
+\begin{frame}{Development of permanent magnets}
+    \begin{center}
+        \includegraphics[height=0.7\paperheight]{permanent-magnets}
 
-{\fullbackground[scale=0.9,page=4]{ian-dc-motor-datasheet.pdf}
-    \begin{frame}{Permanent magnets}
-    \end{frame}
-}
+        \source{http://www.vacuumschmelze.com/fileadmin/Medienbiliothek_2010/Downloads/DM/VACODYM-VACOMAX-PD002_2015_en.pdf}{vacuumschmelze}
+    \end{center}
+
+    \note{
+        A few words about permanent magnets.
+        This slides shoes the development of the power density of permanent
+        magnets in the last century
+        It all started with magnetic steels from which the AlNiCo magnets
+        evolved in the middle of the century becoming the strongest magnet
+        material. Improved manufacturing processes in the 60ies allowed to
+        create an internal structure, an anisotropic axis. This further enhanced
+        the energy product. This material together with the ferrites was at the
+        base of the development of small permanent magnet DC motors. The higher
+        energy density of AlNiCo compared to the ferrites was reflected in the
+        higher power density of coreless DC motors compared to conventional DC
+        motors
+        In the 70ies the first rare earth magnets based on Samarium and cobalt
+        appeared. They wer much stronger than AlNiCo. In the 80ies the even
+        stronger Neodymium-Iron-Boron magnets emerged on the market. Only
+        ironless designs can make the full use of their strength resulting in
+        the extremelx high power density of coreless DC motors.
+
+        However, power density is just one parameter among others in magnetic
+        applications.
+        The magnets should be able to be easily magnetized
+        In motors the magnets must support the heat without loosing power or
+        change irreversibly.
+        Mechanical stability, ease of manufacturing, corrosion resistance are
+        further important features.
+        And of course the cost. In DC motors the magnet cost can amount to as
+        much as 40\%.
+
+        Newer, stronger materials that can be produced and machined reasonably
+        don't seem to appear in the next future. The developments point rather
+        in the direction of improving thermal and chemical stability and
+        enhancing the remanence of existing magnets.
+    }
+\end{frame}
+
+%{\fullbackground[scale=0.9,page=4]{ian-dc-motor-datasheet.pdf}
+%    \begin{frame}{Permanent magnets}
+%
+%        \note{
+%        This diagram shows the areas where the typical demagnetization curves of
+%        different magnetic materials lie.
+%
+%        On the vertical axis we have the magnetization (or more precisely the
+%        magnetic flux density B), to the left we have the external demagnetization
+%        field H, pointing in the opposite direction. Magnetization decreases
+%        with increasing field H.
+%
+%        The magnetization at zero external field is called remanence or residual
+%        magnetism. It tells you how much a magnet can be magnetized. One can see
+%        that AlNiCo and NdFeB can have a very high remanence of more than 1.2
+%        Tesla.
+%
+%        The field H where the magnetization or magnetic induction vanishes is
+%        called coercive field. One can see that rare earth magnets have a very
+%        high coercive field which means they are difficult to demagnetize.
+%
+%        Increasing the air gap in a motor has a similar effect as increasing the
+%        demagnetization field. In AlNiCo motors with the very steep
+%        demagnetization curve only narrow air gaps can be made in order to have
+%        a considerable magnetic induction. Accordingly the coreless winding has
+%        a very thin wall thickness.
+%
+%        In RE motors the air gap can be made much larger. The winding is thicker
+%        and the motor as a whole is stronger. (These effects quite nicely show
+%        what's behind the "energy product" of permanent magnets.)
+%        }
+%
+%    \end{frame}
+%}
 
 {\fullbackground[scale=0.9,page=5]{ian-dc-motor-datasheet.pdf}
     \begin{frame}{Understanding motor datasheets}
@@ -911,10 +1020,76 @@ Can differentiate this expression to get the transfer function for speed
     \end{frame}
 }
 
-{\fullbackground[scale=0.9,page=7]{ian-dc-motor-datasheet.pdf}
-    \begin{frame}{Speed-voltage characteristic}
-    \end{frame}
-}
+\begin{frame}{Speed-torque characteristic}
+
+    \begin{columns}
+        \begin{column}{0.7\linewidth}
+    \begin{center}
+        \includegraphics[width=\linewidth]{voltage-torque}
+    \end{center}
+
+
+        \end{column}
+        \begin{column}{0.3\linewidth}
+            Remember:
+
+    \begin{align*}
+        \dot\theta &= \frac{V}{K} - R \cdot \frac{\tau}{K^2} \\
+        \tau &= K \cdot I
+    \end{align*}
+
+        \end{column}
+    \end{columns}
+
+    \pause
+    Influence of voltage:
+
+    \begin{itemize}
+            \small
+        \item no-load speed $n_0$ proportional to applied voltage
+        \item stall torque $M_H$ proportional to the applied voltage
+        \item increasing voltage shifts the speed-torque line upwards
+        \item speed-torque gradient $\frac{d_v}{d_M}$ unaffected
+    \end{itemize}
+
+    \note{
+    The relationship between speed and torque is the equation of a straight line in
+    our standard representation where the speed is traced as a function of the
+    torque (red line).
+
+    At zero torque, the speed is highest. This speed is called no-load speed
+    n0. The no-load speed can easily be calculated from the applied voltage
+    and the speed constant of the motor.
+
+    Enhancing the load torque leads to a linear reduction of the speed. It
+    becomes clear what the meaning of Dn/DM is: It's the gradient of the
+    speed-torque line.
+    Increasing the torque further reduces speed up to the point where the
+    motor stops. The corresponding torque is called stall torque MH.
+    We have learned that torque and current are equivalent. Hence, we can
+    draw a current axis in parallel to the torque axis. The current
+    corresponding to the stall torque is named starting current IA. 
+
+    A different view on the speed-torque line is to look at the start-up of
+    the motor, i.e. we start at the right end of the speed-torque line.
+    Applying a voltage at zero speed results in a high current, the starting
+    current; there is no back-EMF to counteract the applied voltage. The
+    current produces a high torque that accelerates the motor, the induced
+    voltage increases and less current can flow. Hence, the faster the motor
+    turns, the less torque is produced. 
+
+    All these considerations are valid for a fixed applied voltage U. What
+    happens if the voltage is changed, e.g. at a higher voltage? The applied
+    voltage has only an influence on the first term, which is the no-load
+    speed. A higher voltage results in a higher no-load speed. The
+    speed-torque gradient is unaffected. As a net result: Changing the
+    applied voltage results in a parallel shift of the speed-torque line.
+
+    Remark: An important feature of the speed-torque line is the fact that
+    the produced torque is highest at start, which makes these motors very
+    dynamic.
+    }
+\end{frame}
 
 {\fullbackground[scale=0.9,page=8]{ian-dc-motor-datasheet.pdf}
     \begin{frame}{Speed-torque characteristic}
@@ -922,34 +1097,106 @@ Can differentiate this expression to get the transfer function for speed
 }
 
 {\fullbackground[scale=0.9,page=9]{ian-dc-motor-datasheet.pdf}
-    \begin{frame}{Motor values at nominal voltage}
+    \begin{frame}{Operating points 1/2}
+        \note{
+        The values at nominal voltage basically reflect three special operating points
+        on the speed-torque line at nominal voltage.
+        The first point is the no-load operating point.
+        The no-load speed is the resulting speed if no external output torque
+        has to be delivered.
+        The no-load current is the current needed to overcome internal losses,
+        e.g. friction. (More on the next slide)
+
+        The second operating point is the rated or nominal operating point. It
+        is defined by the maximum permissible continuous current or nominal
+        current. This is the maximum current at which the motor can be operated
+        for long periods of time without overheating. 
+        The rated or nominal torque is the motor torque corresponding to the
+        nominal current.
+        The nominal speed has no deeper meaning. It's just the resulting speed
+        at this load.
+
+        The last operating point on the far right is at stall or start.
+        The stall torque describes at which load torque the motor stalls, when
+        supplied with the nominal voltage.
+        The starting current is the corresponding current, that will also be
+        present just after powering the motor with the nominal voltage.
+        }
     \end{frame}
 }
 
-{\fullbackground[scale=0.9,page=10]{ian-dc-motor-datasheet.pdf}
-    \begin{frame}{Operating points}
-    \end{frame}
-}
+\begin{frame}{Operating points 2/2}
+
+    \begin{itemize}
+        \item \textbf{Load operating points} are defined by the
+            applications. They are characterised by a load speed $n_L$ at a
+            given load torque $M_L$
+        \item \textbf{Motor operating points} lie on the speed-torque line: select
+            the voltage accordingly.
+    \end{itemize}
+
+    \begin{center}
+        \includegraphics[width=0.8\linewidth]{operating-points}
+    \end{center}
+
+    \note{
+    An important concept are the operating points. We have to distinguish between
+    the Load operating points: These are pairs of speed and torque values that
+    are required by application. In the diagram they are represented by the
+    blue points. 
+    Typically, during acceleration the highest torque is needed and all the
+    points on the acceleration arrow are operating points that are run
+    through. 
+    The single point in the middle represents a constant motor operation at
+    given load and speed.
+    During deceleration, usually less torque is needed. Friction helps.
+    The motor operating points are located on the speed-torque line at the
+    relative voltage.
+
+    Running the motor at the operating points demanded by the load requires
+    the motor voltage to be adjusted correspondingly, and hence the
+    speed-torque line. That's the task of a controller.
+    }
+\end{frame}
+
+\begin{frame}{Effect of changing the windings}
+    \[
+    \dot\theta = \frac{V}{K} - R \cdot \frac{\tau}{K^2}
+    \]
+
+    \vspace{2em}
+    ...what would be the effect?
+
+    \begin{itemize}
+        \item on max speed?
+        \item on start current/stall torque?
+    \end{itemize}
+
+\end{frame}
 
 {\fullbackground[scale=0.9,page=11]{ian-dc-motor-datasheet.pdf}
     \begin{frame}{Effect of changing the windings}
+        \[
+        \dot\theta = \frac{V}{K} - R \cdot \frac{\tau}{K^2}
+        \]
+    \vspace{\paperheight}
     \end{frame}
 }
 
-{\fullbackground[scale=0.9,page=12]{ian-dc-motor-datasheet.pdf}
-    \begin{frame}{Torque constant $K_M$}
-    \end{frame}
-}
-
-{\fullbackground[scale=0.9,page=13]{ian-dc-motor-datasheet.pdf}
-    \begin{frame}{Torque constant $K_M$}
-    \end{frame}
-}
-
-{\fullbackground[scale=0.9,page=14]{ian-dc-motor-datasheet.pdf}
-    \begin{frame}{Speed constant $K_n$}
-    \end{frame}
-}
+%{\fullbackground[scale=0.9,page=12]{ian-dc-motor-datasheet.pdf}
+%    \begin{frame}{Torque constant $K_M$}
+%    \end{frame}
+%}
+%
+%{\fullbackground[scale=0.9,page=13]{ian-dc-motor-datasheet.pdf}
+%    \begin{frame}{Torque constant $K_M$}
+%    \end{frame}
+%}
+%
+%{\fullbackground[scale=0.9,page=14]{ian-dc-motor-datasheet.pdf}
+%    \begin{frame}{Speed constant $K_n$}
+%    \end{frame}
+%}
 
 {\fullbackground[scale=0.9,page=15]{ian-dc-motor-datasheet.pdf}
     \begin{frame}{Nominal motor characteristics}
@@ -968,21 +1215,128 @@ Can differentiate this expression to get the transfer function for speed
 
 {\fullbackground[scale=0.9,page=18]{ian-dc-motor-datasheet.pdf}
     \begin{frame}{Influence of temperature on motor operation}
+        \note{
+        Temperature has an influence on motor data as well. 
+
+        Generally, the permanent magnets become weaker at higher temperature, but this
+        is a reversible effect within the permissible temperature range of the
+        motors; the magnets regain their original strength when they cool down. 
+        AlNiCo magnets show the weakest temperature dependency. That's why they
+        are used in DC Tachos, a measuring device that should give the same
+        output independent of temperature.
+
+        Neodymium magnets have a stronger temperature dependency. A motor that
+        is 50°C hotter exhibits a speed constant that is about 5\% higher and a
+        torque constant that is about 5\% lower.
+
+        When the motor heats up, the winding resistance increases by about 0.4%
+        per Kelvin. The main effect is that power losses will be even more
+        pronounced at higher temperature.
+
+        The variation of the motor data with temperature create problems in
+        applications very seldom. Although motor selection is done with the data
+        specified for the cold motor at room temperature, there is usually
+        enough margin left to compensate for the weakening of the motor when it
+        becomes hot in prolonged operation.
+        }
     \end{frame}
 }
 
-{\fullbackground[scale=0.9,page=19]{ian-dc-motor-datasheet.pdf}
-    \begin{frame}{Nominal torque and temperature}
-    \end{frame}
-}
+\begin{frame}{Permissible torque and temperature}
+    \begin{center}
+        \includegraphics[width=\linewidth]{temperature-torque}
+    \end{center}
+    \note{
+    This diagram shows the influence of the ambient temperature on the maximal
+    permissible torque (red curve). One can see that at temperatures below
+    25° the permissible torque is higher, while it decreases at higher
+    ambient temperatures.
+
+    The influence of an improved heat dissipation is shown in the blue
+    curve. Reducing the thermal resistance between housing and ambient by 2
+    leads to a maximum permissible current (or torque) which is about 30\%
+    higher at standard ambient conditions. Such a reduction of the thermal
+    resistance is easily obtained, e.g. by mounting the motor on a metallic
+    chassis.
+    }
+\end{frame}
 
 {\fullbackground[scale=0.9,page=20]{ian-dc-motor-datasheet.pdf}
     \begin{frame}{Motor limits: operation ranges}
+    \note{
+        The red area in the operation range diagram represents the continuous operation
+        range. Running the motor at speeds and torque in this area will not lead to
+        overheating and a reasonable motor life can be expected.
+        The continuous operation range is limited on top by the max. permissible
+        speed nmax. This speed is not an absolute limit but is based on
+        consideration about brush and bearing life. Approaching and exceeding
+        this speed will gradually lead to enhanced audible noise and reduced
+        motor life.
+
+        On the right, the continuous operation range is limited by the maximum
+        continuous (rated or nominal) torque or current. Exceeding this torque
+        or current will lead to an inacceptable motor heating. Again, this is
+        not a sharp limit but depends on the details of heat dissipation. In a
+        cold ambient or with good heat dissipation – e.g. by forced air cooling
+        – more current is allowed and this limit moves to the right. In
+        situations where the heat gets stuck near the motor the continuous
+        torque is reduced.
+
+        At higher speeds internal losses increase and less current is available
+        for output torque production. That’s why in most cases the maximum
+        permissible torque is lower at high speeds.
+
+        On the right there is the short term operation range depicted in white.
+        The diagram in the catalog expands to only about twice the nominal
+        torque, but the motor may be overloaded much more.
+
+        Short term operation means, that the motor can be operated at higher
+        torque than nominal but only for a limited amount of time. The big
+        question is, how long is "short"?
+
+    }
     \end{frame}
 }
 
 {\fullbackground[scale=0.9,page=21]{ian-dc-motor-datasheet.pdf}
     \begin{frame}{Short-term overload operation}
+        \note{
+        The amount of permissible overload depends on the heating of the thermally
+        weakest part in the motor, i.e. the winding. The winding temperature
+        should remain below the maximum permissible winding temperature Tmax.
+        The heating of the winding follows an exponential behavior which is
+        characterized by the thermal time constant of the winding tW. 
+        
+        This time constant amounts to several seconds for the smallest maxon
+        motors up to about 1 minute for the biggest ones. It gives the intrinsic
+        time unit of the overload duration. 
+
+        The amount of overload is best described in units of the nominal torque;
+        again this is an intrinsic motor parameter. Hence we can give a general
+        frame for overload operation that can be applied more or less to all
+        motors. 
+
+        The diagram shows the overload duration as a function of the required
+        torque. 
+        
+        The higher the torque, the shorter it may be applied.
+        At twice the rated current, the motor may be operated as long as about 5
+        times the thermal time constant of the winding.
+        Between 2 and 3 times the nominal torque the possible duration of
+        overload is strongly reduced. At three times the rated torque, the
+        duration is about 60\% of the thermal time constant of the winding.
+
+        The diagram gives general directives and in many cases it allows a quick
+        decision if a thermal overload situation is permitted or not. Overload
+        conditions at relatively low torque and duration can be achieved without
+        problems, while overloading the motor for a long time and at a high
+        torque cannot be done without damaging the motor. In between there is a
+        "gray" zone where it is difficult to give a clear answer without testing
+        and additional experiments. The detailed thermal reaction of the motor
+        depends on the heat dissipation situation as well as the thermal history
+        of the motor.
+
+        }
     \end{frame}
 }
 
@@ -992,7 +1346,24 @@ Can differentiate this expression to get the transfer function for speed
 }
 
 {\fullbackground[scale=0.9,page=23]{ian-dc-motor-datasheet.pdf}
-    \begin{frame}{List of main mechanical motor parameters}
+    \begin{frame}{Mechanical motor parameters}
+        \note{
+        The mechanical data contain the maximum permissible speed and information about
+        the bearing play and load.
+
+        The maximum permissible speed nmax limits the continuous operation range. It is
+        based on consideration about bearing and brush life.
+
+        Radial and axial play can be reduced to zero by a preload of the ball bearings.
+        As a rule the bearings of brushed motors are not preloaded (There is no
+        gain in life expectation which is limited by the brush system). Large DC
+        motors (diameter 50mm and higher) have preloaded ball bearings as well
+        as all the brushless EC motors.
+
+        The bearing load is given for static and dynamic situation. Static means
+        at standstill, dynamic means during operation. 
+
+        }
     \end{frame}
 }
 
@@ -1007,10 +1378,10 @@ Can differentiate this expression to get the transfer function for speed
 }
 
 
-{\fullbackground[scale=0.9,page=26]{ian-dc-motor-datasheet.pdf}
-    \begin{frame}{Motor size selection}
-    \end{frame}
-}
+%{\fullbackground[scale=0.9,page=26]{ian-dc-motor-datasheet.pdf}
+%    \begin{frame}{Motor size selection}
+%    \end{frame}
+%}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Brushless DC motors}
@@ -1080,23 +1451,25 @@ Can differentiate this expression to get the transfer function for speed
 \end{frame}
 }
 
-{\fullbackground[scale=0.9,page=21]{../part1/figs/ian-sensors.pdf}
-    \begin{frame}{Electronic commutation systems}
-    \note {
-In this third part of the presentation we would like to understand the electronic commutation.
-There are different systems. maxon uses the following three :
+\videoframe[0.65]{figs/brushless-commutation.mp4}
 
-- Block commutation with or without Hall sensors
-- Sinusoidal commutation.
-
-As you can see the different maxon controller families perform different commutation types.
-
-Common to all these systems is that they should apply the current in a way, that the generated torque is as high as possible. As we have learned this is achieved by a perpendicular orientation of the magnetic fields of permanent magnet and winding. We have seen as well that we need to know the orientation of the permanent magnet to achieve this.
-
-We start with block commutation with Hall sensor position feedback. That's the standard commutation type. Once we have understood this the two other commutation schemes are easily derived from it.
-    }
-    \end{frame}
-}
+%{\fullbackground[scale=0.9,page=21]{../part1/figs/ian-sensors.pdf}
+%    \begin{frame}{Electronic commutation systems}
+%    \note {
+%In this third part of the presentation we would like to understand the electronic commutation.
+%There are different systems. maxon uses the following three :
+%
+%- Block commutation with or without Hall sensors
+%- Sinusoidal commutation.
+%
+%As you can see the different maxon controller families perform different commutation types.
+%
+%Common to all these systems is that they should apply the current in a way, that the generated torque is as high as possible. As we have learned this is achieved by a perpendicular orientation of the magnetic fields of permanent magnet and winding. We have seen as well that we need to know the orientation of the permanent magnet to achieve this.
+%
+%We start with block commutation with Hall sensor position feedback. That's the standard commutation type. Once we have understood this the two other commutation schemes are easily derived from it.
+%    }
+%    \end{frame}
+%}
 
 {\fullbackground[scale=0.9,page=22]{../part1/figs/ian-sensors.pdf}
     \begin{frame}{Block commutation}
@@ -1163,88 +1536,6 @@ to control speed or position.
 }
 
 
-{\fullbackground[scale=0.9,page=6]{ian-brushless-dc-motors.pdf}
-\begin{frame}{Block commutation}
-
-%\begin{itemize}
-%\item
-%\end{itemize}
-%
-%\_
-%
-%HS3
-%
-%HS1
-%
-%HS2
-%
-%controller
-%
-%power stage
-%
-%(MOSFET)
-%
-%phase 1
-%
-%phase 2
-%
-%phase 3
-%
-%EC motor
-%
-%(magnet, winding, sensor)
-%
-%rotor position feedback
-%
-%commutation
-%
-%logics
-%
-    \note{
-
-\textbf{On the right} we have a schematic \textbf{cross section of a
-maxon EC motor} with 2 pole permanent magnet in the center, the three
-phase winding and the three Hall sensors placed at 120°. For simplicity
-we assume the Hall sensors to probe the power magnet directly.
-
-\textbf{On the left} we have the \textbf{commutation electronics} which
-is fed with a DC supply voltage. There is a power bridge made of 6
-MOSFETs. Three of them are needed to contact the motor phases to the
-positive supply voltage. The lower three MOSFETs make the contact to the
-supply ground. The power bridge is controlled by a commutation logic
-that evaluates the Hall sensor signals and, accordingly, switches the
-power on the three motor phases.
-
-\textbf{Comments on the animation:}
-
-In this starting position the Hall sensors give the following signal:
-HS1 has just switched to a high state, HS2 is low and HS3 is high.
-
-The commutation logic knows that for this signal combination and
-clockwise motor rotation the current must flow from phase 1 to 2 and
-powers the respective two MOSFETs.
-
-The winding produces a magnetic field and the magnetic rotor tries to
-align.
-
-After 60° the HS3 starts seeing the south pole. Its output switches to
-low and the commutation logic switches the current from phase 1 to 3.
-The field of the winding advances by 60° and the rotor continues to
-rotate.
-
-Again after 60° the Hall sensor pattern changes, HS2 switches to a high
-output level. Accordingly the electronics commutates the current to flow
-from phase 2 to 3. Again the field of the winding advances by another
-60° and the rotor continues.
-
-And so on \ldots{} . After 6 commutation intervals we are back at the
-initial configuration and the rotor has accomplished one turn.
-
-}
-
-\end{frame}
-
-}
 
 {\fullbackground[scale=0.9,page=7]{ian-brushless-dc-motors.pdf}
 \begin{frame}{Brushless motor for RC aircraft}
@@ -1253,7 +1544,7 @@ initial configuration and the rotor has accomplished one turn.
 }
 
 {\fullbackground[scale=0.9,page=8]{ian-brushless-dc-motors.pdf}
-\begin{frame}{Maxon EC brushless motor}
+\begin{frame}{Construction of a EC brushless motor}
 
 %Permanent magnet
 %
