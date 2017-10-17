@@ -1,0 +1,49 @@
+#! /usr/bin/python
+
+import sys
+text = sys.argv[1]
+
+def go(line):
+    sys.stdout.write("\033[u\033[" + str(9-line) + "A\033[G\033[17C")
+
+trump = """
+   ,------._     
+  /         :    ________________________
+ /  ,-__-.  :   /                        \\  
+; ,' _   _`-|  /  
+|/  - ||-   | /  
+|\   /_\    |---
+:|         |;
+ \    O    ;
+  \        ;
+   `--+---'
+"""
+
+bubble_length = 24
+
+
+print(trump)
+print("\033[s")
+
+go(0)
+
+line = 0
+current_length = 0
+for word in text.split(" "):
+
+    if current_length + len(word) >= bubble_length:
+        line += 1
+        go(line)
+        current_length = 0
+
+    current_length += len(word) + 1
+    sys.stdout.write(word + " ")
+
+for i in range(line+1):
+    go(i)
+    sys.stdout.write("\033[2D|\033[" + str(bubble_length + 2) + "C|")
+
+go(line + 1)
+sys.stdout.write("\033[D\\" + "_" * bubble_length + "/")
+
+print("\033[u")

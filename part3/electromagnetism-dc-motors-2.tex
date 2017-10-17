@@ -93,10 +93,69 @@ $ trumpsays "Being nice to Rocket Man has failed."
    `--+---'
 \end{verbatim}
 
-Bonus point for automatically fetching the actual tweets!
-
 \end{frame}
 
+\begin{frame}[fragile]{}
+\begin{pythoncode}
+#! /usr/bin/python
+
+import sys
+text = sys.argv[1] # retrieve the first command-line parameter
+
+def go(line):
+    """ move the console cursor to the start of a balloon's line.
+    Uses ANSI escape codes: https://en.wikipedia.org/wiki/ANSI_escape_code
+    """
+    sys.stdout.write("\033[u\033[" + str(9-line) + "A\033[G\033[17C")
+
+balloon_length = 24
+trump = """
+   ,------._     
+  /         :    ________________________
+ /  ,-__-.  :   /                        \\  
+; ,' _   _`-|  /  
+|/  - ||-   | /  
+|\   /_\    |---
+:|         |;
+ \    O    ;
+  \        ;
+   `--+---'
+"""
+print(trump)
+print("\033[s") # save the cursor position (bottom of the screen)
+\end{pythoncode}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{pythoncode}
+go(0)
+
+line = 0
+current_length = 0 # holds the nb of characters printed on current line
+for word in text.split(" "): # iterate over each of the words 
+
+    # do we need a line break?
+    if current_length + len(word) >= balloon_length:
+        line += 1
+        go(line)
+        current_length = 0
+
+    current_length += len(word) + 1
+    sys.stdout.write(word + " ") # print the word, without final line break
+
+# Draw the balloon contours
+for i in range(line+1):
+    go(i)
+    sys.stdout.write("\033[2D|\033[" + str(balloon_length + 2) + "C|")
+
+go(line + 1)
+sys.stdout.write("\033[D\\" + "_" * balloon_length + "/")
+
+print("\033[u") # restore the position of the cursor, to the bottom
+\end{pythoncode}
+
+
+\end{frame}
 
 \begin{frame}[fragile]{This week's challenge}
 
@@ -106,6 +165,24 @@ Bonus point for automatically fetching the actual tweets!
         \begin{center}
             \includegraphics[width=0.7\linewidth]{coding-challenge-terminal-image}
         \end{center}
+
+\end{frame}
+
+\begin{frame}[fragile]{Tips for this week's challenge}
+\begin{pythoncode}
+# how to get the pixels of an image?
+from PIL import Image
+im = Image.open('image.jpg')
+rgb_im = im.convert('RGB')
+r, g, b = rgb_im.getpixel((1, 1))
+
+
+# use ANSI escape code to set the adequate foreground/background color
+# see https://en.wikipedia.org/wiki/ANSI_escape_code#24-bit
+
+# use in a clever way the Unicode character U+2580, 'Upper Half Block'
+# to increase the resolution of your viewer
+\end{pythoncode}
 
 \end{frame}
 
