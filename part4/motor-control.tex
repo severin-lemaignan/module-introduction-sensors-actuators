@@ -19,6 +19,8 @@
 \usepackage{tabularx,ragged2e}
 \usepackage{booktabs}
 
+\usepackage[european,cuteinductors]{circuitikz}
+
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
@@ -469,15 +471,8 @@ to control speed or position.
 }
 
 
-\begin{frame}{Four quadrant operation of DC motor}
+\begin{frame}{The modes of operation of a DC motor -- hoist example}
 
-    In a DC motor, what do we control? 
-    
-    The speed? The torque?
-
-\end{frame}
-
-\begin{frame}{Four quadrant operation -- hoist example}
 
     \resizebox{\linewidth}{!}{
     \begin{tikzpicture}[>=latex]
@@ -493,6 +488,9 @@ to control speed or position.
     \end{tikzpicture}
     }
 
+    \begin{center}
+    \Large $\Rightarrow$ four quadrant
+    \end{center}
 
 \end{frame}
 
@@ -508,12 +506,13 @@ to control speed or position.
         \end{column}
         \begin{column}{0.6\linewidth}
     \begin{itemize}
-        \item \textbf{Quadrant I} -– Driving forward with positive speed and positive torque
-        \item \textbf{Quadrant II} -- Generating or braking with positive speed and negative torque
-        \item \textbf{Quadrant III} -– Driving with negative speed and negative torque
+        \item \textbf{Quadrant I} -- Driving forward with positive speed and positive torque
+        \item \textbf{Quadrant II} -- Generating or braking with positive speed
+            and negative torque
+
+        \item \textbf{Quadrant III} -- Driving with negative speed and negative torque
         \item \textbf{Quadrant IV} -- Generating or braking with negative speed
-            and positive torque. \textbf{Regenerative braking} or
-            \textbf{Reverse braking}.
+            and positive torque
 
     \end{itemize}
 
@@ -525,15 +524,178 @@ to control speed or position.
     (check the link for more details)}
 \end{frame}
 
+\begin{frame}{Analysis of the four quadrants}
+    \only<1> {
+
+    \begin{center}
+        \textbf{Quadrant I}: Forward motoring
+
+        \resizebox{0.6\linewidth}{!}{
+            % Based on http://texample.net/tikz/examples/induction-machine/
+            \begin{circuitikz}
+                \draw
+                (0,0) node[anchor=east]{$+$}
+                to [short, *-, i=$I$] (3,0)
+                to [V, l_={EMF}] (3,-2)
+                to[short, -*] (0,-2) node[anchor=east] {$-$} ;
+
+                \draw (0,-2) to [open, v^>=$V$] (0,0);
+
+                \coordinate (motor) at (3.5,-1);
+                \draw[thick,->>](motor)--++(1,0) node[midway,above]{$\dot\theta$};
+
+                \draw[->] (motor)++(1,0)++(50:0.4) arc (50:-50:0.4)
+                node[anchor=west,midway]{\footnotesize\bf CW};
+
+                \draw {[anchor=east] (3,-0.5) node {$+$} (3,-1.5) node{$-$}};
+
+            \end{circuitikz}
+
+        }
+    \end{center}
+
+    \[\left.\begin{array}{lr}
+        V > EMF \Rightarrow I > 0 \Rightarrow \tau > 0 \\
+        \dot\theta > 0
+    \end{array} \right\} P_{el} > 0, P_{mech} > 0
+    \]
+
+    }
+
+    \only<2> {
+
+    \begin{center}
+        \textbf{Quadrant II}: Forward bracking
+
+        \resizebox{0.6\linewidth}{!}{
+            % Based on http://texample.net/tikz/examples/induction-machine/
+            \begin{circuitikz}
+                \draw
+                (0,0) node[anchor=east]{$+$}
+                to [short, *-, i<=$I$] (3,0)
+                to [V, l_={EMF}] (3,-2)
+                to[short, -*] (0,-2) node[anchor=east] {$-$} ;
+
+                \draw (0,-2) to [open, v^>=$V$] (0,0);
+
+                \coordinate (motor) at (3.5,-1);
+                \draw[thick,->>](motor)--++(1,0) node[midway,above]{$\dot\theta$};
+
+                \draw[->] (motor)++(1,0)++(50:0.4) arc (50:-50:0.4)
+                node[anchor=west,midway]{\footnotesize\bf CW};
+
+                \draw {[anchor=east] (3,-0.5) node {$+$} (3,-1.5) node{$-$}};
+
+            \end{circuitikz}
+
+        }
+    \end{center}
+
+    Supply voltage reduced:
+
+    \[\left.\begin{array}{lr}
+        V < EMF \Rightarrow I < 0 \Rightarrow \tau < 0 \\
+        \dot\theta > 0
+    \end{array} \right\} P_{el} < 0, P_{mech} < 0
+    \]
+
+
+    $\Rightarrow$ power is provided back to the generator: \textbf{regenerative
+    braking}
+
+    }
+
+    \only<3> {
+
+    \begin{center}
+        \textbf{Quadrant III}: Reverse motoring
+
+        \resizebox{0.6\linewidth}{!}{
+            % Based on http://texample.net/tikz/examples/induction-machine/
+            \begin{circuitikz}
+                \draw
+                (0,0) node[anchor=east]{$-$}
+                to [short, *-, i<=$I$] (3,0)
+                to [V, l_={EMF}] (3,-2)
+                to[short, -*] (0,-2) node[anchor=east] {$+$} ;
+
+                \draw (0,-2) to [open, v^<=$V$] (0,0);
+
+                \coordinate (motor) at (3.5,-1);
+                \draw[thick,->>](motor)--++(1,0) node[midway,above]{$\dot\theta$};
+
+                \draw[<-] (motor)++(1,0)++(50:0.4) arc (50:-50:0.4)
+                node[anchor=west,midway]{\footnotesize\bf CCW};
+
+                \draw {[anchor=east] (3,-0.5) node {$-$} (3,-1.5) node{$+$}};
+
+            \end{circuitikz}
+
+        }
+    \end{center}
+
+    \[\left.\begin{array}{lr}
+        V < 0 \text{ and } |V| > |EMF| \Rightarrow I < 0 \Rightarrow \tau < 0 \\
+        \dot\theta < 0
+    \end{array} \right\} P_{el} > 0, P_{mech} > 0
+    \]
+
+
+    }
+
+
+    \only<4> {
+
+    \begin{center}
+        \textbf{Quadrant IV}: Backward braking
+
+        \resizebox{0.6\linewidth}{!}{
+            % Based on http://texample.net/tikz/examples/induction-machine/
+            \begin{circuitikz}
+                \draw
+                (0,0) node[anchor=east]{$-$}
+                to [short, *-, i=$I$] (3,0)
+                to [V, l_={EMF}] (3,-2)
+                to[short, -*] (0,-2) node[anchor=east] {$+$} ;
+
+                \draw (0,-2) to [open, v^<=$V$] (0,0);
+
+                \coordinate (motor) at (3.5,-1);
+                \draw[thick,->>](motor)--++(1,0) node[midway,above]{$\dot\theta$};
+
+                \draw[<-] (motor)++(1,0)++(50:0.4) arc (50:-50:0.4)
+                node[anchor=west,midway]{\footnotesize\bf CCW};
+
+                \draw {[anchor=east] (3,-0.5) node {$-$} (3,-1.5) node{$+$}};
+
+            \end{circuitikz}
+
+        }
+    \end{center}
+
+    Again, reduced supply voltage:
+
+    \[\left.\begin{array}{lr}
+        V < 0 \text{ and } |V| < |EMF| \Rightarrow I > 0 \Rightarrow \tau > 0 \\
+        \dot\theta < 0
+    \end{array} \right\} P_{el} < 0, P_{mech} < 0
+    \]
+
+    $\Rightarrow$ power is provided back to the generator: \textbf{regenerative
+    braking}
+
+
+    }
+
+\end{frame}
+
+\imageframe[color=black,caption={Example of four\par quadrant operation application}]{train}
+
 {\fullbackground[scale=0.9,page=03]{ian-motor-ctrl.pdf}
     \begin{frame}{One and two quadrant operation}
     \end{frame}
 }
 
-{\fullbackground[scale=0.9,page=05]{ian-motor-ctrl.pdf}
-    \begin{frame}{Four quadrant operation}
-    \end{frame}
-}
 
 \begin{frame}{Relation to the Speed-torque characteristic}
 
@@ -556,6 +718,11 @@ to control speed or position.
         \end{column}
     \end{columns}
 
+    \begin{center}
+        Not the same thing! The speed-torque characteristic related the speed to
+        the torque (and to a lesser extend, to the voltage). It is essentially orthogonal to
+        the modes of operation.
+    \end{center}
 
 \end{frame}
 
