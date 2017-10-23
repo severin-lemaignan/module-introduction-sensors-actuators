@@ -12,6 +12,8 @@
 \usepackage{pgfpages} % required for notes on second screen
 \usepackage{graphicx}
 
+\usepackage{pdfpcnotes}
+
 \usepackage{multicol}
 
 \usepackage{tabularx,ragged2e}
@@ -915,7 +917,7 @@ We can differentiate this expression to get the transfer function for speed
 {\fullbackground[scale=0.9,page=2]{ian-dc-motor-datasheet.pdf}
     \begin{frame}{Maxon DC motor variants}
 
-        \note{
+        \pnote{
             What are the differences of the different maxon motors?
 
         Basic possibilities for variation
@@ -939,7 +941,7 @@ We can differentiate this expression to get the transfer function for speed
         \source{http://www.vacuumschmelze.com/fileadmin/Medienbiliothek_2010/Downloads/DM/VACODYM-VACOMAX-PD002_2015_en.pdf}{vacuumschmelze}
     \end{center}
 
-    \note{
+    \pnote{
         A few words about permanent magnets.
         This slides shoes the development of the power density of permanent
         magnets in the last century
@@ -978,7 +980,7 @@ We can differentiate this expression to get the transfer function for speed
 %{\fullbackground[scale=0.9,page=4]{ian-dc-motor-datasheet.pdf}
 %    \begin{frame}{Permanent magnets}
 %
-%        \note{
+%        \pnote{
 %        This diagram shows the areas where the typical demagnetization curves of
 %        different magnetic materials lie.
 %
@@ -1052,7 +1054,7 @@ We can differentiate this expression to get the transfer function for speed
         \item speed-torque gradient $\frac{d_v}{d_M}$ unaffected
     \end{itemize}
 
-    \note{
+    \pnote{
     The relationship between speed and torque is the equation of a straight line in
     our standard representation where the speed is traced as a function of the
     torque (red line).
@@ -1098,7 +1100,7 @@ We can differentiate this expression to get the transfer function for speed
 
 {\fullbackground[scale=0.9,page=9]{ian-dc-motor-datasheet.pdf}
     \begin{frame}{Operating points 1/2}
-        \note{
+        \pnote{
         The values at nominal voltage basically reflect three special operating points
         on the speed-torque line at nominal voltage.
         The first point is the no-load operating point.
@@ -1139,7 +1141,7 @@ We can differentiate this expression to get the transfer function for speed
         \includegraphics[width=0.8\linewidth]{operating-points}
     \end{center}
 
-    \note{
+    \pnote{
     An important concept are the operating points. We have to distinguish between
     the Load operating points: These are pairs of speed and torque values that
     are required by application. In the diagram they are represented by the
@@ -1215,7 +1217,7 @@ We can differentiate this expression to get the transfer function for speed
 
 {\fullbackground[scale=0.9,page=18]{ian-dc-motor-datasheet.pdf}
     \begin{frame}{Influence of temperature on motor operation}
-        \note{
+        \pnote{
         Temperature has an influence on motor data as well. 
 
         Generally, the permanent magnets become weaker at higher temperature, but this
@@ -1246,7 +1248,7 @@ We can differentiate this expression to get the transfer function for speed
     \begin{center}
         \includegraphics[width=\linewidth]{temperature-torque}
     \end{center}
-    \note{
+    \pnote{
     This diagram shows the influence of the ambient temperature on the maximal
     permissible torque (red curve). One can see that at temperatures below
     25° the permissible torque is higher, while it decreases at higher
@@ -1263,7 +1265,7 @@ We can differentiate this expression to get the transfer function for speed
 
 {\fullbackground[scale=0.9,page=20]{ian-dc-motor-datasheet.pdf}
     \begin{frame}{Motor limits: operation ranges}
-    \note{
+    \pnote{
         The red area in the operation range diagram represents the continuous operation
         range. Running the motor at speeds and torque in this area will not lead to
         overheating and a reasonable motor life can be expected.
@@ -1300,7 +1302,7 @@ We can differentiate this expression to get the transfer function for speed
 
 {\fullbackground[scale=0.9,page=21]{ian-dc-motor-datasheet.pdf}
     \begin{frame}{Short-term overload operation}
-        \note{
+        \pnote{
         The amount of permissible overload depends on the heating of the thermally
         weakest part in the motor, i.e. the winding. The winding temperature
         should remain below the maximum permissible winding temperature Tmax.
@@ -1347,7 +1349,7 @@ We can differentiate this expression to get the transfer function for speed
 
 {\fullbackground[scale=0.9,page=23]{ian-dc-motor-datasheet.pdf}
     \begin{frame}{Mechanical motor parameters}
-        \note{
+        \pnote{
         The mechanical data contain the maximum permissible speed and information about
         the bearing play and load.
 
@@ -1474,7 +1476,7 @@ We can differentiate this expression to get the transfer function for speed
 {\fullbackground[scale=0.9,page=22]{../part1/figs/ian-sensors.pdf}
     \begin{frame}{Block commutation}
 
-\note{
+\pnote{
 First we have to look at the Hall sensor feedback signals. Again we do this
 based on the simplest design, the slotless maxon EC motor with 1 pole pair.
 
@@ -1514,7 +1516,7 @@ The next slide shows how the complete block commutation system works.
 
 {\fullbackground[scale=0.9,page=23]{../part1/figs/ian-sensors.pdf}
     \begin{frame}{Components of an EC drive system}
-\note{
+\pnote{
 Let's first look at an EC drive system in general.
 
 The three phases of the EC motor cannot be connected directly to a DC power
