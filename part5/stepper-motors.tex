@@ -1,0 +1,369 @@
+%!TEX program = xelatex
+
+\documentclass[compress]{beamer}
+%--------------------------------------------------------------------------
+% Common packages
+%--------------------------------------------------------------------------
+
+\definecolor{links}{HTML}{663000}
+\hypersetup{colorlinks,linkcolor=,urlcolor=links}
+
+\usepackage[english]{babel}
+\usepackage{pgfpages} % required for notes on second screen
+\usepackage{graphicx}
+
+\usepackage{multicol}
+
+\usepackage{tabularx,ragged2e}
+\usepackage{booktabs}
+
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+\usetheme{hri}
+
+% Display the navigation bullet even without subsections
+\usepackage{remreset}% tiny package containing just the \@removefromreset command
+\makeatletter
+\@removefromreset{subsection}{section}
+\makeatother
+\setcounter{subsection}{1}
+
+\makeatletter
+\let\beamer@writeslidentry@miniframeson=\beamer@writeslidentry
+\def\beamer@writeslidentry@miniframesoff{%
+  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}% does not happen normally
+  {%else
+    % removed \addtocontents commands
+    \clearpage\beamer@notesactions%
+  }
+}
+\newcommand*{\miniframeson}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframeson}
+\newcommand*{\miniframesoff}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframesoff}
+\makeatother
+
+
+
+\newcommand{\source}[2]{{\tiny\it Source: \href{#1}{#2}}}
+
+\usepackage{tikz}
+\usetikzlibrary{mindmap,backgrounds,positioning,calc,patterns}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepackage{circuitikz}
+
+\graphicspath{{figs/}}
+
+\title{ROCO222 \newline Intro to Sensors and Actuators}
+\subtitle{Part 5 -- Stepper motors}
+
+\date{}
+\author{Séverin Lemaignan}
+\institute{Centre for Neural Systems and Robotics\\{\bf Plymouth University}}
+
+\begin{document}
+
+\licenseframe{github.com/severin-lemaignan/module-introduction-sensors-actuators}
+
+\maketitle
+
+\section{Stepper motors}
+{\fullbackground[scale=0.9,page=2]{ian-stepper-motors.pdf}
+    \begin{frame}{Stepper motor basic idea}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=3]{ian-stepper-motors.pdf}
+    \begin{frame}{Several basic types of stepping motors}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=4]{ian-stepper-motors.pdf}
+    \begin{frame}{Variable reluctance motor}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=5]{ian-stepper-motors.pdf}
+    \begin{frame}{Variable reluctance stepper motor operation}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=6]{ian-stepper-motors.pdf}
+    \begin{frame}{Variable reluctance stepper motor operation}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=7]{ian-stepper-motors.pdf}
+    \begin{frame}{Variable reluctance motor coils}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=8]{ian-stepper-motors.pdf}
+    \begin{frame}{Variable reluctance stepper motor operation}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=9]{ian-stepper-motors.pdf}
+    \begin{frame}{Permanent magnet stepper motor operation}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=10]{ian-stepper-motors.pdf}
+    \begin{frame}{Permanent magnet stepper motor features}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=11]{ian-stepper-motors.pdf}
+    \begin{frame}{Hybrid stepping motor}
+    \end{frame}
+}
+
+
+{\fullbackground[scale=0.9,page=12]{ian-stepper-motors.pdf}
+    \begin{frame}{Parts of a hybrid stepper}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=13]{ian-stepper-motors.pdf}
+    \begin{frame}{Inside a hybrid stepper}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=14]{ian-stepper-motors.pdf}
+    \begin{frame}{Hybrid stepping motor operation}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=15]{ian-stepper-motors.pdf}
+    \begin{frame}{Unipolar motor windings}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=16]{ian-stepper-motors.pdf}
+    \begin{frame}{Bipolar motor windings}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=17]{ian-stepper-motors.pdf}
+    \begin{frame}{Bipolar delivers more torque than unipolar}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=18]{ian-stepper-motors.pdf}
+    \begin{frame}{Unipolar versus bipolar circuitry}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=19]{ian-stepper-motors.pdf}
+    \begin{frame}{Bifilar stepper motor}
+    \end{frame}
+}
+
+\section{Stepper motor modes}
+
+{\fullbackground[scale=0.9,page=21]{ian-stepper-motors.pdf}
+    \begin{frame}{Stepping motor control modes}
+    \end{frame}
+}
+{\fullbackground[scale=0.9,page=22]{ian-stepper-motors.pdf}
+    \begin{frame}{Full step operation}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=23]{ian-stepper-motors.pdf}
+    \begin{frame}{Half step operation}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=24]{ian-stepper-motors.pdf}
+    \begin{frame}{2 Phases full step operation}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=25]{ian-stepper-motors.pdf}
+    \begin{frame}{Single step response and resonances}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=26]{ian-stepper-motors.pdf}
+    \begin{frame}{Microstepping}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=27]{ian-stepper-motors.pdf}
+    \begin{frame}{Sine-cosine microstepping}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=28]{ian-stepper-motors.pdf}
+    \begin{frame}{Arduino microstepping example code}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=29]{ian-stepper-motors.pdf}
+    \begin{frame}{Arduino microstepping example code}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=30]{ian-stepper-motors.pdf}
+    \begin{frame}{Stepper motor step parameters}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=31]{ian-stepper-motors.pdf}
+    \begin{frame}{Example: step parameters}
+    \end{frame}
+}
+{\fullbackground[scale=0.9,page=32]{ian-stepper-motors.pdf}
+    \begin{frame}{Current flow in stepper motors}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=33]{ian-stepper-motors.pdf}
+    \begin{frame}{Current flow in stepper motors}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=34]{ian-stepper-motors.pdf}
+    \begin{frame}{Current flow in stepper motors}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=35]{ian-stepper-motors.pdf}
+    \begin{frame}{Chopper control of current}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=36]{ian-stepper-motors.pdf}
+    \begin{frame}{Rough calculation of max pulse rate}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=37]{ian-stepper-motors.pdf}
+    \begin{frame}{Rough calculation of max pulse rate}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=38]{ian-stepper-motors.pdf}
+    \begin{frame}{Stepper motor torque-speed characteristic}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=39]{ian-stepper-motors.pdf}
+    \begin{frame}{Stepper motor torque-speed characteristic}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=40]{ian-stepper-motors.pdf}
+    \begin{frame}{Stepper motor torque-speed characteristic}
+    \end{frame}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Stepper motor drivers}
+
+{\fullbackground[scale=0.9,page=42]{ian-stepper-motors.pdf}
+    \begin{frame}{L298N DC stepper motor controller}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=43]{ian-stepper-motors.pdf}
+    \begin{frame}{L298N DC stepper motor controller}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=44]{ian-stepper-motors.pdf}
+    \begin{frame}{L298N DC stepper motor controller}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=45]{ian-stepper-motors.pdf}
+    \begin{frame}{L298N DC stepper motor controller}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=46]{ian-stepper-motors.pdf}
+    \begin{frame}{L298N DC stepper motor controller}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=47]{ian-stepper-motors.pdf}
+    \begin{frame}{DRV8825 stepper motor controller}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=48]{ian-stepper-motors.pdf}
+    \begin{frame}{DRV8825 stepper motor controller}
+    \end{frame}
+}
+
+\section{Stepper motor issues}
+
+{\fullbackground[scale=0.9,page=50]{ian-stepper-motors.pdf}
+    \begin{frame}{Advantages and disadvantages of steppers}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=51]{ian-stepper-motors.pdf}
+    \begin{frame}{Advantages and disadvantages of steppers}
+    \end{frame}
+}
+{\fullbackground[scale=0.9,page=52]{ian-stepper-motors.pdf}
+    \begin{frame}{Stepper motor design issues}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=53]{ian-stepper-motors.pdf}
+    \begin{frame}{Typical stepper torque characteristics}
+    \end{frame}
+}
+
+\section{Applications}
+
+{\fullbackground[scale=0.9,page=54]{ian-stepper-motors.pdf}
+    \begin{frame}{CNC mill using steppers}
+    \end{frame}
+}
+
+\videoframe[0.56]{../part4/figs/3d-printer.mp4}
+
+{\fullbackground[scale=0.9,page=55]{ian-stepper-motors.pdf}
+    \begin{frame}{Servo motor versus stepper motor}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=56]{ian-stepper-motors.pdf}
+    \begin{frame}{Wide range of standard NEMA frames}
+    \end{frame}
+}
+
+{\fullbackground[scale=0.9,page=57]{ian-stepper-motors.pdf}
+    \begin{frame}{Geared stepper motor}
+    \end{frame}
+}
+
+\imageframe[color=black]{datasheet}
+
+\begin{frame}{}
+    \begin{center}
+        \Large
+        That's all, folks!\\[2em]
+        \normalsize
+        Questions:\\
+        Portland Square B316 or \url{severin.lemaignan@plymouth.ac.uk} \\[1em]
+
+        Slides:\\
+        \href{https://github.com/severin-lemaignan/module-introduction-sensors-actuators}{\small
+        github.com/severin-lemaignan/module-introduction-sensors-actuators}
+
+
+    \end{center}
+\end{frame}
+
+
+
+\end{document}
