@@ -12,6 +12,8 @@
 \usepackage{pgfpages} % required for notes on second screen
 \usepackage{graphicx}
 
+\usepackage{pdfpcnotes}
+
 \usepackage{multicol}
 
 \usepackage{tabularx,ragged2e}
@@ -115,10 +117,27 @@
 
 
 \section{Stepper motors}
-{\fullbackground[scale=0.9,page=2]{ian-stepper-motors.pdf}
-    \begin{frame}{Stepper motor basic idea}
-    \end{frame}
-}
+
+\begin{frame}{Stepper motor basic principle}
+    \begin{columns}
+        \begin{column}{0.4\linewidth}
+            \begin{center}
+                \includegraphics[width=1.2\linewidth]{bipolar}
+            \end{center}
+        \end{column}
+        \begin{column}{0.6\linewidth}
+            \begin{itemize}
+                \item A stepper motor is a synchronous electric motor.
+                \item The rotor's equilibrium position occurs when aligned with the
+                    stator's magnetic field
+                \item By sequencing the current in the coils, one generates a rotating
+                    magnetic field, which in turn generates a rotation of the
+                    rotor, one step at time.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+
+\end{frame}
 
 {\fullbackground[scale=0.9,page=3]{ian-stepper-motors.pdf}
     \begin{frame}{Several basic types of stepping motors}
@@ -136,7 +155,7 @@
 }
 
 {\fullbackground[scale=0.9,page=6]{ian-stepper-motors.pdf}
-    \begin{frame}{Variable reluctance stepper motor operation}
+    \begin{frame}{Variable reluctance stepper motor: sequencing}
     \end{frame}
 }
 
@@ -145,13 +164,8 @@
     \end{frame}
 }
 
-{\fullbackground[scale=0.9,page=8]{ian-stepper-motors.pdf}
-    \begin{frame}{Variable reluctance stepper motor operation}
-    \end{frame}
-}
-
 {\fullbackground[scale=0.9,page=9]{ian-stepper-motors.pdf}
-    \begin{frame}{Permanent magnet stepper motor operation}
+    \begin{frame}{Permanent magnet stepper motor}
     \end{frame}
 }
 
@@ -160,26 +174,86 @@
     \end{frame}
 }
 
-{\fullbackground[scale=0.9,page=11]{ian-stepper-motors.pdf}
-    \begin{frame}{Hybrid stepping motor}
-    \end{frame}
-}
+\begin{frame}{Hybrid stepper motors}
 
+    \begin{columns}
+        \begin{column}{0.6\linewidth}
+            \begin{itemize}
+                \item combine a permanent magnet and a
+                    rotor with metal teeth to provide features of the variable
+                    reluctance and permanent magnet motors 
 
-{\fullbackground[scale=0.9,page=12]{ian-stepper-motors.pdf}
-    \begin{frame}{Parts of a hybrid stepper}
-    \end{frame}
-}
+                \item the rotor teeth provide a smaller magnetic circuit
+                    resistance in some rotor positions, which improves static
+                    and dynamic torque
 
-{\fullbackground[scale=0.9,page=13]{ian-stepper-motors.pdf}
-    \begin{frame}{Inside a hybrid stepper}
-    \end{frame}
-}
+                \item more expensive than other steppers, but they use smaller
+                    steps, have greater torque, and have greater maximum speeds
 
-{\fullbackground[scale=0.9,page=14]{ian-stepper-motors.pdf}
-    \begin{frame}{Hybrid stepping motor operation}
-    \end{frame}
-}
+                \item most common type of stepper
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.4\linewidth}
+
+            \begin{center}
+                \includegraphics[width=0.9\linewidth]{hybrid}
+                \hspace{1em}
+
+                \includegraphics[width=0.9\linewidth]{magnetized-shaft}
+            \end{center}
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\begin{frame}{Hybrid stepping motor operation}
+    \begin{center}
+        \begin{columns}
+            \begin{column}{0.5\linewidth}
+        \includegraphics[width=\linewidth]{hybrid}
+
+        \source{https://www.phidgets.com/docs/Stepper_Motor_and_Controller_Primer}{Phidgets.com (check the link for details)}
+                
+            \end{column}
+            \begin{column}{0.5\linewidth}
+        \includegraphics[width=\linewidth]{hybrid-operation}
+
+        \source{http://www.nmbtc.com/step-motors/engineering/construction-and-operating-theory/}{MinebeaMitsumi}
+             \end{column}
+        \end{columns}
+
+    \end{center}
+
+    \pnote{
+        The image to the right is a cross-sectional view of the inside of a
+        hybrid bipolar stepper motor. As you can see, it has eight poles with
+        six teeth each. This motor contains two coils- one wrapping the
+        odd-numbered poles, and the other wrapping the even-numbered poles. The
+        steel end-cap in the center of the image covers a cylindrical permanent
+        magnet which surrounds the shaft.
+
+        If positive current is sent to the odd-numbered coil, poles 1 and 5 are
+        magnetized as south, and poles 3 and 7 are magnetized as north. Assuming
+        the permanent magnet in the center of the motor has its north pole
+        facing toward us, this will result in the rotor turning so that the
+        teeth line up with stator poles 1 and 5, as they are in the image. At
+        the same time, poles 3 and 7 will become aligned on the opposite end of
+        the motor, where the gear on the rotor is permanently offset by the
+        width of one tooth and the permanent magnet has magnetized the rotor as
+        south. The rotation of the motor is continued by sending negative
+        current through the even-numbered phase, then negative current through
+        the odd-numbered phase, then positive current through the even-numbered
+        phase, and so on. The stepper controller can reverse the direction of
+        rotation simply by reversing this sequence.
+
+        When a stepper motor becomes engaged in software, and current is applied
+        to the coils, it may abruptly "snap" to the position that the rotor is
+        being held at. 
+    }
+\end{frame}
+
+\imageframe{parts-hybrid}
+
 
 \begin{frame}{Bipolar motor windings}
 
@@ -243,7 +317,7 @@
     \end{frame}
 }
 
-\section{Controlling a stepper motor with an Arduino}
+\section[Arduino]{Controlling a stepper motor with an Arduino}
 
 \begin{frame}{Unipolar versus bipolar circuitry}
 
@@ -341,6 +415,7 @@ void loop(){
         \end{overprint}
 \end{frame}
 
+\videoframe[0.56]{figs/stepper.mov}
 
 \section[Modes]{Stepper motor modes}
 
@@ -353,13 +428,13 @@ void loop(){
     \end{frame}
 }
 
-{\fullbackground[scale=0.9,page=23]{ian-stepper-motors.pdf}
-    \begin{frame}{Half step operation}
+{\fullbackground[scale=0.9,page=24]{ian-stepper-motors.pdf}
+    \begin{frame}{2 Phases full step operation}
     \end{frame}
 }
 
-{\fullbackground[scale=0.9,page=24]{ian-stepper-motors.pdf}
-    \begin{frame}{2 Phases full step operation}
+{\fullbackground[scale=0.9,page=23]{ian-stepper-motors.pdf}
+    \begin{frame}{Half step operation}
     \end{frame}
 }
 
@@ -469,10 +544,11 @@ void loop(){
     \end{frame}
 }
 
-{\fullbackground[scale=0.9,page=46]{ian-stepper-motors.pdf}
-    \begin{frame}{L298N DC stepper motor controller}
-    \end{frame}
-}
+\begin{frame}{On the Arduino motor shield}
+    \begin{center}
+        \includegraphics[width=0.8\linewidth]{motorshield}
+    \end{center}
+\end{frame}
 
 {\fullbackground[scale=0.9,page=47]{ian-stepper-motors.pdf}
     \begin{frame}{DRV8825 stepper motor controller}
@@ -484,7 +560,7 @@ void loop(){
     \end{frame}
 }
 
-\section[Limits]{Stepper motor issues}
+\section[Limits]{Strenghts and Weaknesses}
 
 {\fullbackground[scale=0.9,page=50]{ian-stepper-motors.pdf}
     \begin{frame}{Advantages and disadvantages of steppers}
@@ -507,6 +583,18 @@ void loop(){
 
 \section{Applications}
 
+{\fullbackground[scale=0.9,page=56]{ian-stepper-motors.pdf}
+    \begin{frame}{Wide range of standard NEMA frames}
+    \end{frame}
+}
+
+\begin{frame}{Variable number of stacks}
+
+    \begin{center}
+        \includegraphics[width=0.8\linewidth]{stepper-stacks-size}
+    \end{center}
+\end{frame}
+
 {\fullbackground[scale=0.9,page=54]{ian-stepper-motors.pdf}
     \begin{frame}{CNC mill using steppers}
     \end{frame}
@@ -516,11 +604,6 @@ void loop(){
 
 {\fullbackground[scale=0.9,page=55]{ian-stepper-motors.pdf}
     \begin{frame}{Servo motor versus stepper motor}
-    \end{frame}
-}
-
-{\fullbackground[scale=0.9,page=56]{ian-stepper-motors.pdf}
-    \begin{frame}{Wide range of standard NEMA frames}
     \end{frame}
 }
 
