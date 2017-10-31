@@ -54,10 +54,12 @@
 \pgfplotsset{compat=newest}
 \usepackage{circuitikz}
 
+\usepackage[normalem]{ulem}
+
 \graphicspath{{figs/}}
 
 \title{ROCO222 \newline Intro to Sensors and Actuators}
-\subtitle{Part 5 -- Stepper motors}
+\subtitle{Stepper motors}
 
 \date{}
 \author{Séverin Lemaignan}
@@ -68,6 +70,49 @@
 \licenseframe{github.com/severin-lemaignan/module-introduction-sensors-actuators}
 
 \maketitle
+
+\miniframesoff
+\begin{frame}{What have we done so far?}
+
+\begin{itemize}
+    \item \textbf{Week 1} -- \sout{Arduino + Encoders}
+    \item \textbf{Week 2} -- \sout{Electromagnetism and DC motors 1}
+    \item \textbf{Week 4} -- \sout{Electromagnetism and DC motors 2}
+    \item \textbf{Week 5} -- \sout{Magnets, brushless motor, motor control}
+    \item \textbf{Week 6} -- Stepper motors
+    \item \textbf{Week 7} -- \emph{no lecture}
+    \item \textbf{Week 8} -- Non-electrical actuators (Martin Stoelen)
+    \item \textbf{Week 9} -- ROS middleware, joint state, kinematics 101, visualisation
+    \item \textbf{Week 10} -- Software engineering for robotics
+    \item \textbf{Week 11} -- Induction motors
+    \item \textbf{Week 12} -- Sensors
+    \item \textbf{Week 13} -- Exam preparation
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Labs}
+
+\begin{itemize}
+    \item \textbf{Week 1} -- \sout{Git, Linux, command-line}
+    \item \textbf{Week 2} -- \sout{DC motor design}
+    \item \textbf{Week 4} -- \sout{Incremental encoder}
+    \item \textbf{Week 5} -- \sout{Arduino motor control}
+    \item \textbf{Week 6} -- Arduino and Stepper motors
+    \item \textbf{Week 7} -- \textbf{Lab on Monday for everyone} Servo project intro
+    \item \textbf{Week 8} -- Design for 3D printing (Jake)
+    \item \textbf{Week 9} -- Servo project cont'd
+    \item \textbf{Week 10} -- Servo project cont'd
+    \item \textbf{Week 11} -- Servo project cont'd
+    \item \textbf{Week 12} -- Servo project final
+\end{itemize}
+
+\end{frame}
+
+
+\miniframeson
+
+
 
 \section{Stepper motors}
 {\fullbackground[scale=0.9,page=2]{ian-stepper-motors.pdf}
@@ -136,32 +181,168 @@
     \end{frame}
 }
 
-{\fullbackground[scale=0.9,page=15]{ian-stepper-motors.pdf}
-    \begin{frame}{Unipolar motor windings}
-    \end{frame}
-}
+\begin{frame}{Bipolar motor windings}
 
-{\fullbackground[scale=0.9,page=16]{ian-stepper-motors.pdf}
-    \begin{frame}{Bipolar motor windings}
-    \end{frame}
-}
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+
+            \begin{center}
+                \includegraphics[width=\linewidth]{bipolar}
+            \end{center}
+        \end{column}
+        \begin{column}{0.5\linewidth}
+
+            \begin{itemize}
+                \item In a bipolar winding the current flow on the coils is reversed, which reverses electromagnetic polarity
+                \item All the windings can be used to drive the motor
+                \item Four wires 
+                \item No common center connection. 
+                \item Two independent sets of coils
+                \item Need H-bridge to reverse direction of current in coils
+            \end{itemize}
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\begin{frame}{Unipolar motor windings}
+
+
+    \begin{center}
+        \includegraphics[width=0.6\linewidth]{unipolar}
+    \end{center}
+
+    \only<1>{
+    Unipolar stepping motor are made of two windings.
+
+        \begin{itemize}
+            \item Each windings has a center tap either brought outside motor
+                separately or connected together and brought outside as one wire
+
+            \item Therefore unipolar motors have 5 or 6 wires
+        \end{itemize}
+    }
+    \only<2>{
+        \begin{itemize}
+            \item Center taps normally tied to GND, ends of the coils alternately V+ 
+            \item Unipolar drivers always energize the coils in the same direction.
+            \item Current flow is never reversed, hence the name unipolar
+            \item Less available torque because only half of the coils energized at a time
+        \end{itemize}
+    }
+\end{frame}
 
 {\fullbackground[scale=0.9,page=17]{ian-stepper-motors.pdf}
     \begin{frame}{Bipolar delivers more torque than unipolar}
     \end{frame}
 }
 
-{\fullbackground[scale=0.9,page=18]{ian-stepper-motors.pdf}
-    \begin{frame}{Unipolar versus bipolar circuitry}
-    \end{frame}
-}
 
 {\fullbackground[scale=0.9,page=19]{ian-stepper-motors.pdf}
     \begin{frame}{Bifilar stepper motor}
     \end{frame}
 }
 
-\section{Stepper motor modes}
+\section{Controlling a stepper motor with an Arduino}
+
+\begin{frame}{Unipolar versus bipolar circuitry}
+
+    \begin{center}
+        \includegraphics[width=0.6\linewidth]{wiring}
+    \end{center}
+
+    \small
+    \begin{columns}
+        \begin{column}{0.6\linewidth}
+            \begin{itemize}
+                \item Only need simple switching units to operate
+                \item Don’t need H-bridge
+                \item Unipolar drivers can be implemented with simple transistor circuitry
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            \begin{itemize}
+                \item Bipolar drivers need H-bridge circuitry to reverse the current flow though the coil
+                \item \emph{Not really a problem these days!}
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Colour coding}
+
+    \begin{center}
+        \includegraphics[width=0.75\linewidth]{color-codes}
+
+        \source{https://www.linengineering.com/}{Lin engineering}
+    \end{center}
+\end{frame}
+
+
+\begin{frame}{Wiring to the Arduino motor shield}
+
+    \begin{center}
+        \includegraphics[width=0.8\linewidth]{unipolar-wiring}
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Full-step control program}
+    \begin{overprint}
+    \onslide<1>
+        \begin{minted}[frame=none,
+               linenos=false,
+               fontsize=\small,
+               xleftmargin=0.5em]{cpp}
+
+#define DIR_A 12
+#define PWM_A 3
+#define DIR_B 13
+#define PWM_B 11
+
+const int delayMs = 100;
+
+void setup() {
+  pinMode(DIR_A, OUTPUT);
+  pinMode(DIR_B, OUTPUT);
+
+  pinMode(9, OUTPUT); digitalWrite(8, LOW); //No braking ch. A
+  pinMode(8, OUTPUT); digitalWrite(8, LOW); //No braking ch. B
+}
+
+\end{minted}
+\onslide<2>
+\begin{minted}[frame=none,
+               linenos=false,
+               fontsize=\scriptsize,
+               xleftmargin=0.5em]{cpp}
+void loop(){
+
+  digitalWrite(DIR_A, HIGH); // Ch. A forward
+  digitalWrite(DIR_B, HIGH); // Ch. B forward
+  analogWrite(PWM_A, 255); // Ch. A on
+  analogWrite(PWM_B, 0); // Ch. B off
+  delay(delayMs);
+  
+  analogWrite(PWM_A, 0); // Ch. A off
+  analogWrite(PWM_B, 255); // Ch. B on
+  delay(delayMs);
+  
+  digitalWrite(DIR_A, LOW); // Ch. A backwards
+  digitalWrite(DIR_B, LOW); // Ch. B backwards
+  analogWrite(PWM_A, 255); // Ch. A on
+  analogWrite(PWM_B, 0); // Ch. B off
+  delay(delayMs);
+  
+  analogWrite(PWM_A, 0); // Ch. A off
+  analogWrite(PWM_B, 255); // Ch. B on
+  delay(delayMs);
+}
+\end{minted}
+        \end{overprint}
+\end{frame}
+
+
+\section[Modes]{Stepper motor modes}
 
 {\fullbackground[scale=0.9,page=21]{ian-stepper-motors.pdf}
     \begin{frame}{Stepping motor control modes}
@@ -264,7 +445,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Stepper motor drivers}
+\section[Drivers]{Stepper motor drivers}
 
 {\fullbackground[scale=0.9,page=42]{ian-stepper-motors.pdf}
     \begin{frame}{L298N DC stepper motor controller}
@@ -301,7 +482,7 @@
     \end{frame}
 }
 
-\section{Stepper motor issues}
+\section[Limits]{Stepper motor issues}
 
 {\fullbackground[scale=0.9,page=50]{ian-stepper-motors.pdf}
     \begin{frame}{Advantages and disadvantages of steppers}
