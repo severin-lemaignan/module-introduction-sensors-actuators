@@ -23,6 +23,14 @@
 
 \RequirePackage{hyperref}
 
+\RequirePackage{xspace}
+\newcommand{\eg}{e.g.\xspace}
+\newcommand{\etal}{\textit{et al.}\xspace}
+\newcommand{\ie}{i.e.\xspace}
+\newcommand{\etc}{etc.\xspace}
+\newcommand{\vs}{\textit{vs.}\xspace}
+
+
 \author{Séverin Lemaignan, Plymouth University}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% Set up the header and footer  %%%%%%%%%%%%%%%%%%
