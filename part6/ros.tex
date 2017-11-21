@@ -112,7 +112,7 @@
 
 \miniframeson
 
-\section{ROS is not an operating system}
+\section[Intro]{ROS is not an operating system}
 
 \begin{frame}{Instead, ROS is...}
     \begin{itemize}
@@ -165,140 +165,12 @@
 \end{frame}
 
 \begin{frame}{}
-    This being clarified...
+    [we will revisit these slides at the end of the lecture]
 \end{frame}
 
-\section{How does it look like?}
+\section[Example]{A first example}
 
-\begin{frame}[containsverbatim]{}
-
-\begin{shcode}
-$ roscore
-$ rosrun rviz rviz
-$ roslaunch openni_launch openni.launch
-\end{shcode}
-
-\end{frame}
-
-
-\imageframe[color=black]{rviz-pointcloud-0}
-
-\begin{frame}[containsverbatim]{}
-
-\begin{shcode}
-$ rosrun attention_tracker estimate 
-                         image:=/camera/rgb/image_color
-\end{shcode}
-
-\end{frame}
-
-\imageframe[color=black]{rviz-pointcloud}
-
-\begin{frame}[containsverbatim]{}
-\begin{shcode}
-$ rosnode list 
-/camera_base_link
-/camera_base_link1
-/camera_base_link2
-/camera_base_link3
-/ros_attention_tracker
-/rosout
-/camera/camera_nodelet_manager
-/camera/debayer
-/camera/depth_metric
-/camera/depth_metric_rect
-/camera/depth_points
-/camera/depth_rectify_depth
-/camera/depth_registered_hw_metric_rect
-/camera/depth_registered_metric
-/camera/depth_registered_rectify_depth
-/camera/depth_registered_sw_metric_rect
-/camera/disparity_depth
-/camera/disparity_registered_hw
-/camera/disparity_registered_sw
-/camera/driver
-/camera/points_xyzrgb_hw_registered
-/camera/points_xyzrgb_sw_registered
-/camera/rectify_color
-/camera/rectify_ir
-/camera/rectify_mono
-/camera/register_depth_rgb
-\end{shcode}
-
-\end{frame}
-
-\begin{frame}[containsverbatim]{}
-\begin{shcode}
-$ rostopic list
-/camera_info
-/image
-/nb_detected_faces
-/rosout
-/rosout_agg
-/tf
-/camera/depth/image_rect_raw
-/camera/depth/image_rect_raw/compressed
-/camera/depth/image_rect_raw/compressed/parameter_descriptions
-/camera/depth/image_rect_raw/compressed/parameter_updates
-/camera/depth/image_rect_raw/compressedDepth
-/camera/depth/image_rect_raw/compressedDepth/parameter_descriptions
-/camera/depth/image_rect_raw/compressedDepth/parameter_updates
-/camera/depth/image_rect_raw/theora
-/camera/depth/image_rect_raw/theora/parameter_descriptions
-/camera/depth/image_rect_raw/theora/parameter_updates
-/camera/depth_rectify_depth/parameter_descriptions
-/camera/depth_rectify_depth/parameter_updates
-\end{shcode}
-
-\end{frame}
-
-\begin{frame}[containsverbatim]{}
-\begin{shcode}
-$ rostopic echo tf
-transforms: 
-  - 
-    header: 
-      seq: 0
-      stamp: 
-        secs: 1449222890
-        nsecs: 396561780
-      frame_id: /camera_link
-    child_frame_id: /camera_rgb_frame
-    transform: 
-      translation: 
-        x: 0.0
-        y: -0.045
-        z: 0.0
-      rotation: 
-        x: 0.0
-        y: 0.0
-        z: 0.0
-        w: 1.0
----
-transforms: 
-  - 
-    header: 
-      seq: 0
-      stamp: 
-        secs: 1449222890
-
-\end{shcode}
-
-\end{frame}
-
-
-\begin{frame}[containsverbatim]{}
-
-\begin{shcode}
-$ rosrun rqt_reconfigure rqt_reconfigure
-\end{shcode}
-
-\end{frame}
-
-
-\imageframe[color=black]{dynamic_reconfigure.png}
-
-\begin{frame}{Example: a simple image processing pipeline}
+\begin{frame}{A simple image processing pipeline}
 
 \begin{center}
 \begin{tikzpicture}[
@@ -321,6 +193,13 @@ $ rosrun rqt_reconfigure rqt_reconfigure
         \path (node2) edge[bend right] (node3);
 
 
+    \uncover<2-> {
+
+        \node at (-0,0) (a) {this is a \textbf{node}};
+        \path[dashed] (a) edge (node1);
+        \node at (-4.5,-3) (b) {this is a \textbf{topic}};
+        \path[dashed] (b) edge (topic3);
+    }
 \end{tikzpicture}
 \end{center}
 
@@ -358,17 +237,19 @@ $ rosrun rqt_reconfigure rqt_reconfigure
 
 \begin{frame}[containsverbatim]{}
 
-\begin{pythoncode}
+\begin{minted}[frame=none,
+               linenos=true,
+               fontsize=\footnotesize,
+               numbersep=0.4em,
+               xleftmargin=0.5em]{python}
 import sys, cv2, rospy
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 
 def on_image(image):
     cv_image = bridge.imgmsg_to_cv2(image, "bgr8")
-    (rows,cols,channels) = cv_image.shape
-    cv2.circle(cv_image, (cols/2,rows/2), 50,(0,0,255), -1)
-    cv2.imshow("Image window", cv_image)
-    cv2.waitKey(3)
+    rows, cols, channels = cv_image.shape
+    cv2.circle(cv_image, (cols/2, rows/2), 50, (0,0,255), -1)
     image_pub.publish(bridge.cv2_to_imgmsg(cv_image, "bgr8"))
 
 rospy.init_node('image_processor')
@@ -378,16 +259,33 @@ image_pub = rospy.Publisher("processed_image",Image)
 
 while not rospy.is_shutdown():
     rospy.spin()
-\end{pythoncode}
+\end{minted}
 
 \end{frame}
 
-\begin{frame}[containsverbatim]{}
+\begin{frame}[fragile]{How to use this code?}
+
+First, we need to write data onto the \texttt{/image} topic, for instance from a
+webcam:
 
 \begin{shcode}
-$ roslaunch gscam v4l.launch
-$ python image_processor.py image:=/v4l/camera/image_raw
-$ rosrun image_view image_view image:=/processed_image
+> rosrun usb_cam usb_cam_node
+\end{shcode}
+
+\pause
+
+Then, we run our code:
+
+\begin{shcode}
+> python image_processor.py
+\end{shcode}
+
+\pause
+
+Finally, we run a 3rd node to display the image:
+
+\begin{shcode}
+> rosrun image_view image_view image:=/processed_image
 \end{shcode}
 
 \end{frame}
@@ -400,7 +298,7 @@ $ rosrun image_view image_view image:=/processed_image
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{The key concepts}
+\section[Key concepts]{The key ROS concepts}
 
 \begin{frame}{Talking Nodes}
 
@@ -449,7 +347,7 @@ $ rosrun image_view image_view image:=/processed_image
 
     }
 
-    \only<8> {
+    \only<8-9> {
         \node [rosnode,fill=hriSec3!50] at (-5,0) (roscore) {roscore};
         \path[dashed] (node1) edge[<->,very thin, bend right] node[label,above] {\tiny XML-RPC} (roscore);
         \path[dashed] (node2) edge[<->,very thin, bend right] node[label,above] {\tiny XML-RPC} (roscore);
@@ -458,86 +356,30 @@ $ rosrun image_view image_view image:=/processed_image
     }
 
 \end{tikzpicture}
-\only<5>{Services: \bf synchronous}
-\only<7>{Actions: \bf asynchronous}
-\only<8>{\tt ROS\_MASTER\_URI=http://<host>:<port>}
-\end{center}
-
-\end{frame}
-
-\begin{frame}{Nodelets}
-
-\begin{center}
-\begin{tikzpicture}[
-                    >=latex,
-                    every edge/.style={->, draw, very thick},
-                    service/.style={->, draw, very thick,dashed},
-                    rosnode/.style={draw, font=\sf, node distance=0.5, rounded
-                    corners, align=center, inner sep=5pt,fill=hriSec2Dark!50},
-                    topic/.style={font=\tt, node distance=0.5, align=center, inner sep=5pt},
-                    pic/.style={fill=none,draw=none}
-                ]
-
-    \node [rosnode] at (-4,0) (node1) {image acquisition};
-    \node [rosnode] at (0,-2) (node2) {image processor};
-    \node [rosnode] at (4,-4) (node3) {next processing};
-
-        \node [topic] at (-4,-1.5) (topic3) {/image};
-        \node [topic] at (-1,-3.5) (topic1) {/processed\_image};
-        \path (node1) edge[bend right] (node2);
-        \path (node2) edge[bend right] (node3);
-
-
-\end{tikzpicture}
+    \only<5>{Services: {\bf synchronous}: call is blocking, only suitable when
+    very short processing (\eg setting a parameter)}
+    \only<7>{Actions: {\bf asynchronous}: call is non-blocking, suitable for
+    long processes (\eg motion planning)}
+    \only<8>{The \texttt{roscore} daemon act as yellow pages for the nodes to
+    discover each others.}
+    \only<9>{When nodes are distributed on different machines: {\tt
+    ROS\_MASTER\_URI=http://<host>:<port>} to point to \texttt{roscore}}
 \end{center}
 
 \end{frame}
 
 
-\begin{frame}[containsverbatim]{Packages, nodes and launch files}
-\begin{shcode}
-$ cd my_package
-$ ls
-CMakeLists.txt
-cfg/
-include/
-launch/
-msgs/
-nodes/
-package.xml
-src/
-$ rosrun my_package my_node
-\end{shcode}
-\end{frame}
+\begin{frame}[fragile]{Messages}
 
-\begin{frame}[containsverbatim]{Packages, nodes and launch files}
-\begin{xmlcode}
-<launch>
+    \textbf{Topics} are TCP ports\bubblemark{port} on which data is exchanged.
 
-  <arg name="head_frame" default="head_camera"/>
-  <arg name="image" default="/camera/rgb/image_raw"/>
+    The data is \textbf{serialized} using a format specific to each type of
+    data: ROS defines its \textbf{data interface} with \emph{messages}.
 
-  <node pkg="attention_tracker" type="focus" />
-
-  <node pkg="attention_tracker" type="estimate">
-    <param name="face_model" 
-        value="$(find attention_tracker)/model.dat" />
-    <remap from="/image" to="$(arg image)"/>
-  </node>
-
-</launch>
-\end{xmlcode}
-\begin{shcode}
-$ roslaunch my_package my_system.launch
-\end{shcode}
-\end{frame}
-
-
-
-\begin{frame}[containsverbatim]{Messages}
+    \pause
 
 \begin{shcode}
-$ rosmsg show geometry_msgs/Pose
+> rosmsg show geometry_msgs/Pose
 geometry_msgs/Point position
   float64 x
   float64 y
@@ -548,11 +390,32 @@ geometry_msgs/Quaternion orientation
   float64 z
   float64 w
 \end{shcode}
+
+\source{http://docs.ros.org/api/geometry_msgs/html/msg/Pose.html}{geometry\_msgs::Pose definition}
+
+    \bubble<1>[200][1][5cm]{port}{Think of a serial port, but for a network connection}
 \end{frame}
 
-\begin{frame}[containsverbatim]{Messages}
+\begin{frame}[fragile]{Message example: joint state}
 \begin{shcode}
-$ rosmsg show sensor_msgs/Image 
+> rosmsg show sensor_msgs/JointState 
+std_msgs/Header header
+  uint32 seq
+  time stamp
+  string frame_id
+string[] name
+float64[] position
+float64[] velocity
+float64[] effort
+\end{shcode}
+
+\source{http://docs.ros.org/api/sensor_msgs/html/msg/JointState.html}{sensor\_msgs::JointState definition}
+\end{frame}
+
+
+\begin{frame}[fragile]{Message example: image}
+\begin{shcode}
+> rosmsg show sensor_msgs/Image 
 std_msgs/Header header
     uint32 seq
     time stamp
@@ -565,11 +428,12 @@ uint32 step
 uint8[] data
 \end{shcode}
 
+\source{http://docs.ros.org/api/sensor_msgs/html/msg/Image.html}{sensor\_msgs::Image definition}
 \end{frame}
 
-\begin{frame}[containsverbatim]{Messages}
+\begin{frame}[fragile]{Messages content}
 \begin{shcode}
-$ rostopic echo /camera/image_raw 
+> rostopic echo /camera/image_raw 
 header: 
     seq: 56
     stamp: 
@@ -585,43 +449,45 @@ data: [32, 57, 51, 36, 61, 55, 41, 63, 60,...
 \end{shcode}
 \end{frame}
 
+\begin{frame}[plain]
+    \begin{center}
+        What are these \emph{frames}?
+    \end{center}
 
-\begin{frame}{ROS vs YARP terminology}
-    \begin{table}[]
-        \begin{tabularx}{\linewidth}{l>{\raggedright}X}
-            \toprule
-            \textbf{YARP}			& \textbf{ROS} \tabularnewline
-            \midrule
-            \texttt{Port}		& \texttt{topic} \tabularnewline
-            \texttt{RpcClient/RpcServer} & \texttt{action} (async) or \texttt{service} (sync) \tabularnewline
-            \texttt{Bottle}		& \texttt{message} \tabularnewline
-            \midrule
-            \texttt{yarpserver}		& \texttt{roscore} \tabularnewline
-            \bottomrule
-        \end{tabularx}
-    \end{table}
+    \pause
 
-    Connections of ports: explicit with YARP, implicit with ROS
+    A \textbf{frame} is a labelled orthogonal basis with a convenient (6D) origin.
+
+    Each part of the robot has usually its own frame, sensors have their frames,
+    objects in the environment have their frames, etc.
 \end{frame}
 
-
-\begin{frame}{Transformations}
-    \only<1>{
+\imageframe{frames-pr2}
+\imageframe[scale=0.8]{frames-nao}
+\begin{frame}{Frames}
+\only<1> {
     \begin{center}
-        \includegraphics[height=0.9\textheight]{nao_markers}
+    \input{sketches/scene-graph-only-cube.tex}
     \end{center}
 }
-%\only<2> {
-%    \input{sketches/scene-graph-only-cube.tex}
-%}
-\only<2> {
+\only<2-> {
     \begin{center}
     \input{sketches/scene-graph-cube.tex}
     \end{center}
 }
+
+\only<2> {
+    The \textbf{TF} library is responsible for maintaining the full
+    transformation tree, and calculating the transformation between any two frames.
+}
+\only<3> {
+    Attention: even though they look similar, frames and topics are unrelated.
+}
 \end{frame}
 
-\begin{frame}{Frames}
+\begin{frame}{"Creating" frames}
+
+Frames come to existence as soon as someone (a node) broadcast them.
 
 \begin{center}
 \resizebox{0.9\textwidth}{!}{%
@@ -655,13 +521,24 @@ data: [32, 57, 51, 36, 61, 55, 41, 63, 60,...
 
 \end{frame}
 
-\begin{frame}[containsverbatim]{}
+\begin{frame}[fragile]{How to write a TF broadcaster?}
 
-\begin{cppcode}
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+            \begin{center}C++
+            \end{center}
+\begin{minted}[frame=none,
+        linenos=true,
+        fontsize=\tiny,
+        numbersep=0.4em,
+        xleftmargin=0.5em]{cpp}
+
 #include <ros/ros.h>
 #include <tf/transform_broadcaster.h>
 
+
 int main(int argc, char** argv){
+
   float x=0.f,y=0.f,theta=0.f;
 
   ros::init(argc, argv, "my_tf_broadcaster");
@@ -669,33 +546,79 @@ int main(int argc, char** argv){
   ros::Rate rate(10); // 10 hz
 
   while (ros::ok()) {
-    tf::Transform transform(tf::Quaternion(0, 0, theta), 
-                            tf::Vector3(x, y, 0.0));
-    br.sendTransform(tf::StampedTransform(transform, 
-                                          ros::Time::now(), 
-                                          "map", "my_robot"));
+    tf::Transform transform(
+                    tf::Quaternion(0, 0, theta), 
+                    tf::Vector3(x, y, 0.0));
+
+    br.sendTransform(
+         tf::StampedTransform(transform, 
+                              ros::Time::now(), 
+                              "my_robot", "map"));
+
     x++;
     rate.sleep();
   }
   return 0;
 };
-\end{cppcode}
+\end{minted}
+
+            
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            \begin{center}Python
+            \end{center}
+
+\begin{minted}[frame=none,
+               linenos=true,
+               fontsize=\tiny,
+               numbersep=0.4em,
+               xleftmargin=0.5em]{python}
+
+import rospy
+import tf
+from tf.transformations import quaternion_from_euler
+
+if __name__ == '__main__':
+
+   x = 0.; y = 0.; theta = 0.
+
+   rospy.init_node('my_tf_broadcaster')
+   br = tf.TransformBroadcaster()
+   rate = rospy.Rate(10) # 10hz
+
+   while not rospy.is_shutdown():
+
+       br.sendTransform(
+           (x, y, 0),
+           quaternion_from_euler(0, 0, theta),
+           rospy.Time.now(),
+           "my_robot", "map")
+
+       x += 1
+       rate.sleep()
+
+\end{minted}
+
+            \vspace{2em}
+        \end{column}
+    \end{columns}
 
 \end{frame}
 
+%
+%\begin{frame}[containsverbatim]{}
+%
+%\begin{shcode}
+%> g++ tf.cpp -o tf -lroscpp -lrostime -lboost_system -ltf
+%> ./tf
+%\end{shcode}
+%
+%\end{frame}
+%
+
 \begin{frame}[containsverbatim]{}
-
 \begin{shcode}
-$ g++ tf.cpp -o tf -lroscpp -lrostime -lboost_system -ltf
-$ ./tf
-\end{shcode}
-
-\end{frame}
-
-
-\begin{frame}[containsverbatim]{}
-\begin{shcode}
-$ rostopic echo tf
+> rostopic echo tf
 transforms: 
   - 
     header: 
@@ -723,7 +646,7 @@ transforms:
 
 \begin{frame}{To summarize: key concepts}
     \begin{itemize}
-        \item Package, Node, Nodelet, Launch files
+        \item Node
         \item Master
         \item Messages
         \item Topics
@@ -731,13 +654,22 @@ transforms:
         \item Actions
         \item Transformations/frames
     \end{itemize}
+
+    \pause
+
+    Some additional concepts:
+    \begin{itemize}
+        \item Package
+        \item Launch file
+        \item Nodelet
+    \end{itemize}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{A robotic arm with ROS}
+\section[Robot arm]{A robotic arm with ROS}
 
 \imageframe[caption={That's our hardware...}, color=black]{servo-arm2}
 \imageframe[caption={That's what we want...}, color=black]{servo-rviz}
@@ -1120,6 +1052,204 @@ void loop(){
 \end{columns}
 \end{frame}
 
+\section{ROS usage}
+
+\begin{frame}{Nodelets}
+
+\begin{center}
+\begin{tikzpicture}[
+                    >=latex,
+                    every edge/.style={->, draw, very thick},
+                    service/.style={->, draw, very thick,dashed},
+                    rosnode/.style={draw, font=\sf, node distance=0.5, rounded
+                    corners, align=center, inner sep=5pt,fill=hriSec2Dark!50},
+                    topic/.style={font=\tt, node distance=0.5, align=center, inner sep=5pt},
+                    pic/.style={fill=none,draw=none}
+                ]
+
+    \node [rosnode] at (-4,0) (node1) {image acquisition};
+    \node [rosnode] at (0,-2) (node2) {image processor};
+    \node [rosnode] at (4,-4) (node3) {next processing};
+
+        \node [topic] at (-4,-1.5) (topic3) {/image};
+        \node [topic] at (-1,-3.5) (topic1) {/processed\_image};
+        \path (node1) edge[bend right] (node2);
+        \path (node2) edge[bend right] (node3);
+
+
+\end{tikzpicture}
+\end{center}
+
+\end{frame}
+
+
+\begin{frame}[containsverbatim]{Packages, nodes and launch files}
+\begin{shcode}
+> cd my_package
+> ls
+CMakeLists.txt
+cfg/
+include/
+launch/
+msgs/
+nodes/
+package.xml
+src/
+> rosrun my_package my_node
+\end{shcode}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Packages, nodes and launch files}
+\begin{xmlcode}
+<launch>
+
+  <arg name="head_frame" default="head_camera"/>
+  <arg name="image" default="/camera/rgb/image_raw"/>
+
+  <node pkg="attention_tracker" type="focus" />
+
+  <node pkg="attention_tracker" type="estimate">
+    <param name="face_model" 
+        value="$(find attention_tracker)/model.dat" />
+    <remap from="/image" to="$(arg image)"/>
+  </node>
+
+</launch>
+\end{xmlcode}
+\begin{shcode}
+> roslaunch my_package my_system.launch
+\end{shcode}
+\end{frame}
+
+
+\begin{frame}[containsverbatim]{}
+
+\begin{shcode}
+> roscore
+> rosrun rviz rviz
+> roslaunch openni_launch openni.launch
+\end{shcode}
+
+\end{frame}
+
+
+\imageframe[color=black]{rviz-pointcloud-0}
+
+\begin{frame}[containsverbatim]{}
+
+\begin{shcode}
+> rosrun attention_tracker estimate 
+                         image:=/camera/rgb/image_color
+\end{shcode}
+
+\end{frame}
+
+\imageframe[color=black]{rviz-pointcloud}
+
+\begin{frame}[containsverbatim]{}
+\begin{shcode}
+> rosnode list 
+/camera_base_link
+/camera_base_link1
+/camera_base_link2
+/camera_base_link3
+/ros_attention_tracker
+/rosout
+/camera/camera_nodelet_manager
+/camera/debayer
+/camera/depth_metric
+/camera/depth_metric_rect
+/camera/depth_points
+/camera/depth_rectify_depth
+/camera/depth_registered_hw_metric_rect
+/camera/depth_registered_metric
+/camera/depth_registered_rectify_depth
+/camera/depth_registered_sw_metric_rect
+/camera/disparity_depth
+/camera/disparity_registered_hw
+/camera/disparity_registered_sw
+/camera/driver
+/camera/points_xyzrgb_hw_registered
+/camera/points_xyzrgb_sw_registered
+/camera/rectify_color
+/camera/rectify_ir
+/camera/rectify_mono
+/camera/register_depth_rgb
+\end{shcode}
+
+\end{frame}
+
+\begin{frame}[containsverbatim]{}
+\begin{shcode}
+> rostopic list
+/camera_info
+/image
+/nb_detected_faces
+/rosout
+/rosout_agg
+/tf
+/camera/depth/image_rect_raw
+/camera/depth/image_rect_raw/compressed
+/camera/depth/image_rect_raw/compressed/parameter_descriptions
+/camera/depth/image_rect_raw/compressed/parameter_updates
+/camera/depth/image_rect_raw/compressedDepth
+/camera/depth/image_rect_raw/compressedDepth/parameter_descriptions
+/camera/depth/image_rect_raw/compressedDepth/parameter_updates
+/camera/depth/image_rect_raw/theora
+/camera/depth/image_rect_raw/theora/parameter_descriptions
+/camera/depth/image_rect_raw/theora/parameter_updates
+/camera/depth_rectify_depth/parameter_descriptions
+/camera/depth_rectify_depth/parameter_updates
+\end{shcode}
+
+\end{frame}
+
+\begin{frame}[containsverbatim]{}
+\begin{shcode}
+> rostopic echo tf
+transforms: 
+  - 
+    header: 
+      seq: 0
+      stamp: 
+        secs: 1449222890
+        nsecs: 396561780
+      frame_id: /camera_link
+    child_frame_id: /camera_rgb_frame
+    transform: 
+      translation: 
+        x: 0.0
+        y: -0.045
+        z: 0.0
+      rotation: 
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        w: 1.0
+---
+transforms: 
+  - 
+    header: 
+      seq: 0
+      stamp: 
+        secs: 1449222890
+
+\end{shcode}
+
+\end{frame}
+
+
+\begin{frame}[containsverbatim]{}
+
+\begin{shcode}
+> rosrun rqt_reconfigure rqt_reconfigure
+\end{shcode}
+
+\end{frame}
+
+
+\imageframe[color=black]{dynamic_reconfigure.png}
+
 
 
 \section{Other ROS tools}
@@ -1146,6 +1276,21 @@ void loop(){
 \imageframe[color=black]{dynamic_reconfigure}
 
 
+\section{So, what is ROS?}
+
+\begin{frame}{Instead, ROS is...}
+    \begin{itemize}
+        \item<+-> A fairly simple peer-to-peer message passing system designed with robotics in
+            mind
+        \item<+-> An API to this system (in several languages -- C++ and Python are
+            1st tier)
+        \item<+-> A set of standard message types that facilitate interoperability between modules
+        \item<+-> A set of conventions to write and package robotic softwares
+        \item<+-> Deep integration of a few key open-source libraries (OpenCV, PCL, tf)
+        \item<+-> A set of tools to run and monitor the nodes
+        \item<+-> Engagement of a large academic community, leading to a library of thousands of nodes
+    \end{itemize}
+\end{frame}
 
 
 \begin{frame}{}
