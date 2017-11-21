@@ -1,0 +1,95 @@
+def O (0,0,0)
+
+%%% cube
+def p1 (1,0,0) def p2 (1,0,1) def p3 (0,0,1)
+def p4 (0,1,0) def p5 (0,1,1) def p6 (1,1,1) def p7 (1,1,0)
+
+% faces of the cube
+
+def cube {
+    put {scale(0.6) then translate([0.5,0.5,0.5])} {
+        polygon[cull=false,fill style=box](O)(p1)(p2)(p3) % bottom
+        polygon[cull=false,fill style=box](O)(p1)(p7)(p4) % front
+        polygon[cull=false,fill style=box](p1)(p7)(p6)(p2) % right
+        polygon[cull=false,fill style=box](O)(p3)(p5)(p4) % left
+        polygon[cull=false,fill style=box](p4)(p5)(p6)(p7) % top
+        polygon[cull=false,fill style=box](p5)(p3)(p2)(p6) % back
+    }
+}
+
+def axes {
+    def sz 1
+    line [line style=axis, color=green,arrows=->] (O)(sz,0,0)
+    line [line style=axis, color=blue,arrows=->] (O)(0,sz,0)
+    line [line style=axis, color=red,arrows=->] (O)(0,0,sz)
+    special |\node at #1 {\tiny y};\node at #2 {\tiny z};\node at #3 {\tiny x};|[lay=in]
+    (sz * 1.2,0,0)(0,sz * 1.2,0)(0,0,sz * 1.2)
+    %{cube}
+}
+
+def t1 translate([-5,1,-5])
+def t2 rotate(-40, [0,1,0]) then translate([1,2,-2])
+def t3 translate([2,1,-1]) * [[t2]] 
+def t4 translate([2,-1,0]) * rotate(30, [1,0,0]) * [[t2]]
+
+def a1 [[t1]]*(O)
+def a2 [[t2]]*(O)
+def a3 [[t3]]*(O)
+def a4 [[t4]]*(O)
+
+def axes0 {
+            {axes} 
+            {special |\node at #1 {\small\tt /map};| (0,-0.5,0)}
+}
+
+def axes1 {
+    put {[[t1]]} {
+            {axes} 
+            {cube}
+            {special |\node at #1 {\small\tt /table};| (0,-0.5,0)}
+    }
+}
+
+def axes2 {
+    put {[[t2]]} {
+            {axes} 
+            {cube}
+            {special |\node at #1 {\small\tt /base\_link};| (-0.5,-0.5,0)}
+    }
+}
+
+
+def axes3 {
+    put {[[t3]]} {
+            {axes} 
+            {cube}
+            {special |\node at #1 {\small\tt /camera};| (1,-0.3,0)}
+    }
+}
+
+def axes4 {
+    put {[[t4]]} {
+            {axes} 
+            {cube}
+            {special |\node at #1 {\small\tt /gripper};| (1,0,-0.5)}
+    }
+}
+
+
+def eye (5,4,10)
+def look_at (0,0,-5)
+
+
+put { view((eye), (look_at)) then perspective(12) } {
+    {axes0} 
+    {axes1} 
+    line[style=dashed] (O) (a1)
+    {axes2} 
+    line[style=dashed] (O) (a2)
+    {axes3} 
+    line[style=dashed] (a2) (a3)
+    {axes4}
+    line[style=dashed] (a2) (a4)
+}
+
+global { language tikz }
