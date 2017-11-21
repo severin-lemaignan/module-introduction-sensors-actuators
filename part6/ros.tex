@@ -1,0 +1,196 @@
+%!TEX program = xelatex
+
+\documentclass[compress]{beamer}
+%--------------------------------------------------------------------------
+% Common packages
+%--------------------------------------------------------------------------
+
+\definecolor{links}{HTML}{663000}
+\hypersetup{colorlinks,linkcolor=,urlcolor=links}
+
+\usepackage[english]{babel}
+\usepackage{pgfpages} % required for notes on second screen
+\usepackage{graphicx}
+
+\usepackage{pdfpcnotes}
+
+\usepackage{multicol}
+
+\usepackage{tabularx,ragged2e}
+\usepackage{booktabs}
+
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+\usetheme{hri}
+
+% Display the navigation bullet even without subsections
+\usepackage{remreset}% tiny package containing just the \@removefromreset command
+\makeatletter
+\@removefromreset{subsection}{section}
+\makeatother
+\setcounter{subsection}{1}
+
+\makeatletter
+\let\beamer@writeslidentry@miniframeson=\beamer@writeslidentry
+\def\beamer@writeslidentry@miniframesoff{%
+  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}% does not happen normally
+  {%else
+    % removed \addtocontents commands
+    \clearpage\beamer@notesactions%
+  }
+}
+\newcommand*{\miniframeson}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframeson}
+\newcommand*{\miniframesoff}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframesoff}
+\makeatother
+
+
+
+\newcommand{\source}[2]{{\tiny\it Source: \href{#1}{#2}}}
+
+\usepackage{tikz}
+\usetikzlibrary{mindmap,backgrounds,positioning,calc,patterns}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepackage{circuitikz}
+
+\usepackage[normalem]{ulem}
+
+\graphicspath{{figs/}}
+
+\title{ROCO222 \newline Intro to Sensors and Actuators}
+\subtitle{ROS, the Robot Operating System}
+
+\date{}
+\author{Séverin Lemaignan}
+\institute{Centre for Neural Systems and Robotics\\{\bf Plymouth University}}
+
+\begin{document}
+
+\licenseframe{github.com/severin-lemaignan/module-introduction-sensors-actuators}
+
+\maketitle
+
+\miniframesoff
+
+\miniframeson
+
+
+
+\section{ROS and Arduino}
+
+\begin{frame}[fragile]{ROS with the Arduino}
+
+    \sh{rosserial} is a ROS \emph{bridge} that transparently transport ROS messages
+    over a serial connection.
+
+    \sh{rosserial_arduino} is a \sh{rosserial} client for the Arduino.
+    You can install it easily:\\
+    \sh{apt install ros-kinetic-rosserial ros-kinetic-rosserial-arduino}
+
+    To make it transparently available in the Arduino IDE, you need to also
+    install it as an Arduino library:
+
+    \begin{shcode}
+> cd $HOME/sketchbook/libraries
+> rosrun rosserial_arduino make_libraries.py .
+    \end{shcode}
+\end{frame}
+
+\imageframe{arduino-ide-ros}
+
+\begin{frame}[fragile]{Arduino code to control a servo with ROS}
+\begin{columns}
+    \begin{column}{0.5\linewidth}
+        
+\begin{minted}[frame=none,
+        linenos=true,
+        fontsize=\tiny,
+        numbersep=0.4em,
+        xleftmargin=0.5em]{cpp}
+#include <ros.h>
+#include <std_msgs/UInt16.h>
+#include <Servo.h> 
+
+using namespace ros;
+
+NodeHandle  nh;
+Servo servo;
+
+void cb( const std_msgs::UInt16& msg){
+  servo.write(msg.data); // 0-180
+}
+
+Subscriber<std_msgs::UInt16> sub("servo", cb);
+
+void setup(){
+  nh.initNode();
+  nh.subscribe(sub);
+
+  servo.attach(9); //attach it to pin 9
+}
+
+void loop(){
+  nh.spinOnce();
+  delay(1);
+}
+\end{minted}
+    \end{column}
+    \begin{column}{0.5\linewidth}
+
+        \small Python $\approx$equivalent:
+
+\begin{minted}[frame=none,
+               linenos=true,
+               fontsize=\tiny,
+               numbersep=0.4em,
+               xleftmargin=0.5em]{python}
+import rospy
+from std_msgs.msg import UInt16
+
+def cb(msg):
+    # servo.write(msg.data)
+    print(msg.data)
+
+rospy.init_node('listener')
+rospy.Subscriber("servo", UInt16, cb)
+# servo.attach(9)
+rospy.spin()
+\end{minted}
+    \end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Running the code}
+    To use the code, from your 'master' ROS computer:
+
+\begin{shcode}
+> roscore
+> rosrun rosserial_python serial_node.py /dev/ttyACM0
+> rostopic pub --once servo std_msgs/UInt16 110
+\end{shcode}
+\end{frame}
+
+
+
+\begin{frame}{}
+    \begin{center}
+        \Large
+        That's all, folks!\\[2em]
+        \normalsize
+        Questions:\\
+        Portland Square B316 or \url{severin.lemaignan@plymouth.ac.uk} \\[1em]
+
+        Slides:\\
+        \href{https://github.com/severin-lemaignan/module-introduction-sensors-actuators}{\small
+        github.com/severin-lemaignan/module-introduction-sensors-actuators}
+
+
+    \end{center}
+\end{frame}
+
+
+
+\end{document}

@@ -310,7 +310,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%  Syntax coloring with minted %%%%%%%%%%%%%%%%%%%%
 \RequirePackage[cache]{minted}
 \renewcommand{\theFancyVerbLine}{
-  \sffamily\textcolor[rgb]{0.5,0.5,0.5}{\scriptsize\arabic{FancyVerbLine}}}
+  \sffamily\textcolor[rgb]{0.5,0.5,0.5}{\tiny\arabic{FancyVerbLine}}}
 
 \newminted{cmake}{frame=none,
                  linenos=false,
@@ -345,7 +345,7 @@
 \newminted{sh}{frame=lines,
                  linenos=false,
                  fontsize=\small,
-                 xleftmargin=1.8em}
+                 xleftmargin=0.5em}
 
 \newmintinline[sh]{sh}{fontsize=\small}
 
