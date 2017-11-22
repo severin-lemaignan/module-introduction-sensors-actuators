@@ -657,11 +657,10 @@ transforms:
 
     \pause
 
-    Some additional concepts:
+    Some additional concepts that we will discuss later on:
     \begin{itemize}
         \item Package
         \item Launch file
-        \item Nodelet
     \end{itemize}
 \end{frame}
 
@@ -690,15 +689,15 @@ transforms:
     \path[use as bounding box] (-6,1) rectangle (6,-5);
 
     \only<1-2>{
-    \node [rosnode] at (0,0) (node1) {ctrl servo 1};
+    \node [rosnode] at (0,0) (node1) {servo ctrl 1};
     \node [servo,above=0.3 of node1] (node1s) {servo};
     \path[<->,thick] (node1) edge (node1s);
-    \node [rosnode] at (4,-2) (node2) {ctrl servo 2};
+    \node [rosnode] at (4,-2) (node2) {servo ctrl 2};
     \node [servo,above=0.3 of node2] (node2s) {servo};
     \path[<->,thick] (node2) edge (node2s);
     }
     \only<3>{
-        \node [rosnode] at (0,0) (node1) {ctrl servos -- \textbf{Arduino}};
+        \node [rosnode] at (0,0) (node1) {servos ctrl -- \textbf{Arduino}};
         \node [servo,above=0.3 of node1] (node1s) {servo};
         \path[<->,thick] (node1) edge (node1s);
         \node [servo,right=0.3 of node1s] (node2s) {servo};
@@ -735,7 +734,7 @@ transforms:
     \sh{rosserial} is a ROS \emph{bridge} that transparently transport ROS messages
     over a serial connection.
 
-    \sh{rosserial_arduino} is a \sh{rosserial} client for the Arduino.
+    \sh{rosserial_arduino} is a \sh{rosserial} \emph{client} for the Arduino.
     You can install it easily:\\
     \sh{apt install ros-kinetic-rosserial ros-kinetic-rosserial-arduino}
 
@@ -823,10 +822,8 @@ rospy.spin()
 \end{frame}
 
 
-\begin{frame}[fragile]{URDF: Describing the kinematics of our robot}
+\begin{frame}{URDF}
 
-    \begin{overprint}
-        \onslide<1>
         \textbf{URDF} (\emph{Unified Robot Description Format}) is an XML-based language
         to describe a robot.
 
@@ -840,16 +837,23 @@ rospy.spin()
             \begin{column}{0.5\linewidth}
         \begin{itemize}
                 \small
-            \item For complex geometries, any STL or Collada mesh can be used
+            \item Primitives (cylinders, cubes, spheres) to describe the
+                geometry
+            \item For complex geometries, any STL or Collada meshes can be used
             \item Only \emph{tree structures} can be represented: no parallel robots
             \item Only \emph{rigid links} can be represented: no soft robots
         \end{itemize}
             \end{column}
         \end{columns}
+\end{frame}
 
+\begin{frame}[fragile]{URDF: Describing the kinematics of our robot}
 
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+    \begin{overprint}
+        \onslide<1>
 
-        \onslide<2>
     \begin{minted}[frame=none,
                fontsize=\tiny,
                numbersep=0.4em,
@@ -871,6 +875,42 @@ rospy.spin()
 
 
 
+
+
+
+
+
+
+
+
+
+
+</robot>
+\end{minted}
+
+        \onslide<2>
+    \begin{minted}[frame=none,
+               fontsize=\tiny,
+               numbersep=0.4em,
+               xleftmargin=0.5em]{xml}
+<?xml version="1.0"?>
+<robot name="roco_arm">
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.06" radius="0.1"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="first_segment">
+    <visual>
+      <geometry>
+        <box size="0.6 0.05 0.1"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="-0.3 0 0" />
+    </visual>
+  </link>
 
 
 
@@ -907,43 +947,10 @@ rospy.spin()
     </visual>
   </link>
 
-
-
-
-
-
-
-
-</robot>
-\end{minted}
-
-        \onslide<4>
-    \begin{minted}[frame=none,
-               fontsize=\tiny,
-               numbersep=0.4em,
-               xleftmargin=0.5em]{xml}
-<?xml version="1.0"?>
-<robot name="roco_arm">
-  <link name="base_link">
-    <visual>
-      <geometry>
-        <cylinder length="0.06" radius="0.1"/>
-      </geometry>
-    </visual>
-  </link>
-
-  <link name="first_segment">
-    <visual>
-      <geometry>
-        <box size="0.6 0.05 0.1"/>
-      </geometry>
-      <origin rpy="0 0 0" xyz="-0.3 0 0" />
-    </visual>
-  </link>
-
   <joint name="base_to_first" type="revolute">
     <axis xyz="0 1 0" />
-    <limit effort="1000" lower="0" upper="3.14" velocity="0.5" />
+    <limit effort="1000" lower="0"
+                    upper="3.14" velocity="0.5" />
     <parent link="base_link"/>
     <child link="first_segment"/>
     <origin xyz="0 0 0.03" />
@@ -952,9 +959,15 @@ rospy.spin()
 \end{minted}
 
     \end{overprint}
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            \begin{center}
+                \includegraphics[width=0.8\linewidth]{servo-arm2-narrow}
+            \end{center}
+        \end{column}
+    \end{columns}
 \end{frame}
 
-\imageframe{urdf-rviz}
 
 \begin{frame}[fragile]{Display the model}
 
@@ -964,8 +977,88 @@ rospy.spin()
 > rosparam set robot_description -t code/robot-arm.urdf
 > rosrun robot_state_publisher robot_state_publisher
 > rosrun joint_state_publisher joint_state_publisher _use_gui:=true
+> rosrun rviz rviz
 \end{minted}
 \end{frame}
+
+\imageframe{urdf-rviz}
+
+\begin{frame}[plain]
+
+\begin{center}
+    \resizebox{0.7\linewidth}{!}{%
+\begin{tikzpicture}[
+                    >=latex,
+                    every edge/.style={->, draw, very thick},
+                    service/.style={->, draw, very thick,dashed},
+                    rosnode/.style={draw, font=\sf, node distance=0.5, rounded corners, align=center, inner sep=5pt,fill=hriSec2Dark!50},
+                    servo/.style={draw, font=\sf, node distance=0.5, align=center, inner sep=5pt,fill=hriSec3Comp!50},
+                    topic/.style={font=\tt, node distance=0.5, align=center, inner sep=5pt},
+                    pic/.style={fill=none,draw=none}
+                ]
+
+    \path[use as bounding box] (-6,1) rectangle (6,-5);
+
+        \node [rosnode] at (0,0) (node1) {servos ctrl -- \textbf{Arduino}};
+        \node [servo,above=0.3 of node1] (node1s) {servo};
+        \path[<->,thick] (node1) edge (node1s);
+        \node [servo,right=0.3 of node1s] (node2s) {servo};
+        \path[<->,thick] (node1) edge (node2s);
+
+    \node [rosnode] at (-5,-4) (node3) {viz 3D -- \texttt{rviz}};
+    \node [rosnode] at (0,-4) (node4) {GUI -- \texttt{joint\_state\_publisher}};
+
+        \node [topic] at (0,-2) (topic1) {/joint\_states};
+        \path (node4) edge[bend left] (topic1);
+        \path (topic1) edge[bend right] (node1);
+
+    \only<1-2>{
+        \path (topic1) edge[bend right] (node3);
+    }
+
+    \only<3>{
+        \node [rosnode,above=2.5 of node3] (node5) {\texttt{robot\_state\_publisher}};
+        \node [topic, above=1 of node3] (topic2) {/tf};
+        \path (topic1) edge[bend right] (node5);
+        \path (node5) edge (topic2);
+        \path (topic2) edge (node3);
+    }
+
+\end{tikzpicture}
+}
+
+        Why do we need \texttt{robot\_state\_publisher}?
+    \end{center}
+
+    \only<2>
+
+    \texttt{rviz} needs the {transformations} between each geometry.
+    Going from a \textbf{joint state} (\ie the angles for each joint) to
+    transformations (\ie \textbf{frames}) requires \textbf{forward kinematics}.
+
+    \only<3>
+        \texttt{robot\_state\_publisher} \emph{subscribes} to the joint state
+        topic \texttt{/joint\_states} and \emph{broadcasts} the corresponding TF
+        frames.
+
+\end{frame}
+
+\begin{frame}[fragile]{Joint state}
+\begin{shcode}
+> rosmsg show sensor_msgs/JointState 
+std_msgs/Header header
+  uint32 seq
+  time stamp
+  string frame_id
+string[] name
+float64[] position
+float64[] velocity
+float64[] effort
+\end{shcode}
+
+\source{http://docs.ros.org/api/sensor_msgs/html/msg/JointState.html}{sensor\_msgs::JointState definition}
+\end{frame}
+
 
 \begin{frame}[fragile]{Reading the joint state on the Arduino}
 \begin{columns}
@@ -1052,38 +1145,17 @@ void loop(){
 \end{columns}
 \end{frame}
 
-\section{ROS usage}
-
-\begin{frame}{Nodelets}
-
-\begin{center}
-\begin{tikzpicture}[
-                    >=latex,
-                    every edge/.style={->, draw, very thick},
-                    service/.style={->, draw, very thick,dashed},
-                    rosnode/.style={draw, font=\sf, node distance=0.5, rounded
-                    corners, align=center, inner sep=5pt,fill=hriSec2Dark!50},
-                    topic/.style={font=\tt, node distance=0.5, align=center, inner sep=5pt},
-                    pic/.style={fill=none,draw=none}
-                ]
-
-    \node [rosnode] at (-4,0) (node1) {image acquisition};
-    \node [rosnode] at (0,-2) (node2) {image processor};
-    \node [rosnode] at (4,-4) (node3) {next processing};
-
-        \node [topic] at (-4,-1.5) (topic3) {/image};
-        \node [topic] at (-1,-3.5) (topic1) {/processed\_image};
-        \path (node1) edge[bend right] (node2);
-        \path (node2) edge[bend right] (node3);
 
 
-\end{tikzpicture}
-\end{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Deeper into ROS}
 
-\end{frame}
+\begin{frame}[fragile]{Packages}
 
+The source code of ROS nodes is usually organised into a \emph{package}.
 
-\begin{frame}[containsverbatim]{Packages, nodes and launch files}
 \begin{shcode}
 > cd my_package
 > ls
@@ -1097,56 +1169,99 @@ package.xml
 src/
 > rosrun my_package my_node
 \end{shcode}
+
+\only<1>{
+One package often contains more than one node.
+
+Besides the source code, packages may contain as well specific messages,
+configuration files, launch files, etc.
+}
+
+\only<2>{
+Packages must contain a \emph{manifest}, \texttt{package.xml}. It contains the
+package name, version, authors, as well as the dependencies.
+}
+
+\only<3>{
+
+A new package template can be created easily:
+
+\texttt{> catkin\_create\_pkg my\_package <ROS dependencies>}
+
+}
 \end{frame}
 
-\begin{frame}[containsverbatim]{Packages, nodes and launch files}
-\begin{xmlcode}
+\begin{frame}[fragile]{Launch files}
+\only<1>{
+\emph{Launch files} allow to group together nodes and their configuration.
+}
+
+\begin{minted}[fontsize=\footnotesize]{xml}
 <launch>
+  <arg name="model" />
+  <arg name="gui" default="true" />
 
-  <arg name="head_frame" default="head_camera"/>
-  <arg name="image" default="/camera/rgb/image_raw"/>
+  <param name="robot_description" textfile="$(arg model)" />
+  <param name="use_gui" value="$(arg gui)"/>
 
-  <node pkg="attention_tracker" type="focus" />
-
-  <node pkg="attention_tracker" type="estimate">
-    <param name="face_model" 
-        value="$(find attention_tracker)/model.dat" />
-    <remap from="/image" to="$(arg image)"/>
-  </node>
+  <node name="joint_state_publisher" pkg="joint_state_publisher" 
+                                type="joint_state_publisher" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" 
+                                type="state_publisher" />
+  <node name="rviz" pkg="rviz" type="rviz" required="true" />
 
 </launch>
-\end{xmlcode}
-\begin{shcode}
-> roslaunch my_package my_system.launch
-\end{shcode}
+\end{minted}
+
+
+\only<2>{
+    To use the launch file, call \texttt{roslaunch} instead of \texttt{rosrun}:
+
+    \texttt{> roslaunch my\_package interactive\_arm.launch}
+}
+\only<3>{
+    Arguments (\texttt{<arg>}) can be provided from the command-line:
+
+    \texttt{> roslaunch my\_package interactive\_arm.launch model:=my\_arm.urdf}
+}
+\only<4>{
+    Parameters (\texttt{<param>}) are loaded to the ROS \emph{parameter server}
+    and shared with all the ROS nodes.
+}
+\only<5>{
+    Some nodes may be marked as \texttt{required}: if they die (closed or crashed),
+    all the other nodes in the launch file are killed as well.
+}
+\only<6>{
+    Many more possibilities, see \href{http://wiki.ros.org/roslaunch/XML}{roslaunch
+    documentation}.
+}
 \end{frame}
 
-
-\begin{frame}[containsverbatim]{}
-
-\begin{shcode}
-> roscore
-> rosrun rviz rviz
-> roslaunch openni_launch openni.launch
-\end{shcode}
-
-\end{frame}
-
-
-\imageframe[color=black]{rviz-pointcloud-0}
-
-\begin{frame}[containsverbatim]{}
-
-\begin{shcode}
-> rosrun attention_tracker estimate 
-                         image:=/camera/rgb/image_color
-\end{shcode}
-
-\end{frame}
-
+\imageframe[color=black]{rviz}
+\imageframe[color=black]{rviz-plugins}
+\imageframe[color=black]{urdf-rviz}
+\imageframe[color=black]{rviz-sandtray}
 \imageframe[color=black]{rviz-pointcloud}
+\imageframe[color=black]{rviz-faces}
 
-\begin{frame}[containsverbatim]{}
+
+\begin{frame}{Other tools}
+    \begin{table}[]
+        \begin{tabularx}{\linewidth}{l>{\raggedright}X}
+            \toprule
+            \texttt{rosnode}, \texttt{rostopic},... & Print out/publish/call messages, services, nodes \tabularnewline
+            \texttt{rosconsole} & Centralized logging \tabularnewline
+            \texttt{rosbag} & Record and replay messages \tabularnewline
+            \texttt{rqt\_reconfigure} & Live configuration of nodes \tabularnewline
+            \texttt{rqt\_diagnostics} & Standardized diagnostics \tabularnewline
+            \texttt{rosgraph} & plots the node network \tabularnewline
+            \bottomrule
+        \end{tabularx}
+    \end{table}
+\end{frame}
+
+\begin{frame}[fragile]{}
 \begin{shcode}
 > rosnode list 
 /camera_base_link
@@ -1179,7 +1294,7 @@ src/
 
 \end{frame}
 
-\begin{frame}[containsverbatim]{}
+\begin{frame}[fragile]{}
 \begin{shcode}
 > rostopic list
 /camera_info
@@ -1204,7 +1319,7 @@ src/
 
 \end{frame}
 
-\begin{frame}[containsverbatim]{}
+\begin{frame}[fragile]{}
 \begin{shcode}
 > rostopic echo tf
 transforms: 
@@ -1238,39 +1353,6 @@ transforms:
 
 \end{frame}
 
-
-\begin{frame}[containsverbatim]{}
-
-\begin{shcode}
-> rosrun rqt_reconfigure rqt_reconfigure
-\end{shcode}
-
-\end{frame}
-
-
-\imageframe[color=black]{dynamic_reconfigure.png}
-
-
-
-\section{Other ROS tools}
-
-\begin{frame}{Tools}
-    \begin{table}[]
-        \begin{tabularx}{\linewidth}{l>{\raggedright}X}
-            \toprule
-            \texttt{rviz} & versatile 2D/3D visualization \tabularnewline
-            \texttt{rosconsole} & Centralized logging \tabularnewline
-            \texttt{rosbag} & Record and replay messages \tabularnewline
-            \texttt{rqt\_reconfigure} & Live configuration of nodes \tabularnewline
-            \texttt{rqt\_diagnostics} & Standardized diagnostics \tabularnewline
-            \texttt{rosgraph} & plots the node network \tabularnewline
-            + tons of introspection tools & Print out/publish/call messages, services, nodes \tabularnewline
-            \bottomrule
-        \end{tabularx}
-    \end{table}
-\end{frame}
-
-\imageframe[color=black]{rviz}
 \imageframe[color=black]{console}
 \imageframe[color=black]{bag}
 \imageframe[color=black]{dynamic_reconfigure}
@@ -1278,7 +1360,7 @@ transforms:
 
 \section{So, what is ROS?}
 
-\begin{frame}{Instead, ROS is...}
+\begin{frame}{ROS is...}
     \begin{itemize}
         \item<+-> A fairly simple peer-to-peer message passing system designed with robotics in
             mind
@@ -1288,7 +1370,6 @@ transforms:
         \item<+-> A set of conventions to write and package robotic softwares
         \item<+-> Deep integration of a few key open-source libraries (OpenCV, PCL, tf)
         \item<+-> A set of tools to run and monitor the nodes
-        \item<+-> Engagement of a large academic community, leading to a library of thousands of nodes
     \end{itemize}
 \end{frame}
 
