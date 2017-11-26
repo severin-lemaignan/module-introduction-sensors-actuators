@@ -60,8 +60,10 @@ syntax} and \textbf{push your journal and the pictures on GitHub}.
 
 \intro
 
-\step{Make sure you are running Linux. Otherwise, reboot and switch to Linux.
-\textbf{ROS does not work on Windows}.}
+\step{Reboot on Linux}
+    
+Make sure you are running Linux. Otherwise, reboot and switch to Linux.
+\textbf{ROS does not work on Windows}.
 
 
 \part{Servos control with ROS}
@@ -99,11 +101,17 @@ void loop() {
 
 As discussed in the lecture, you always need to start \sh{roscore} before being able to launch any other node.
 
-Open a terminal and start it.
+Open a terminal and start it with the command \sh{roscore}.
 
-Type \sh{rostopic list} to list all the available topics. As this point, you should only see two of them. Search on the web what is the use of the \sh{/rosout} topic. Report it in your lab journal.
+In another window, type \sh{rostopic list} to list all the available topics. At
+this point, you should only see two of them. Search on the web what is the use
+of the \sh{/rosout} topic. Report it in your lab journal.
 
-Let's publish something on a new topic: type \sh{rostopic pub /test std_msgs/String "Hello"}
+Let's publish something on a new topic. Type: 
+
+\begin{shcode}
+> rostopic pub /test std_msgs/String "Hello"
+\end{shcode}
 
 Now type again \sh{rostopic list}. You should see a new topic \sh{/test}.
 
@@ -127,8 +135,16 @@ yourself with the basic message types by visiting
 \step{RViz}
 
 RViz is the main 3D visualisation tool provided with ROS. Start it now (simply
-type \sh{rviz} in a different terminal). Right now, RViz does not have much to
-show (no ROS node is running yet, except... RViz itself).
+type \sh{rviz} in a different terminal). At this point, RViz does not have much to
+show (no ROS node is running yet, except... RViz itself), so the 3D viewport is
+simply an empty grid (Figure~\ref{rviz}).
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\linewidth]{rviz}
+    \caption{The default, initial RViz window.}
+    \label{rviz}
+\end{figure}
 
 RViz visualization rely on plugins: one plugin for every datatype we want to
 visualise (images, 3D models, point clouds, etc.). Figure out how to add
@@ -136,29 +152,35 @@ visualisation plugins, and explore what is available.
 
 \step{Configure ROS for the Arduino}
 
-\sh{rosserial} is a ROS \emph{bridge} that transparently transport ROS messages
-over a serial connection: as the Arduino does not feature a network socket, we
-need to use this serial bridge instead.
+As the Arduino does not feature a network socket, we need to use a serial bridge
+instead.  \sh{rosserial} is such a ROS \emph{bridge} that transparently
+transport ROS messages over a serial connection.
 
-\sh{rosserial_arduino} is a \sh{rosserial} \emph{client} for the Arduino.
-You can install it easily:\\
-\sh{apt install ros-kinetic-rosserial-python ros-kinetic-rosserial-arduino}
+\sh{rosserial_arduino} is a \sh{rosserial} \emph{client} for the Arduino (\ie
+the library that runs \emph{on the Arduino} to deserialize the ROS messages).
 
-To make it transparently available in the Arduino IDE, you need to also
-install it as an Arduino library:
+You can install \sh{rosserial} easily:
+
+\begin{shcode}
+> sudo apt install ros-kinetic-rosserial-python ros-kinetic-rosserial-arduino
+\end{shcode}
+
+To make it transparently available in the Arduino IDE, you also need to install
+it as an Arduino library:
 
 \begin{shcode}
 > cd $HOME/sketchbook/libraries
 > rosrun rosserial_arduino make_libraries.py .
 \end{shcode}
 
-Restart the Arduino IDE. You should now have access to many ROS examples:
+Restart the Arduino IDE. You should now have access to many ROS examples
+(Figure~\ref{ros-arduino-examples}).
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.9\linewidth]{arduino-ide-ros}
+    \includegraphics[width=0.56\linewidth]{arduino-ide-ros}
     \caption{Examples of ROS nodes for the Arduino}
-    \label{}
+    \label{ros-arduino-examples}
 \end{figure}
 
 
@@ -168,7 +190,7 @@ Restart the Arduino IDE. You should now have access to many ROS examples:
 Use the following code sample to control a servo by sending one integer between
 0 and 180:
 
-\begin{cppcode}
+\begin{minted}[frame=lines,linenos=true]{cpp}
 #include <ros.h>
 #include <std_msgs/UInt16.h>
 #include <Servo.h> 
@@ -196,11 +218,18 @@ void loop(){
   delay(1);
 }
 
-\end{cppcode}
+\end{minted}
+
+\note{
+    Analyse this code example. In particular, \textbf{explain in your lab journal what is
+the function defined at line 10, and the role of the object instantiated at line
+14}.
+}
 
 Compile and upload the code to the Arduino.
 
-In a terminal, start \sh{rosserial} (setting the serial port as required):
+In a terminal, start \sh{rosserial} (changing the serial port of your Arduino as
+required):
 
 \begin{shcode}
 > rosrun rosserial_python serial_node.py /dev/ttyACM0
@@ -210,14 +239,23 @@ Now, call \sh{rostopic pub} with the adequate parameter to move your servo-motor
 
 \part{3D model of your arm}
 
-We now want to build a 3D model of the arm. We first have to create a geometric
-and kinematic description of the arm using the URDF format.
+We have a first ROS node, able to control a servo motor. However, to do useful
+things with our arm (like 3D motion planning), we need to describe its complete
+kinematic model.
 
-\step{Visualise a URDF file in RViz}
+The next step is indeed to build a 3D model of the arm. We need to create a
+\textbf{geometric and kinematic description of the arm} using the \textbf{URDF
+format}.
+
+\step{Visualise an existing URDF file in RViz}
 
 Create a new directory called \sh{robot-project} and a sub-directory called
-{models}. Save the following URDF file in this subdirectory as
-\sh{robot-arm.urdf}:
+\sh{models}. Save the following URDF file in this subdirectory as
+\sh{robot-arm.urdf}.
+
+\note{
+    You can also \href{https://dle.plymouth.ac.uk/mod/folder/view.php?id=511887}{download this file from the DLE}.
+}
 
 \begin{xmlcode}
 <?xml version="1.0"?>
@@ -256,46 +294,68 @@ Load this file as the \emph{description} of your robot:
 > rosparam set robot_description -t models/robot-arm.urdf
 \end{shcode}
 
-Next, launch the \sh{robot_state_publisher} node:
+Next, launch the \sh{robot_state_publisher} and \sh{joint_state_publisher} nodes
+in two terminals:
 
 \begin{shcode}
 > rosrun robot_state_publisher robot_state_publisher
 \end{shcode}
 
-This node reads the robot description, and broadcasts the 6D transformations (TF
+\begin{shcode}
+> rosrun joint_state_publisher joint_state_publisher _use_gui:=true
+\end{shcode}
+
+
+The \sh{robot_state_publisher} node reads the robot description, and broadcasts the 6D transformations (TF
 frames) corresponding to each of the links described in the URDF file.
 
+The \sh{joint_state_publisher} node reads as well the robot description and
+creates a GUI with one slider per joint, making it easy to manipulate the
+pose of our robot.
+
 Finally, add the \texttt{Robot model} plugin to RViz and set the \texttt{Fixed
-frame} to \sh{/base_link}:
+frame} to \sh{/base_link} (Figure~\ref{rviz-robot-model}).
 
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.9\linewidth]{rviz-plugins}
+    \includegraphics[width=0.52\linewidth]{rviz-plugins}
     \caption{Adding the \texttt{Robot model} visualisation plugin to RViz}
-    \label{}
+    \label{rviz-robot-model}
 \end{figure}
 
-You should see the following model in the 3D viewport:
+\pagebreak
+You should see the following model in the 3D viewport (Figure~\ref{rviz-urdf}):
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.9\linewidth]{urdf-rviz}
-    \caption{A first, simple, URDF model, visualised in RViz.}
-    \label{}
+    \caption{A first, simple, URDF model, visualised in RViz. On the right, the
+    \sh{joint_state_publisher} interface.}
+    \label{rviz-urdf}
 \end{figure}
 
 
 \step{Create the URDF file of your robot}
 
 Using \sh{robot-arm.urdf} as a starting point, complete the URDF to accurately
-model your arm. Measure precisely the dimension of each segment, and place
+model your arm. Measure precisely the dimension of each segment, and position
 accurately the joints.
 
+\note{
+You might find it useful to use your CAD software to quickly measure the
+segments and the position of the joint axes.
+}
+
+\more{
+    Some CAD tools (like Solidworks) have extensions to export directly to URDF.
+    Check online!
+}
+
 If you wish to check your model, reload the robot description, and restart the
-\sh{robot_state_publisher} node. You do not need to restart RViz, but you need
-to desactivate and re-activate the \texttt{robot model} plugin to update the
-rendering.
+\sh{robot_state_publisher} and \sh{joint_state_publisher} nodes. You do not need
+to restart RViz, but you need to desactivate and re-activate the \texttt{robot
+model} plugin to update the rendering.
 
 \more{
     Instead of simple geometric primitive, you can use STL meshes (like the ones
@@ -304,16 +364,22 @@ rendering.
     do that.
 }
 
-\begin{shcode}
-> rosrun joint_state_publisher joint_state_publisher _use_gui:=true
-\end{shcode}
 
 
 \note{
-Document your findings with photographs and a short video of RC servo
-operation.
+Do not forget to include screenshots of your URDF model in your lab journal.
 }
 
+\part{Control the servo-motors from the robot's joint state}
+
+Lastly, modify the Arduino code to directly read the robot joint state and to
+control the servo-motors accordingly.
+
+
+\note{
+    As short video-clip of your arm moving alongside the 3D model in RViz is
+    certainly appropriate for your lab journal!
+}
 
 
 \end{document}
