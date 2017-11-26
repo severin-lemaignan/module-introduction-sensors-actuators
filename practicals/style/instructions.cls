@@ -84,6 +84,14 @@
 
 \newmintinline[sh]{sh}{fontsize=\small}
 
+\newminted{xml}{frame=lines,
+                 linenos=false,
+                 fontsize=\small,
+                 xleftmargin=1.8em}
+
+\newmintinline[xml]{xml}{fontsize=\small}
+
+
 
 %%%%%%%%%%%%%%%%%  Sections %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
