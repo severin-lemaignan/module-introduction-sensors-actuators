@@ -568,11 +568,22 @@ at (#5) {#6};
 \NewDocumentCommand{\bubblemark}{O{-0.5ex} m}{%
 \tikz[overlay,remember picture,baseline=#1] \node (#2) {};
 }
+
 %%%%%%%%% Highlight (math) text by putting it in a red colorbox
 
 \NewDocumentCommand{\highlight}{r<> m}{%
 \alt<#1>{\colorbox{red!50}{$#2$}}{#2}
 }
+
+
+\setbeamercolor{highlightCol}{bg=hriSec3,fg=white}
+\newcommand{\highlightbox}[1]{%
+    \vspace{1em}%
+    \begin{beamercolorbox}[wd=\linewidth,ht=2ex,dp=0.7ex]{highlightCol}%
+    \centering #1%
+    \end{beamercolorbox}%
+    \vspace{1em}%
+}%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
