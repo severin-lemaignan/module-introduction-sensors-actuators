@@ -1,0 +1,6 @@
+#! /usr/bin/env python
+
+import facerec.reco
+
+if __name__ == '__main__':
+    facerec.reco.run("my_faces")
