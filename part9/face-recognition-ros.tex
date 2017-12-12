@@ -117,6 +117,9 @@
 
 \imageframe{face-recognition-challenge}
 
+{
+    \paper{\source{https://pdfs.semanticscholar.org/37de/33701dd73c89a7b410d69070085b583bfd38.pdf}{Mark
+    Richardson, Principal Component Analysis}}
 \begin{frame}{Principal Component Analysis}
 
     \only<1>{
@@ -141,18 +144,27 @@
         \begin{column}{0.5\linewidth}
             \begin{center}
                 \includegraphics[width=\linewidth]{pca-food-example-1-eigenvector}
+
                 \includegraphics<4->[width=\linewidth]{pca-food-example-2-eigenvector}
+
                 \includegraphics<5->[width=\linewidth]{pca-food-example-load-plot}
             \end{center}
         \end{column}
     \end{columns}
-}
+
+    }
+
 \end{frame}
+}
 
 \imageframe[scale=0.9, caption={Applied to handwriting}]{pca}
 \videoframe{figs/cowriter.mp4?start=135}
 
 \imageframe[scale=0.9, caption={Applied to faces}]{dataset}
+
+{
+    \paper{\source{https://github.com/bytefish/facerecognition_guide}{Philipp
+    Wagner, Face Recognition with Python}}
 
 \begin{frame}{PCA Algorithm}
     Let $\mathbf{X} = \{ \mathbf{x}_{1}, \mathbf{x}_{2}, \ldots, \mathbf{x}_{n} \}$ be a vector with observations $\mathbf{x}_i \in \mathbb{R}^{d}$.
@@ -177,6 +189,7 @@
     \end{enumerate}
 
 \end{frame}
+}
 
 \begin{frame}[fragile]{Python code}
 
@@ -226,7 +239,26 @@ subplot(title="Eigenfaces", images=images, rows=4, cols=4)
     \bubble<1->[80][0.5][3cm]{image}{The image of a face!}
     \bubble<1->[100]{pcabasis}{The PCA basis}
 
-    \pause
+\end{frame}
+
+\imageframe[scale=0.8]{pca-projections-1}
+\imageframe[scale=0.8]{pca-projections-2}
+\imageframe[scale=0.8]{pca-projections-3}
+
+\begin{frame}{PCA Projection and reconstruction}
+
+    The $k$ principal components of an observed vector
+    $\mathbf{x}\bubblemark{image}$ are then given by:
+
+    \[
+        \mathbf{y} = W^{T} (\mathbf{x} - \mu)
+    \]
+
+    where $W\bubblemark{pcabasis} = (\mathbf{v}_{1}, \mathbf{v}_{2}, \ldots, \mathbf{v}_{k})$.
+    
+    \bubble<1->[80][0.5][3cm]{image}{The image of a face!}
+    \bubble<1->[100]{pcabasis}{The PCA basis}
+
 
     The reconstruction from the PCA basis is given by:
 
@@ -306,11 +338,114 @@ subplot(title="Reconstruction of one face", images=images, rows=4, cols=4)
 
         \pause
 
-        PCA is often used as a \textbf{dimemsionality reduction} technique (\ie a
+        PCA is often used as a \textbf{dimensionality reduction} technique (\ie a
         kind of data lossy data compression).
 
     \end{center}
 \end{frame}
+
+
+\section[Face recognition]{Face recognition}
+
+\imageframe{face-recognition-challenge}
+
+\imageframe[scale=0.8]{pca-projections-4}
+\imageframe[scale=0.8]{pca-projections-5}
+\imageframe[scale=0.8]{pca-projections-6}
+
+\begin{frame}{Recognition}
+
+    \begin{enumerate}
+        \item \textbf{learn a model} by projecting the training set onto the PCA
+            basis
+        \item \textbf{project the test image} as well
+        \item \textbf{find the 1-nearest neighbour}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Python code}
+
+
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+\begin{minted}[fontsize=\scriptsize]{python}
+def dist(p, q):
+    p = np.asarray(p).flatten()
+    q = np.asarray(q).flatten()
+    return np.sqrt(np.sum(
+                    np.power((p-q),2)
+                    ))
+
+
+def learn_model(X):
+    D, W, mu = pca(X, nb_evs=10)
+    # compute projections
+    projections = []
+    for xi in X:
+        yi = project(W,
+                   xi.reshape(1,-1), 
+                   mu)
+        projections.append(yi)
+
+    return W, projections
+\end{minted}
+
+        \end{column}
+        \begin{column}{0.5\linewidth}
+
+
+\begin{minted}[fontsize=\scriptsize]{python}
+def predict(X, W, projections):
+    minDist = np.finfo('float').max
+    minClass = -1
+    Q = project(W, X.reshape(1,-1), mu)
+
+    for i in range(len(projections)):
+        dist = dist(projections[i], Q)
+        if dist < minDist:
+            minDist = dist
+            faceClass = faceClasses[i]
+    return faceClass
+
+
+X, faceClasses = read_images()
+W, projections = learn_model(X)
+predict(test_image, W, projections)
+
+\end{minted}
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\begin{frame}{Limits of the PCA approach (Eigenfaces)}
+
+    PCA tries to find a combination of linear features that maximizes the total
+    variance (\ie the ``axes of maximum variation'').
+    
+    No concept of class!
+
+\end{frame}
+
+\imageframe[caption={Here, 10 images per class -- we only want to learn
+between-class discriminant features}]{dataset}
+\imageframe[caption={For instance, the PCA (wrongly) encodes the illumination}]{eigenfaces}
+
+
+{
+    \paper{\source{http://www.cs.jhu.edu/~hager/Public/teaching/cs461/pami97-eigenfaces.pdf}{Belhumeur, Hespanha and Kriegman, Eigenfaces vs.
+    fisherfaces: Recognition using class specific linear projection}}
+
+\begin{frame}{Limits of the PCA approach (Eigenfaces)}
+
+    $\Rightarrow$ Linear Discriminant Analysis (LDA) (and the corresponding
+    \emph{Fischerfaces})
+
+    LDA tries to find a combination of linear features that maximizes the ratio
+    of between-classes to within-classes scatter.
+
+\end{frame}
+}
 
 \section[With ROS]{How to integrate that with ROS?}
 
