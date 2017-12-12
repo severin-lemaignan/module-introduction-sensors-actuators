@@ -1,0 +1,458 @@
+%!TEX program = xelatex
+
+\documentclass[compress]{beamer}
+%--------------------------------------------------------------------------
+% Common packages
+%--------------------------------------------------------------------------
+
+\definecolor{links}{HTML}{663000}
+\hypersetup{colorlinks,linkcolor=,urlcolor=links}
+
+\usepackage[english]{babel}
+\usepackage{pgfpages} % required for notes on second screen
+\usepackage{graphicx}
+
+\usepackage{pdfpcnotes}
+
+\usepackage{multicol}
+
+\usepackage{tabularx,ragged2e}
+\usepackage{booktabs}
+
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+\usetheme{hri}
+
+% Display the navigation bullet even without subsections
+\usepackage{remreset}% tiny package containing just the \@removefromreset command
+\makeatletter
+\@removefromreset{subsection}{section}
+\makeatother
+\setcounter{subsection}{1}
+
+\makeatletter
+\let\beamer@writeslidentry@miniframeson=\beamer@writeslidentry
+\def\beamer@writeslidentry@miniframesoff{%
+  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}% does not happen normally
+  {%else
+    % removed \addtocontents commands
+    \clearpage\beamer@notesactions%
+  }
+}
+\newcommand*{\miniframeson}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframeson}
+\newcommand*{\miniframesoff}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframesoff}
+\makeatother
+
+
+
+\newcommand{\source}[2]{{\tiny\it Source: \href{#1}{#2}}}
+
+\usepackage[normalem]{ulem}
+
+\usepackage{tikz}
+\usetikzlibrary{intersections,arrows,shapes,calc,mindmap,backgrounds,positioning,svg.path}
+
+\tikzset{box/.style={
+            draw, 
+            fill=blue!20,
+            fill opacity=0.8,
+            thick,
+            inner sep=0pt,
+            minimum size=1cm,
+            transform shape
+        },
+        finalbox/.style={
+            draw, 
+            fill=orange,
+            fill opacity=0.8,
+            thick,
+            inner sep=0pt,
+            minimum size=1cm,
+            transform shape
+        },
+        dot/.style={
+            draw,
+            circle,
+            fill=red!20,
+            inner sep=0pt,
+            minimum size=1cm,
+            transform shape
+        },
+        axis/.style={
+            thick,
+            gray,
+            font=\small},
+        every to/.style={
+            >=latex,
+            dashed,
+            thick
+        }
+    }
+
+
+\graphicspath{{figs/}}
+
+\title{ROCO222 \newline Intro to Sensors and Actuators}
+\subtitle{Face recognition and Integration with ROS}
+
+\date{}
+\author{Séverin Lemaignan}
+\institute{Centre for Neural Systems and Robotics\\{\bf Plymouth University}}
+
+\begin{document}
+
+\licenseframe{github.com/severin-lemaignan/module-introduction-sensors-actuators}
+
+\maketitle
+
+\miniframesoff
+
+\miniframeson
+
+
+\section[Principal Component Analysis]{Face recognition: Principal Component Analysis}
+
+\imageframe{face-recognition-challenge}
+
+\begin{frame}{Principal Component Analysis}
+
+    \only<1>{
+    Principal Component Analysis (PCA) is a technique to find the sources of variance in a dataset.
+    }
+
+    \only<2>{
+    \begin{center}
+        \includegraphics[width=0.8\linewidth]{pca-food-example}
+    \end{center}
+    }
+
+    \only<3->{
+
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+    \begin{center}
+        \includegraphics[width=\linewidth]{pca-food-example}
+    \end{center}
+
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            \begin{center}
+                \includegraphics[width=\linewidth]{pca-food-example-1-eigenvector}
+                \includegraphics<4->[width=\linewidth]{pca-food-example-2-eigenvector}
+                \includegraphics<5->[width=\linewidth]{pca-food-example-load-plot}
+            \end{center}
+        \end{column}
+    \end{columns}
+}
+\end{frame}
+
+\imageframe[scale=0.9, caption={Applied to handwriting}]{pca}
+\videoframe{figs/cowriter.mp4?start=135}
+
+\imageframe[scale=0.9, caption={Applied to faces}]{dataset}
+
+\begin{frame}{PCA Algorithm}
+    Let $\mathbf{X} = \{ \mathbf{x}_{1}, \mathbf{x}_{2}, \ldots, \mathbf{x}_{n} \}$ be a vector with observations $\mathbf{x}_i \in \mathbb{R}^{d}$.
+
+    \begin{enumerate}
+        \item Compute the mean $\mu$
+            \[
+                \mu = \frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_{i}
+            \]
+        \item Compute the the Covariance Matrix $S$
+            \[
+                S = \frac{1}{n} \sum_{i=1}^{n} (\mathbf{x}_{i} - \mu) (\mathbf{x}_{i} - \mu)^{T}
+            \]
+        \item Compute the eigenvalues $\lambda_{i}$ and eigenvectors $\mathbf{v}_{i}$ of $S$
+            \[
+                S \cdot \mathbf{v}_{i} = \lambda_{i} \mathbf{v}_{i} \text{\hspace{1em} with } i=1,2,\ldots,n
+            \]
+        \item Order the eigenvectors descending by their eigenvalue. The $k$
+            principal components are the eigenvectors corresponding to the $k$
+            largest eigenvalues.
+
+    \end{enumerate}
+
+\end{frame}
+
+\begin{frame}[fragile]{Python code}
+
+\begin{pythoncode}
+def pca(X):
+
+    mu = X.mean(axis=0)
+    X = X - mu
+    C = np.dot(X.T,X)
+    eigenvalues, eigenvectors = np.linalg.eigh(C)
+
+    # sort eigenvectors descending by their eigenvalue
+    idx = np.argsort(-eigenvalues)
+    eigenvalues = eigenvalues[idx]
+    eigenvectors = eigenvectors[:,idx]
+    return eigenvalues, eigenvectors, mu
+
+# D: eigenvalues, W: eigenvectors, mu: mean, X: 40 X 10304 image array
+D, W, mu = pca(X) 
+
+# plot the first 16 'eigenfaces'
+images = []
+for i in range(16):
+    image = W[:,i].reshape(X[0].shape)
+    images.append(normalize(image,0,255))
+
+subplot(title="Eigenfaces", images=images, rows=4, cols=4)
+
+\end{pythoncode}
+\end{frame}
+
+
+\imageframe{dataset}
+\imageframe{eigenfaces}
+
+\begin{frame}{PCA Projection and Reconstruction}
+
+    The $k$ principal components of an observed vector
+    $\mathbf{x}\bubblemark{image}$ are then given by:
+
+    \[
+        \mathbf{y} = W^{T} (\mathbf{x} - \mu)
+    \]
+
+    where $W\bubblemark{pcabasis} = (\mathbf{v}_{1}, \mathbf{v}_{2}, \ldots, \mathbf{v}_{k})$.
+    
+    \bubble<1->[80][0.5][3cm]{image}{The image of a face!}
+    \bubble<1->[100]{pcabasis}{The PCA basis}
+
+    \pause
+
+    The reconstruction from the PCA basis is given by:
+
+    \[
+        \mathbf{x} = W \cdot \mathbf{y} + \mu
+    \]
+
+\end{frame}
+
+\begin{frame}[fragile]{Python code}
+
+\begin{pythoncode}
+def project(W, X, mu=None):
+    if mu is None:
+        return np.dot(X,W)
+    return np.dot(X - mu, W)
+
+def reconstruct(W, Y, mu=None):
+    if mu is None:
+        return np.dot(Y,W.T)
+    return np.dot(Y, W.T) + mu
+
+images = []
+for nb_evs in range(10, 310, 20):
+    P = project(W[:,0:nb_evs], X[0].reshape(1,-1), mu)
+    R = reconstruct(W[:,0:nb_evs], P, mu)
+
+    R = R.reshape(X[0].shape)
+    images.append(normalize(R,0,255))
+
+subplot(title="Reconstruction of one face", images=images, rows=4, cols=4)
+\end{pythoncode}
+\end{frame}
+
+\imageframe{one-face}
+
+\begin{frame}{Why is it useful?}
+
+
+    Original images: $dim(\mathbf{x}) = 92 \times 112 = 10304$ pixels: large number of dimensions!
+
+    $\Rightarrow$ difficult to tell whether 2 images represent the same person
+    (\ie \emph{classify} them).
+
+    \pause
+
+    With the PCA, we project our test image onto a PCA basis of $k$ principal
+    components: $\mathbf{y} = W^{T} (\mathbf{x} - \mu)$ with $W = (\mathbf{v}_{1}, \mathbf{v}_{2}, \ldots, \mathbf{v}_{k})$.
+
+
+    $dim(\mathbf{y}) = k$ is much smaller than $dim(\mathbf{x})$
+
+    \pause
+
+    \textbf{We effectively ``summarize'' our image into a few key values}, along
+    the principal axes of variation of our dataset.
+
+    $\Rightarrow$ these values discriminate effectively amongst our images
+    
+    $\Rightarrow$ \textbf{Well suited for classification!}
+
+\end{frame}
+
+\imageframe{reconstruction-1-eigenfaces}
+\imageframe{reconstruction-10-eigenfaces}
+\imageframe{reconstruction-50-eigenfaces}
+
+\begin{frame}{}
+    \begin{center}
+        \includegraphics[width=\linewidth]{reconstruction-50-eigenfaces-top-row}
+
+        \vspace{2em}
+        Remember: these faces are reconstructed from 50 values (to be compared
+        to the 10304 values required for the original photos).
+
+        \vspace{2em}
+
+        \pause
+
+        PCA is often used as a \textbf{dimemsionality reduction} technique (\ie a
+        kind of data lossy data compression).
+
+    \end{center}
+\end{frame}
+
+\section[With ROS]{How to integrate that with ROS?}
+
+\begin{frame}{A simple image processing pipeline}
+
+\begin{center}
+\begin{tikzpicture}[
+                    >=latex,
+                    every edge/.style={->, draw, very thick},
+                    service/.style={->, draw, very thick,dashed},
+                    rosnode/.style={draw, font=\sf, node distance=0.5, rounded
+                    corners, align=center, inner sep=5pt,fill=hriSec2Dark!50},
+                    topic/.style={font=\tt, node distance=0.5, align=center, inner sep=5pt},
+                    pic/.style={fill=none,draw=none}
+                ]
+
+    \node [rosnode] at (-4,0) (node1) {image acquisition};
+    \node [rosnode] at (0,-2) (node2) {image processor};
+    \node [rosnode] at (4,-4) (node3) {next processing};
+
+        \node [topic] at (-4,-1.5) (topic3) {/image};
+        \node [topic] at (-1,-3.5) (topic1) {/processed\_image};
+        \path (node1) edge[bend right] (node2);
+        \path (node2) edge[bend right] (node3);
+
+
+    \uncover<2-> {
+
+        \node at (-0,0) (a) {this is a \textbf{node}};
+        \path[dashed] (a) edge (node1);
+        \node at (-4.5,-3) (b) {this is a \textbf{topic}};
+        \path[dashed] (b) edge (topic3);
+    }
+\end{tikzpicture}
+\end{center}
+
+\end{frame}
+
+%\begin{frame}{Example: a simple image processing pipeline}
+%
+%\begin{center}
+%\begin{tikzpicture}[
+%                    >=latex,
+%                    every edge/.style={->, draw, very thick},
+%                    service/.style={->, draw, very thick,dashed},
+%                    rosnode/.style={draw, font=\sf, node distance=0.5, rounded
+%                    corners, align=center, inner sep=5pt,fill=hriSec2Dark!50},
+%                    topic/.style={font=\tt, node distance=0.5, align=center, inner sep=5pt},
+%                    pic/.style={fill=none,draw=none}
+%                ]
+%
+%    \node [rosnode] at (-4,0) (node1) {\tt gscam};
+%    \node [rosnode] at (0,-2) (node2) {\tt our\_processing};
+%    \node [rosnode] at (4,-4) (node3) {\tt next\_processing};
+%
+%        \node [topic] at (-1.2,-0.7) (topic2) {/v4l/camera/image\_raw};
+%        \node [topic] at (-2.4,-2.2) (topic3) {/image};
+%        \node [topic] at (1.4,-2.7) (topic1) {/processed\_image};
+%        \path (node1) edge[bend right] (node2);
+%        \path (node2) edge[bend right] (node3);
+%
+%
+%\end{tikzpicture}
+%\end{center}
+%
+%\end{frame}
+
+
+\begin{frame}[containsverbatim]{}
+
+\begin{minted}[frame=none,
+               linenos=true,
+               fontsize=\footnotesize,
+               numbersep=0.4em,
+               xleftmargin=0.5em]{python}
+import sys, cv2, rospy
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
+
+def on_image(image):
+    cv_image = bridge.imgmsg_to_cv2(image, "bgr8")
+    rows, cols, channels = cv_image.shape
+    cv2.circle(cv_image, (cols/2, rows/2), 50, (0,0,255), -1)
+    image_pub.publish(bridge.cv2_to_imgmsg(cv_image, "bgr8"))
+
+rospy.init_node('image_processor')
+bridge = CvBridge()
+image_sub = rospy.Subscriber("image",Image, on_image)
+image_pub = rospy.Publisher("processed_image",Image)
+
+while not rospy.is_shutdown():
+    rospy.spin()
+\end{minted}
+
+\end{frame}
+
+\begin{frame}[fragile]{How to use this code?}
+
+First, we need to write data onto the \texttt{/image} topic, for instance from a
+webcam:
+
+\begin{shcode}
+> rosrun usb_cam usb_cam_node
+\end{shcode}
+
+\pause
+
+Then, we run our code:
+
+\begin{shcode}
+> python image_processor.py
+\end{shcode}
+
+\pause
+
+Finally, we run a 3rd node to display the image:
+
+\begin{shcode}
+> rosrun image_view image_view image:=/processed_image
+\end{shcode}
+
+\end{frame}
+
+
+\imageframe[color=black]{image_processor.png}
+
+\begin{frame}{}
+    \begin{center}
+        \Large
+        That's all, folks!\\[2em]
+        \normalsize
+        Questions:\\
+        Portland Square B316 or \url{severin.lemaignan@plymouth.ac.uk} \\[1em]
+
+        Slides:\\
+        \href{https://github.com/severin-lemaignan/module-introduction-sensors-actuators}{\small
+        github.com/severin-lemaignan/module-introduction-sensors-actuators}
+
+
+    \end{center}
+\end{frame}
+
+
+
+\end{document}
