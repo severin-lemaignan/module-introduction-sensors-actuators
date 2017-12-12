@@ -164,7 +164,7 @@
 
 {
     \paper{\source{https://github.com/bytefish/facerecognition_guide}{Philipp
-    Wagner, Face Recognition with Python}}
+    Wagner, Face Recognition with Python} (code source available as well)}
 
 \begin{frame}{PCA Algorithm}
     Let $\mathbf{X} = \{ \mathbf{x}_{1}, \mathbf{x}_{2}, \ldots, \mathbf{x}_{n} \}$ be a vector with observations $\mathbf{x}_i \in \mathbb{R}^{d}$.
@@ -190,6 +190,7 @@
 
 \end{frame}
 }
+
 
 \begin{frame}[fragile]{Python code}
 
@@ -447,9 +448,19 @@ between-class discriminant features}]{dataset}
 \end{frame}
 }
 
+
+\miniframesoff
+\begin{frame}[plain]
+    \begin{center}
+        \Large
+        10 min break\\[2em]
+    \end{center}
+\end{frame}
+\miniframeson
+
 \section[With ROS]{How to integrate that with ROS?}
 
-\begin{frame}{A simple image processing pipeline}
+\begin{frame}{Reminder: a simple image processing pipeline}
 
 \begin{center}
 \begin{tikzpicture}[
@@ -556,7 +567,7 @@ webcam:
 Then, we run our code:
 
 \begin{shcode}
-> python image_processor.py
+> python image_processor.py image:=/usb_cam/image_raw
 \end{shcode}
 
 \pause
@@ -564,13 +575,274 @@ Then, we run our code:
 Finally, we run a 3rd node to display the image:
 
 \begin{shcode}
-> rosrun image_view image_view image:=/processed_image
+> rqt_image_view image:=/processed_image
+\end{shcode}
+
+\end{frame}
+
+\imageframe[color=black]{image_processor.png}
+
+\section{Creating the FaceRec ROS package}
+
+\begin{frame}[fragile]{Let's create a proper ROS package}
+
+\begin{shcode}
+> cd $HOME
+> mkdir src && cd src
+> catkin_create_pkg facerec rospy
+\end{shcode}
+\pause
+\begin{shcode}
+> ls facerec
+CMakeLists.txt  package.xml  src
+\end{shcode}
+
+\end{frame}
+
+\begin{frame}[fragile]{First, add some code}
+
+\begin{shcode}
+> cd facerec
+> mkdir -p src/facerec && cd src/facerec
+> touch __init__.py # required to create a Python module
+> gedit recognition.py
+\end{shcode}
+\pause
+
+Just a simple stub for a Python module:
+
+\begin{pythoncode}
+def run(dataset):
+    print('Dataset: ' + dataset)
+\end{pythoncode}
+
+\end{frame}
+
+\begin{frame}[fragile]{First, add some initial code}
+
+Create as well an executable (our future ROS node) in \texttt{scripts/}:
+
+\begin{shcode}
+> cd ../..
+> mkdir -p scripts && cd scripts
+> gedit reco
+\end{shcode}
+\pause
+
+\begin{pythoncode}
+#! /usr/bin/env python
+
+import facerec.reco
+
+if __name__ == '__main__':
+    facerec.reco.run("my_faces")
+\end{pythoncode}
+
+\pause
+
+\begin{shcode}
+> chmod +x reco
+\end{shcode}
+\end{frame}
+
+\begin{frame}[fragile]{Configure the Python 'build'}
+
+Because our node is written in Python, our \texttt{CMakeLists.txt} is simple:
+
+\begin{cmakecode}
+cmake_minimum_required(VERSION 2.8.3)
+project(facerec)
+
+find_package(catkin REQUIRED COMPONENTS
+  rospy
+)
+
+catkin_python_setup()
+catkin_package()
+
+install(PROGRAMS
+   scripts/reco
+   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+\end{cmakecode}
+\end{frame}
+
+\begin{frame}[fragile]{Configure the Python 'build'}
+
+However, we need a \texttt{setup.py} (standard Python
+    \texttt{distutils}-based packaging):
+
+\begin{pythoncode}
+from distutils.core import setup
+from catkin_pkg.python_setup import generate_distutils_setup
+
+# fetch values from package.xml
+setup_args = generate_distutils_setup(
+                    packages=['facerec'],
+                    package_dir={'': 'src'},
+                )
+
+setup(**setup_args)
+\end{pythoncode}
+
+\end{frame}
+
+\begin{frame}[fragile]{Install the node}
+
+    We can now install our node:
+
+\begin{shcode}
+> cd ..
+> mkdir -p build && cd build
+> cmake -DCMAKE_INSTALL_PREFIX=<install prefix> ..
+> make install
+\end{shcode}
+
+\pause
+
+Assuming ROS is correctly installed, we can run our node:
+
+\begin{shcode}
+> export ROS_PACKAGE_PATH=<prefix>/share:$ROS_PACKAGE_PATH
+> rosrun facerec reco
+Dataset: my_faces
+\end{shcode}
+
+
+\end{frame}
+
+\begin{frame}[fragile]{Image processing}
+Let's update the node \texttt{reco} and the library (Python \emph{module})
+    \texttt{recognition.py} to perform simple image processing:
+
+\texttt{recognition.py}:
+\begin{pythoncode}
+import cv2
+
+def run(image):
+    rows, cols, channels = image.shape
+    cv2.circle(image, (cols/2, rows/2), 50, (0,0,255), -1)
+\end{pythoncode}
+\end{frame}
+
+\begin{frame}[fragile]{Image processing}
+\texttt{reco}:
+\begin{pythoncode}
+#! /usr/bin/env python
+
+import sys, rospy
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
+
+import facerec.reco
+
+def on_image(image):
+    cv_image = bridge.imgmsg_to_cv2(image, "bgr8")
+    facerec.reco.run(cv_image)
+    image_pub.publish(bridge.cv2_to_imgmsg(cv_image, "bgr8"))
+
+if __name__ == '__main__':
+    rospy.init_node('image_processor')
+    bridge = CvBridge()
+    image_sub = rospy.Subscriber("image",Image, on_image)
+    image_pub = rospy.Publisher("processed_image",Image, queue_size=1)
+
+    while not rospy.is_shutdown():
+        rospy.spin()
+\end{pythoncode}
+
+\end{frame}
+
+\begin{frame}[fragile]{To use the node}
+
+
+\begin{shcode}
+> rosrun usb_cam usb_cam_node
+\end{shcode}
+
+
+\begin{shcode}
+> rosrun facerec reco image:=/usb_cam/image_raw
+\end{shcode}
+
+
+\begin{shcode}
+> rqt_image_view image:=/processed_image
 \end{shcode}
 
 \end{frame}
 
 
-\imageframe[color=black]{image_processor.png}
+\begin{frame}[plain]
+    \begin{center}
+        \Large
+    Let's try it!
+    \end{center}
+\end{frame}
+
+
+\begin{frame}{What are the next steps for face recognition?}
+
+    We need to:
+    \begin{itemize}
+        \item acquire reference images for each of the face we want to recognise
+        \item re-train the model every time we add new faces to the dataset
+        \item when requested, attempt to recognise the person $\rightarrow$ ROS
+            action
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Possible network}
+
+\begin{center}
+\begin{tikzpicture}[
+                    >=latex,
+                    every edge/.style={->, draw, very thick},
+                    service/.style={->, draw, very thick,dashed},
+                    rosnode/.style={draw, font=\sf, node distance=0.5, rounded
+                    corners, align=center, inner sep=5pt,fill=hriSec2Dark!50},
+                    topic/.style={font=\tt, node distance=0.5, align=center, inner sep=5pt},
+                    pic/.style={fill=none,draw=none}
+                ]
+
+    %\path[use as bounding box] (-6,1) rectangle (6,-5);
+    \node [rosnode] at (0,0) (node1) {client};
+    \node [rosnode] at (4,2) (node2) {facerec};
+    \node [rosnode] at (8,-1) (node3) {camera};
+
+        %\node [topic] at (1,-2) (topic1) {/topic1};
+        %\node [topic] at (-1,-3) (topic2) {/topic2};
+        \node [topic] at (6,-2) (topic3) {/image};
+        \path (node3) edge[bend left] node[label,right] {publishes} (topic3);
+        \path (node2) edge[bend right] node[label,left] {subscribes} (topic3);
+
+        \path[->, dashed] ([xshift=-2pt]node1.north) edge[bend left] node[label,above left] {reco request} ([yshift=2pt]node2.west) ;
+        \path[->, dashed] ([yshift=-2pt]node2.west) edge[bend right] node[label,below right] {reco result} ([xshift=2pt]node1.north);
+
+
+\end{tikzpicture}
+\end{center}
+
+\end{frame}
+
+\begin{frame}{Recognition logic}
+
+    Inside \texttt{facerec}:
+
+    \begin{itemize}
+        \item when incoming request, attempt recognition
+        \item if recognition fails: acquire a couple of images of that person; create a new class; re-train
+        \item if recognition succeeds: add image to corresponding class; re-train
+        \item if unsure: ask for confirmation
+    \end{itemize}
+
+    \pause
+    \begin{center}
+        \textbf{Implementation left as an exercice!}
+    \end{center}
+\end{frame}
 
 \begin{frame}{}
     \begin{center}
