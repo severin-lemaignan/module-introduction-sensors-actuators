@@ -5,6 +5,8 @@ from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 
 import facerec.reco
+from facerec.subspace import pca
+from facerec.util import normalize, asRowMatrix, read_images
 
 def on_image(image):
     cv_image = bridge.imgmsg_to_cv2(image, "bgr8")
@@ -16,6 +18,15 @@ def on_image(image):
 
 if __name__ == '__main__':
     rospy.init_node('image_processor')
+    dataset_path=rospy.get_param('~dataset')
+
+    rospy.loginfo("Dataset is at %s" % dataset_path)
+
+    rospy.loginfo("Reading the dataset...")
+    [X,y] = read_images(dataset_path)
+    rospy.loginfo("Training the model...")
+    [D, W, mu] = pca(asRowMatrix(X), y) # D: eigenvalues, W: eigenvectors, mu: mean
+
     bridge = CvBridge()
     image_sub = rospy.Subscriber("image",Image, on_image)
     image_pub = rospy.Publisher("processed_image",Image, queue_size=1)
