@@ -632,10 +632,10 @@ Create as well an executable (our future ROS node) in \texttt{scripts/}:
 \begin{pythoncode}
 #! /usr/bin/env python
 
-import facerec.reco
+import facerec.recognition
 
 if __name__ == '__main__':
-    facerec.reco.run("my_faces")
+    facerec.recognition.run("my_faces")
 \end{pythoncode}
 
 \pause
@@ -735,11 +735,11 @@ import sys, rospy
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 
-import facerec.reco
+import facerec.recognition
 
 def on_image(image):
     cv_image = bridge.imgmsg_to_cv2(image, "bgr8")
-    facerec.reco.run(cv_image)
+    facerec.recognition.run(cv_image)
     image_pub.publish(bridge.cv2_to_imgmsg(cv_image, "bgr8"))
 
 if __name__ == '__main__':
